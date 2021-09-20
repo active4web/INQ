@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:work/view/auth_screens/login_screen.dart';
+import 'package:work/view/auth_screens/onboard_screens/onboard_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,8 +11,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      builder: (context, child) {
+        return Directionality(textDirection: TextDirection.rtl, child: child);
+      },
+      routes: {
+        LoginScreen.id: (context) => LoginScreen(),
+        OnBoardScreen.id: (context)=>OnBoardScreen(),
+      },
+      initialRoute: OnBoardScreen.id,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        appBarTheme: AppBarTheme(
+          centerTitle: true
+        ),
+        fontFamily: 'Cairo',
+        primarySwatch: Colors.green,
+        scaffoldBackgroundColor: Colors.white
       ),
 
       home: MyHomePage(title: 'Flutter Demo Home Page'),
@@ -19,7 +34,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
+  MyHomePage({Key key, this.title}) : super(key: key);
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
