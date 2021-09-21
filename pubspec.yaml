@@ -25,7 +25,9 @@ dependencies:
     sdk: flutter
   flutter_native_splash: ^1.2.3
   smooth_page_indicator: ^1.0.0+2
-
+  bloc: ^7.0.0
+  flutter_bloc: ^7.0.0
+  im_stepper: ^0.1.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -71,7 +73,9 @@ flutter:
         - asset: Assets/fonts/Cairo-Light.ttf
         - asset: Assets/fonts/Cairo-Regular.ttf
         - asset: Assets/fonts/Cairo-SemiBold.ttf
-
+    - family: CustomIcons
+      fonts:
+        - asset: Assets/fonts/CustomIcons.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

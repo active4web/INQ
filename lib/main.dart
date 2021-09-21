@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:work/view/auth_screens/login_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:work/cubit/user_cubit/user_cubit.dart';
+import 'package:work/view/auth_screens/login_screens/login_screen.dart';
 import 'package:work/view/auth_screens/onboard_screens/onboard_screen.dart';
+import 'package:work/view/auth_screens/signup_screens/signup_screen.dart';
+import 'package:work/view/layouts/user_layout.dart';
+
+import 'cubit/login_cubit/login_cubit.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,26 +15,33 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      builder: (context, child) {
-        return Directionality(textDirection: TextDirection.rtl, child: child);
-      },
-      routes: {
-        LoginScreen.id: (context) => LoginScreen(),
-        OnBoardScreen.id: (context)=>OnBoardScreen(),
-      },
-      initialRoute: OnBoardScreen.id,
-      theme: ThemeData(
-        appBarTheme: AppBarTheme(
-          centerTitle: true
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context)=> UserCubit()),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        // builder: (context, child) {
+        //   return Directionality(textDirection: TextDirection.rtl, child: child);
+        // },
+        routes: {
+          LoginScreen.id: (context) => LoginScreen(),
+          OnBoardScreen.id: (context)=>OnBoardScreen(),
+          SignUpScreen.id:  (context)=>SignUpScreen(),
+          UserLayout.id: (context)=>UserLayout()
+        },
+        initialRoute: OnBoardScreen.id,
+        theme: ThemeData(
+          appBarTheme: AppBarTheme(
+            centerTitle: true
+          ),
+          fontFamily: 'Cairo',
+          primarySwatch: Colors.green,
+          scaffoldBackgroundColor: Colors.white
         ),
-        fontFamily: 'Cairo',
-        primarySwatch: Colors.green,
-        scaffoldBackgroundColor: Colors.white
-      ),
 
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+        home: MyHomePage(title: 'Flutter Demo Home Page'),
+      ),
     );
   }
 }
