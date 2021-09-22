@@ -25,6 +25,7 @@ class CustomButton extends StatelessWidget {
             color: Colors.white,
             fontSize: 16
         ),
+          textDirection: TextDirection.rtl,
         ),
         ),
       ),

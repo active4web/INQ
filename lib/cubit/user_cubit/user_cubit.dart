@@ -5,6 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:work/cubit/user_cubit/user_states.dart';
+import 'package:work/view/user_screens/user_home_screen.dart';
+import 'package:work/view/user_screens/user_menu_screen.dart';
+import 'package:work/view/user_screens/user_profile_screen.dart';
 
 class UserCubit extends Cubit<UserStates>{
   UserCubit(): super(UserInitialState());
@@ -12,14 +15,14 @@ class UserCubit extends Cubit<UserStates>{
   static UserCubit get(context) => BlocProvider.of(context);
 
   List<Widget> screens = [
+    UserMenuScreen(),
+    ProfileScreen(),
     Scaffold(),
     Scaffold(),
-    Scaffold(),
-    Scaffold(),
-    Scaffold(),
+    UserHomeScreen()
   ];
 
-  int selectedIndex = 3;
+  int selectedIndex = 4;
   void changeNavBar(int value) {
     selectedIndex = value;
     emit(UserBottomNavState());
