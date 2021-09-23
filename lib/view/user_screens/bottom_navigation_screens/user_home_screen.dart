@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:work/shared/components/custom_button.dart';
 import 'package:work/shared/components/custom_search_bar.dart';
 import 'package:work/shared/constants.dart';
 import 'package:work/shared/custom_icons.dart';
+import 'package:work/view/notifications_screen.dart';
 
 class UserHomeScreen extends StatelessWidget {
   const UserHomeScreen({Key key}) : super(key: key);
@@ -11,6 +13,7 @@ class UserHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -37,7 +40,32 @@ class UserHomeScreen extends StatelessWidget {
                         SizedBox(width: 16,),
                         Text('مرحبا محمد أحمد',
                           style: TextStyle(fontSize: 24,
-                              color: kDarkBlueColor),)
+                              color: kDarkBlueColor),),
+                        Expanded(child: SizedBox(),),
+                        Stack(
+                          alignment: Alignment.topRight,
+                          children: [
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.pushNamed(context,
+                                    NotificationsScreen.id);
+                              },
+                              child: Icon(
+                                Icons.notifications_none_rounded,
+                                color: kLightGreenColor,
+                                size: 30,
+                              ),
+                            ),
+                            Positioned(
+                              top: 2,
+                              right: 3,
+                              child: CircleAvatar(
+                                radius: 6,
+                                backgroundColor: Colors.red,
+                              ),
+                            )
+                          ],
+                        ),
                       ],
                     ),
                     Row(
@@ -68,7 +96,7 @@ class UserHomeScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 10,)
+                    SizedBox(height: 20,)
                   ],
                 ),
               ),

@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:work/shared/constants.dart';
+import 'package:work/view/user_screens/menu_screens/about_app_screen.dart';
+import 'package:work/view/user_screens/menu_screens/customer_services.dart';
+import 'package:work/view/user_screens/menu_screens/favourites_screen.dart';
+import 'package:work/view/user_screens/menu_screens/privacy_screen.dart';
+import 'package:work/view/user_screens/menu_screens/terms_and_conditions_screen.dart';
 
 class UserMenuScreen extends StatelessWidget {
   const UserMenuScreen({Key key}) : super(key: key);
@@ -14,6 +19,7 @@ class UserMenuScreen extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           child: Stack(
             overflow: Overflow.visible,
+            fit: StackFit.loose,
             alignment: AlignmentDirectional.center,
             children: [
               Positioned(
@@ -78,37 +84,55 @@ class UserMenuScreen extends StatelessWidget {
                 ),
               ),
               Positioned(
-                bottom: 40,
                 top: 220,
-                child: Container(
-                  // margin: EdgeInsets.only(top: 220,),
-                  width: MediaQuery.of(context).size.width*0.85,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [BoxShadow(
-                      color: Colors.grey,
-                      blurRadius: 1
-                    )],
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: ListView(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    children: [
-                      MenuItem(label: 'تاريخ الحجز',),
-                      SizedBox(height: 14,),
-                      MenuItem(label: "المفضلة",),
-                      SizedBox(height: 14,),
-                      MenuItem(label: "سياسة الخصوصية",),
-                      SizedBox(height: 14,),
-                      MenuItem(label: "الشروط و الأحكام",),
-                      SizedBox(height: 14,),
-                      MenuItem(label: "خدمة العملاء",),
-                      SizedBox(height: 14,),
-                      MenuItem(label: "عن التطبيق",),
-                      SizedBox(height: 30,),
-                      TextButton(onPressed: (){}, child: Text('تسجيل الخروج',
-                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),))
-                    ],
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 30),
+                  child: Container(
+                    // margin: EdgeInsets.only(top: 220,),
+                    width: MediaQuery.of(context).size.width*0.85,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 1
+                      )],
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: ListView(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      children: [
+                        // MenuItem(label: 'تاريخ الحجز',),
+                        // SizedBox(height: 14,),
+                        MenuItem(label: "المفضلة",onTab: (){
+                          Navigator.pushNamed(context, FavouritesScreen.id);
+                        },),
+                        SizedBox(height: 14,),
+                        MenuItem(label: "سياسة الخصوصية",
+                        onTab: (){
+                          Navigator.pushNamed(context, PrivacyScreen.id);
+                        },),
+                        SizedBox(height: 14,),
+                        MenuItem(label: "الشروط و الأحكام",
+                          onTab: (){
+                            Navigator.pushNamed(context, TermsAndConditionsScreen.id);
+                          },),
+                        SizedBox(height: 14,),
+                        MenuItem(label: "خدمة العملاء",
+                          onTab: (){
+                            Navigator.pushNamed(context, CustomerServicesScreen.id);
+                          },),
+                        SizedBox(height: 14,),
+                        MenuItem(label: "عن التطبيق",
+                          onTab: (){
+                            Navigator.pushNamed(context, AboutAppScreen.id);
+                          },),
+                        SizedBox(height: 20,),
+                        TextButton(onPressed: (){}, child: Text('تسجيل الخروج',
+                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),))
+                      ],
+                    ),
                   ),
                 ),
               ),

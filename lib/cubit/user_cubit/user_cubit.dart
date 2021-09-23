@@ -5,9 +5,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:work/cubit/user_cubit/user_states.dart';
-import 'package:work/view/user_screens/user_home_screen.dart';
-import 'package:work/view/user_screens/user_menu_screen.dart';
-import 'package:work/view/user_screens/user_profile_screen.dart';
+import 'package:work/view/user_screens/bottom_navigation_screens/user_home_screen.dart';
+import 'package:work/view/user_screens/bottom_navigation_screens/user_menu_screen.dart';
+import 'package:work/view/user_screens/bottom_navigation_screens/user_profile_screen.dart';
+import 'package:work/view/user_screens/bottom_navigation_screens/user_reservations_screen.dart';
 
 class UserCubit extends Cubit<UserStates>{
   UserCubit(): super(UserInitialState());
@@ -18,7 +19,7 @@ class UserCubit extends Cubit<UserStates>{
     UserMenuScreen(),
     ProfileScreen(),
     Scaffold(),
-    Scaffold(),
+    UserReservationScreen(),
     UserHomeScreen()
   ];
 

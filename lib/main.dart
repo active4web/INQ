@@ -5,6 +5,12 @@ import 'package:work/view/auth_screens/login_screens/login_screen.dart';
 import 'package:work/view/auth_screens/onboard_screens/onboard_screen.dart';
 import 'package:work/view/auth_screens/signup_screens/signup_screen.dart';
 import 'package:work/view/layouts/user_layout.dart';
+import 'package:work/view/notifications_screen.dart';
+import 'package:work/view/user_screens/menu_screens/about_app_screen.dart';
+import 'package:work/view/user_screens/menu_screens/customer_services.dart';
+import 'package:work/view/user_screens/menu_screens/favourites_screen.dart';
+import 'package:work/view/user_screens/menu_screens/privacy_screen.dart';
+import 'package:work/view/user_screens/menu_screens/terms_and_conditions_screen.dart';
 
 import 'cubit/login_cubit/login_cubit.dart';
 
@@ -28,6 +34,12 @@ class MyApp extends StatelessWidget {
           LoginScreen.id: (context) => LoginScreen(),
           OnBoardScreen.id: (context)=>OnBoardScreen(),
           SignUpScreen.id:  (context)=>SignUpScreen(),
+          NotificationsScreen.id: (context)=>NotificationsScreen(),
+          FavouritesScreen.id:(context)=>FavouritesScreen(),
+          PrivacyScreen.id:(context)=>PrivacyScreen(),
+          TermsAndConditionsScreen.id:(context)=>TermsAndConditionsScreen(),
+          CustomerServicesScreen.id:(context)=>CustomerServicesScreen(),
+          AboutAppScreen.id:(context)=>AboutAppScreen(),
           UserLayout.id: (context)=>UserLayout()
         },
         initialRoute: OnBoardScreen.id,
@@ -37,7 +49,7 @@ class MyApp extends StatelessWidget {
           ),
           fontFamily: 'Cairo',
           primarySwatch: Colors.green,
-          scaffoldBackgroundColor: Colors.white
+          scaffoldBackgroundColor: Color(0xfff8f8f8)
         ),
 
         home: MyHomePage(title: 'Flutter Demo Home Page'),
