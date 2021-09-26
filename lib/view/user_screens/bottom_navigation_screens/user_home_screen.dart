@@ -6,6 +6,7 @@ import 'package:work/shared/components/custom_search_bar.dart';
 import 'package:work/shared/constants.dart';
 import 'package:work/shared/custom_icons.dart';
 import 'package:work/view/notifications_screen.dart';
+import 'package:work/view/user_screens/salon_screen.dart';
 
 class UserHomeScreen extends StatelessWidget {
   const UserHomeScreen({Key key}) : super(key: key);
@@ -83,12 +84,27 @@ class UserHomeScreen extends StatelessWidget {
                     Row(
                       textDirection: TextDirection.rtl,
                       children: [
-                        Container(
-                          width: 45,
-                          height: 45,
-                          decoration: kBoxDecoration,
-                          child: Icon(Icons.filter_list_rounded,
-                          color: kGreyColor,),
+                        GestureDetector(
+                          onTap: (){
+                            showModalBottomSheet(context: context,
+                                builder:(context) => ClipRRect(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(30),
+                                  ),
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height*0.5,
+                                    color: Colors.white,
+                                    width: MediaQuery.of(context).size.width,
+                                  ),
+                                ));
+                          },
+                          child: Container(
+                            width: 45,
+                            height: 45,
+                            decoration: kBoxDecoration,
+                            child: Icon(Icons.filter_list_rounded,
+                            color: kGreyColor,),
+                          ),
                         ),
                         SizedBox(width: 20,),
                         Expanded(
@@ -125,7 +141,7 @@ class UserHomeScreen extends StatelessWidget {
                   SizedBox(height: 20,),
                   ///services list
                   SizedBox(
-                    height: 71,
+                    height: 72,
                     child: ListView(
                       padding: EdgeInsets.symmetric(horizontal: 30),
                       scrollDirection: Axis.horizontal,
@@ -201,92 +217,97 @@ class SalonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16),
-      padding: EdgeInsets.all(12),
-      height: 140,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [BoxShadow(
-          color: Colors.grey,
-          blurRadius: 1
-        )]
-      ),
-      child: Row(
-        textDirection: TextDirection.rtl,
-        children: [
-          Container(
-            width: 90,
-            height: 90,
-            decoration: BoxDecoration(
-              color: Colors.green,
-              borderRadius: BorderRadius.circular(10)
+    return GestureDetector(
+      onTap: (){
+        Navigator.pushNamed(context, SalonScreen.id);
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 16),
+        padding: EdgeInsets.all(12),
+        height: 140,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [BoxShadow(
+            color: Colors.grey,
+            blurRadius: 1
+          )]
+        ),
+        child: Row(
+          textDirection: TextDirection.rtl,
+          children: [
+            Container(
+              width: 90,
+              height: 90,
+              decoration: BoxDecoration(
+                color: Colors.green,
+                borderRadius: BorderRadius.circular(10)
+              ),
             ),
-          ),
-          SizedBox(width: 16,),
-          Container(
-            width: 180,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  textDirection: TextDirection.rtl,
-                  children: [
-                    Text('صالون احلي طلة',style: TextStyle(
-                      fontSize: 20
-                    ),
-                    textDirection: TextDirection.rtl,),
-                  ],
-                ),
-                Row(
-                  textDirection: TextDirection.rtl,
-                  children: [
-                    RatingBar.builder(
-                      initialRating: 3,
-                      textDirection: TextDirection.rtl,
-                      minRating: 1,
-                      itemSize: 12,
-                      direction: Axis.horizontal,
-                      itemCount: 5,
-                      itemPadding: EdgeInsets.symmetric(horizontal: 1),
-                      itemBuilder: (context, _) => Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                      ),
-                      onRatingUpdate: (rating) {
-                        print(rating);
-                      },
-                    ),
-
-                  ],
-                ),
-                Row(
-                  textDirection: TextDirection.rtl,
-                  children: [
-                    Text('شارع الثورة,عمان '),
-                  ],
-                ),
-                Row(
-                  textDirection: TextDirection.rtl,
-                  children: [
-                    Text('الحجوزات : 50',style: TextStyle(
-                      color: kPrimaryColor
-                    ),
+            SizedBox(width: 16,),
+            Container(
+              width: 180,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
                     textDirection: TextDirection.rtl,
-                    ),
-                  ],
-                )
-              ],
+                    children: [
+                      Text('صالون احلي طلة',style: TextStyle(
+                        fontSize: 20
+                      ),
+                      textDirection: TextDirection.rtl,),
+                    ],
+                  ),
+                  Row(
+                    textDirection: TextDirection.rtl,
+                    children: [
+                      RatingBar.builder(
+                        initialRating: 3,
+                        textDirection: TextDirection.rtl,
+                        minRating: 1,
+                        itemSize: 12,
+                        direction: Axis.horizontal,
+                        itemCount: 5,
+                        itemPadding: EdgeInsets.symmetric(horizontal: 1),
+                        itemBuilder: (context, _) => Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                        onRatingUpdate: (rating) {
+                          print(rating);
+                        },
+                      ),
+
+                    ],
+                  ),
+                  Row(
+                    textDirection: TextDirection.rtl,
+                    children: [
+                      Text('شارع الثورة,عمان '),
+                    ],
+                  ),
+                  Row(
+                    textDirection: TextDirection.rtl,
+                    children: [
+                      Text('الحجوزات : 50',style: TextStyle(
+                        color: kPrimaryColor
+                      ),
+                      textDirection: TextDirection.rtl,
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
-          ),
-          Expanded(child: SizedBox()),
-          Column(
-            children: [
-              Icon(Icons.favorite,color: kPrimaryColor,)
-            ],
-          )
-        ],
+            Expanded(child: SizedBox()),
+            Column(
+              children: [
+                Icon(Icons.favorite,color: kPrimaryColor,)
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -367,6 +388,7 @@ class ServiceTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 71,
+      height: 71,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),

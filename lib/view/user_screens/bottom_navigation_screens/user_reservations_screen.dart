@@ -89,8 +89,7 @@ class _UserReservationScreenState extends State<UserReservationScreen> with Sing
       //     ),
       //   ),
       // ),
-      body:
-      NestedScrollView(
+      body: NestedScrollView(
         headerSliverBuilder: (context, bool)=>
         [
           SliverAppBar(

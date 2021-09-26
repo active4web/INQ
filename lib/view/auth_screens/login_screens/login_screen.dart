@@ -71,7 +71,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 20,),
                   CustomButton(label: 'تسجيل الدخول',onTab: (){
-                    Navigator.pushNamed(context, UserLayout.id);
+                    Navigator.pushNamedAndRemoveUntil(context, UserLayout.id,(route) => false);
                   },),
                   SizedBox(height:60),
                   Row(

@@ -11,6 +11,7 @@ import 'package:work/view/user_screens/menu_screens/customer_services.dart';
 import 'package:work/view/user_screens/menu_screens/favourites_screen.dart';
 import 'package:work/view/user_screens/menu_screens/privacy_screen.dart';
 import 'package:work/view/user_screens/menu_screens/terms_and_conditions_screen.dart';
+import 'package:work/view/user_screens/salon_screen.dart';
 
 import 'cubit/login_cubit/login_cubit.dart';
 
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
           TermsAndConditionsScreen.id:(context)=>TermsAndConditionsScreen(),
           CustomerServicesScreen.id:(context)=>CustomerServicesScreen(),
           AboutAppScreen.id:(context)=>AboutAppScreen(),
+          SalonScreen.id: (context)=>SalonScreen(),
           UserLayout.id: (context)=>UserLayout()
         },
         initialRoute: OnBoardScreen.id,
@@ -49,6 +51,7 @@ class MyApp extends StatelessWidget {
           ),
           fontFamily: 'Cairo',
           primarySwatch: Colors.green,
+          canvasColor: Colors.transparent,
           scaffoldBackgroundColor: Color(0xfff8f8f8)
         ),
 

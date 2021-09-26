@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:work/shared/components/custom_button.dart';
+import 'package:work/shared/components/custom_close_button.dart';
+import 'package:work/shared/components/custom_form_field.dart';
 import 'package:work/shared/constants.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -108,16 +110,8 @@ class ProfileScreen extends StatelessWidget {
                   SizedBox(
                     width: 270,
                       child: CustomButton(label: 'حفظ',)),
-                  Expanded(child: SizedBox()),
-                  Container(
-                    width: 55,
-                    height: 55,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      border: Border.all(color: kPrimaryColor)
-                    ),
-                    child: Icon(Icons.close,color: kPrimaryColor,size: 40,),
-                  ),
+                  SizedBox(width: 20,),
+                  CustomCloseButton()
                 ],
               ),
               SizedBox(height: 40,)
@@ -129,38 +123,7 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
-class CustomFormField extends StatelessWidget {
-  const CustomFormField({
-    Key key, this.label,
-  }) : super(key: key);
 
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(30),
-        boxShadow: [BoxShadow(color: Colors.grey,blurRadius: 0.5,)]
-      ),
-      child: TextFormField(
-        textDirection: TextDirection.rtl,
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          hintText: label,
-          hintTextDirection: TextDirection.rtl
-        ),
-        readOnly: true,
-        style: TextStyle(
-          color: Colors.black
-        ),
-      ),
-    );
-  }
-}
 
 class Label extends StatelessWidget {
   const Label({
