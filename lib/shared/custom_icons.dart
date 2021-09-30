@@ -20,6 +20,7 @@ class CustomIcons {
 
   static const _kFontFam = 'CustomIcons';
   static const String _kFontPkg = null;
+
   static const IconData appointment = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData hair_salon = IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData man = IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
@@ -27,7 +28,14 @@ class CustomIcons {
   static const IconData shaving_cream = IconData(0xe805, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData barber = IconData(0xe806, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData massage = IconData(0xe807, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData beutycenter = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData butycenter = IconData(0xe808, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData sauna = IconData(0xe809, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData salon = IconData(0xe80a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData offers = IconData(0xe80e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData suitcases = IconData(0xe80f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData photo_camera = IconData(0xe810, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData resign = IconData(0xe811, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData delivery_truck = IconData(0xe814, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData orders = IconData(0xe815, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData warehouse = IconData(0xe817, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

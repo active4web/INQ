@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:work/shared/components/custom_button.dart';
+import 'package:work/shared/components/custom_close_button.dart';
 import 'package:work/shared/components/custom_search_bar.dart';
 import 'package:work/shared/constants.dart';
 import 'package:work/shared/custom_icons.dart';
@@ -10,7 +11,6 @@ import 'package:work/view/user_screens/salon_screen.dart';
 
 class UserHomeScreen extends StatelessWidget {
   const UserHomeScreen({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,23 +87,14 @@ class UserHomeScreen extends StatelessWidget {
                         GestureDetector(
                           onTap: (){
                             showModalBottomSheet(context: context,
-                                builder:(context) => ClipRRect(
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(30),
-                                  ),
-                                  child: Container(
-                                    height: MediaQuery.of(context).size.height*0.5,
-                                    color: Colors.white,
-                                    width: MediaQuery.of(context).size.width,
-                                  ),
-                                ));
+                                builder:(context) => FilterBottomSheet());
                           },
                           child: Container(
                             width: 45,
                             height: 45,
                             decoration: kBoxDecoration,
                             child: Icon(Icons.filter_list_rounded,
-                            color: kGreyColor,),
+                              color: kGreyColor,),
                           ),
                         ),
                         SizedBox(width: 20,),
@@ -124,6 +115,7 @@ class UserHomeScreen extends StatelessWidget {
               child: Column(
                 children: [
                   SizedBox(height: 10,),
+                  ///services list
                   Row(
                     textDirection: TextDirection.rtl,
                     children: [
@@ -139,7 +131,6 @@ class UserHomeScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 20,),
-                  ///services list
                   SizedBox(
                     height: 72,
                     child: ListView(
@@ -152,7 +143,7 @@ class UserHomeScreen extends StatelessWidget {
                         ),
                         SizedBox(width: 16,),
                         ServiceTile(
-                          icon: CustomIcons.beutycenter,
+                          icon: CustomIcons.butycenter,
                           label: 'بيوتي سنتر',
                         ),
                         SizedBox(width: 16,),
@@ -169,7 +160,7 @@ class UserHomeScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 50,),
-                  ///Discount list
+                  ///Discount Cards list
                   SizedBox(
                     height: 170,
                     child: ListView.separated(
@@ -204,6 +195,193 @@ class UserHomeScreen extends StatelessWidget {
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+enum SortFilter{
+  place,
+  priceTopDown,
+  PriceBottomUp
+}
+final List<int> _ratingList = [1,2,3,4,5];
+final List<int> _filters = [];
+
+class FilterBottomSheet extends StatelessWidget {
+  const FilterBottomSheet({
+    Key key,
+  }) : super(key: key);
+
+  ///rating filter method
+  Iterable<Widget> get ratingNumber sync* {
+    for (int ratingNum in _ratingList) {
+      yield Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: StatefulBuilder(
+          builder: (context, setState) =>  Directionality(
+            textDirection: TextDirection.rtl,
+            child: FilterChip(
+              backgroundColor: Colors.transparent,
+              pressElevation: 0,
+              labelStyle: TextStyle(
+                color: kPrimaryColor,
+                fontSize: 16,
+                fontWeight: FontWeight.bold
+              ),
+              showCheckmark: true,
+
+              checkmarkColor: Colors.white,
+              labelPadding: EdgeInsets.symmetric(horizontal: 5),
+              shape: StadiumBorder(
+                side: BorderSide(
+                  color: kPrimaryColor,
+                  width: 1.5
+                )
+              ),
+              avatar: Icon(Icons.star,color: kPrimaryColor,size: 20,),
+              label: Text(ratingNum.toString()),
+              selected: _filters.contains(ratingNum),
+              selectedColor: kLightGreenColor,
+              onSelected: (bool selected) {
+                setState(() {
+                  if (selected) {
+                    _filters.add(ratingNum);
+                  } else {
+                    _filters.removeWhere((int rating) {
+                      return rating == ratingNum;
+                    });
+                  }
+                });
+              },
+            ),
+          ),
+        ),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    SortFilter sortFilter = SortFilter.place;
+    return StatefulBuilder(
+      builder: (context, setState) =>  ClipRRect(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(30),
+        ),
+        child: Container(
+          padding: EdgeInsets.all(20),
+          //height: MediaQuery.of(context).size.height*0.5,
+          color: Colors.white,
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            children: [
+              Text('تصفية',style: TextStyle(
+                  color: kDarkBlueColor,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold
+              ),
+                textDirection: TextDirection.rtl,),
+              ///sorting filter
+              Row(
+                textDirection: TextDirection.rtl,
+                children: [
+                  Text('ترتيب حسب',
+                    textDirection: TextDirection.rtl,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54,
+                      fontSize: 15,
+                    ),),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 40,
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      textDirection: TextDirection.rtl,
+                      children: [
+                        Radio<SortFilter>(
+                          value: SortFilter.place,
+                          groupValue: sortFilter,
+                          onChanged: (SortFilter value) {
+                            setState(() {
+                              sortFilter = value;
+                            });
+                          },
+                        ),
+                        SizedBox(width: 16,),
+                        Text('المكان (الأقرب اليك)'),
+                      ],
+                    ),
+                    Row(
+                      textDirection: TextDirection.rtl,
+                      children: [
+                        Radio<SortFilter>(
+                          value: SortFilter.priceTopDown,
+                          groupValue: sortFilter,
+                          onChanged: (SortFilter value) {
+                            setState(() {
+                              sortFilter = value;
+                            });
+                          },
+                        ),
+                        SizedBox(width: 16,),
+                        Text('السعر من الأعلى للاقل'),
+                      ],
+                    ),
+                    Row(
+                      textDirection: TextDirection.rtl,
+                      children: [
+                        Radio<SortFilter>(
+                          value: SortFilter.PriceBottomUp,
+                          groupValue: sortFilter,
+                          onChanged: (SortFilter value) {
+                            setState(() {
+                              sortFilter = value;
+                            });
+                          },
+                        ),
+                        SizedBox(width: 16,),
+                        Text('السعر من الاقل للاعلى'),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              ///Rating filter
+              Row(
+                textDirection: TextDirection.rtl,
+                children: [
+                  Text('التقييم',
+                    textDirection: TextDirection.rtl,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54,
+                      fontSize: 15,
+                    ),),
+                ],
+              ),
+              Wrap(
+                children: ratingNumber.toList(),
+              ),
+              SizedBox(height: 30,),
+              Row(
+                textDirection: TextDirection.rtl,
+                children: [
+                  SizedBox(
+                      width: 270,
+                      child: CustomButton(label: 'تطبيق',)),
+                  SizedBox(width: 20,),
+                  CustomCloseButton()
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -413,5 +591,3 @@ class ServiceTile extends StatelessWidget {
     );
   }
 }
-
-

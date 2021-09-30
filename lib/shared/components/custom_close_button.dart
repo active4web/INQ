@@ -17,7 +17,8 @@ class CustomCloseButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(100),
           border: Border.all(color: kPrimaryColor)
       ),
-      child: Icon(Icons.close,color: kPrimaryColor,size: 40,),
+      child: CloseButton(color: kPrimaryColor,)
+      //Icon(Icons.close,color: kPrimaryColor,size: 40,),
     );
   }
 }
