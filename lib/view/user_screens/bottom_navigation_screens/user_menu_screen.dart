@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:work/shared/constants.dart';
+import 'package:work/shared/defaults.dart';
 import 'package:work/view/user_screens/menu_screens/about_app_screen.dart';
 import 'package:work/view/user_screens/menu_screens/customer_services.dart';
 import 'package:work/view/user_screens/menu_screens/favourites_screen.dart';
@@ -106,27 +107,27 @@ class UserMenuScreen extends StatelessWidget {
                         // MenuItem(label: 'تاريخ الحجز',),
                         // SizedBox(height: 14,),
                         MenuItem(label: "المفضلة",onTab: (){
-                          Navigator.pushNamed(context, FavouritesScreen.id);
+                          navigateTo(context, FavouritesScreen());
                         },),
                         SizedBox(height: 14,),
                         MenuItem(label: "سياسة الخصوصية",
                         onTab: (){
-                          Navigator.pushNamed(context, PrivacyScreen.id);
+                          navigateTo(context, PrivacyScreen());
                         },),
                         SizedBox(height: 14,),
                         MenuItem(label: "الشروط و الأحكام",
                           onTab: (){
-                            Navigator.pushNamed(context, TermsAndConditionsScreen.id);
+                            navigateTo(context, TermsAndConditionsScreen());
                           },),
                         SizedBox(height: 14,),
                         MenuItem(label: "خدمة العملاء",
                           onTab: (){
-                            Navigator.pushNamed(context, CustomerServicesScreen.id);
+                           navigateTo(context, CustomerServicesScreen());
                           },),
                         SizedBox(height: 14,),
                         MenuItem(label: "عن التطبيق",
                           onTab: (){
-                            Navigator.pushNamed(context, AboutAppScreen.id);
+                            navigateTo(context, AboutAppScreen());
                           },),
                         SizedBox(height: 20,),
                         TextButton(onPressed: (){}, child: Text('تسجيل الخروج',

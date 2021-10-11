@@ -18,10 +18,10 @@ class BarberReservationScreen extends StatelessWidget {
           children: [
             SizedBox(height: 30,),
             TableCalendar(
-                focusedDay: DateTime(2010,1,1),
-                firstDay: DateTime(1998,1,1),
-                lastDay: DateTime(2030,1,1),
-              daysOfWeekVisible: false,
+                initialSelectedDay: DateTime(2010,1,1),
+                startDay:  DateTime(1998,1,1),
+                endDay:  DateTime(2030,1,1),
+              headerVisible:  false,
             )
           ],
         ),

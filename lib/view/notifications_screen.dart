@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({Key key}) : super(key: key);
-  static const String id = 'notificationsScreen';
+  //static const String id = 'notificationsScreen';
   @override
   Widget build(BuildContext context) {
     return Scaffold(

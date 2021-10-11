@@ -4,12 +4,10 @@ import 'package:work/shared/components/custom_close_button.dart';
 import 'package:work/shared/components/custom_form_field.dart';
 import 'package:work/shared/components/custom_image_picker.dart';
 import 'package:work/shared/constants.dart';
-import 'package:work/shared/custom_icons.dart';
 import 'package:work/view/user_screens/bottom_navigation_screens/user_profile_screen.dart';
 
-
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({Key key}) : super(key: key);
+class SalonSettingsScreen extends StatelessWidget {
+  const SalonSettingsScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -97,50 +95,7 @@ class SettingsScreen extends StatelessWidget {
                     Text('قبول الحجز تلقائيا')
                   ],
                 ),
-                SizedBox(height: 40,),
-                Label(text: 'بيانات الحلاق',),
-                SizedBox(height: 20,),
-                CustomFormField(label: 'اسم الحلاق / الكوافيرة',),
-                SizedBox(height: 20,),
-                CustomFormField(label: 'الجنس',),
-                SizedBox(height: 20,),
-                CustomFormField(label: 'عدد سنوات الخبرة',),
-                SizedBox(height: 30,),
-                CustomImagePicker(),
-                SizedBox(height: 20,),
-                Row(
-                  textDirection: TextDirection.rtl,
-                  children: [
-                    Text(
-                      'ارفع السيرة الذاتية للحلاق/ كوافيرة',
-                      textDirection: TextDirection.rtl,
-                      style: TextStyle(
-                        color: kPrimaryColor,
-                      ),
-                    ),
-                    Expanded(child: SizedBox()),
-                    Container(
-                      height: 40,
-                      width: MediaQuery.of(context).size.width * 0.35,
-                      decoration: BoxDecoration(
-                          color: kPrimaryColor,
-                          borderRadius: BorderRadius.circular(16)),
-                      child: Center(
-                          child: Text(
-                            'رفع الملف',
-                            textDirection: TextDirection.rtl,
-                            style: TextStyle(
-                              color: Colors.white,
-                            ),
-                          )),
-                    )
-                  ],
-                ),
-                SizedBox(height: 30,),
-                CustomButton(label: 'تغير كلمة المرور',),
-                SizedBox(
-                  height: 20,
-                ),
+                SizedBox(height: 60,),
                 Row(
                   textDirection: TextDirection.rtl,
                   children: [
@@ -159,5 +114,3 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 }
-
-

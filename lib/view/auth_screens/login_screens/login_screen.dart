@@ -4,6 +4,8 @@ import 'package:work/cubit/login_cubit/login_cubit.dart';
 import 'package:work/cubit/login_cubit/login_states.dart';
 import 'package:work/shared/components/custom_button.dart';
 import 'package:work/shared/constants.dart';
+import 'package:work/shared/defaults.dart';
+import 'package:work/view/auth_screens/signup_screens/signup_account_type_screen.dart';
 import 'package:work/view/auth_screens/signup_screens/signup_screen.dart';
 import 'package:work/view/layouts/user_layout.dart';
 
@@ -83,7 +85,7 @@ class LoginScreen extends StatelessWidget {
                       ),),
                       TextButton(
                           onPressed: (){
-                            Navigator.pushNamed(context, SignUpScreen.id);
+                           navigateTo(context, SignUpScreen());
                           },
                           child: Text('انشأ حساب',style: TextStyle(
                             color: kDarkBlueColor,

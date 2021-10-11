@@ -7,7 +7,7 @@ import 'package:work/shared/constants.dart';
 import 'package:work/shared/custom_icons.dart';
 import 'package:work/shared/defaults.dart';
 
-import 'add_service_screen.dart';
+import '../add_service_screen.dart';
 
 class BarberServicesScreen extends StatefulWidget {
   const BarberServicesScreen({Key key}) : super(key: key);

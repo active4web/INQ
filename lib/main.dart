@@ -6,7 +6,7 @@ import 'package:work/cubit/salon_cubit/salon_cubit.dart';
 import 'package:work/cubit/user_cubit/user_cubit.dart';
 import 'package:work/view/auth_screens/login_screens/login_screen.dart';
 import 'package:work/view/auth_screens/onboard_screens/onboard_screen.dart';
-import 'package:work/view/auth_screens/signup_screens/signup_screen.dart';
+import 'package:work/view/auth_screens/signup_screens/signup_account_type_screen.dart';
 import 'package:work/view/layouts/barber_layout.dart';
 import 'package:work/view/layouts/provider_layout.dart';
 import 'package:work/view/layouts/salon_layout.dart';
@@ -42,21 +42,12 @@ class MyApp extends StatelessWidget {
         // },
         routes: {
           LoginScreen.id: (context) => LoginScreen(),
-          OnBoardScreen.id: (context)=>OnBoardScreen(),
-          SignUpScreen.id:  (context)=>SignUpScreen(),
-          NotificationsScreen.id: (context)=>NotificationsScreen(),
-          FavouritesScreen.id:(context)=>FavouritesScreen(),
-          PrivacyScreen.id:(context)=>PrivacyScreen(),
-          TermsAndConditionsScreen.id:(context)=>TermsAndConditionsScreen(),
-          CustomerServicesScreen.id:(context)=>CustomerServicesScreen(),
-          AboutAppScreen.id:(context)=>AboutAppScreen(),
-          SalonScreen.id: (context)=>SalonScreen(),
           ProviderLayout.id: (context)=>ProviderLayout(),
           BarberLayout.id: (context)=>BarberLayout(),
           SalonLayout.id: (context)=>SalonLayout(),
           UserLayout.id: (context)=>UserLayout()
         },
-        initialRoute: SalonLayout.id,
+        initialRoute: LoginScreen.id,
         theme: ThemeData(
           appBarTheme: AppBarTheme(
             centerTitle: true

@@ -3,7 +3,6 @@ import 'package:work/shared/constants.dart';
 
 class TermsAndConditionsScreen extends StatelessWidget {
   const TermsAndConditionsScreen({Key key}) : super(key: key);
-  static const String id = 'TermsAndConditionsScreen';
   @override
   Widget build(BuildContext context) {
     return Scaffold(

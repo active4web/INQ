@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:work/shared/constants.dart';
 import 'package:work/shared/defaults.dart';
-import 'package:work/view/barber_screens/account_statement_screen.dart';
-import 'package:work/view/barber_screens/barber_services_screen.dart';
-import 'package:work/view/barber_screens/settings_screen.dart';
+import 'package:work/view/salon_screens/salon_menu_screens/attendance_qr_code_screen.dart';
+import 'package:work/view/salon_screens/salon_menu_screens/salon_branches_screen.dart';
+import 'package:work/view/salon_screens/salon_menu_screens/salon_complaints_screen.dart';
+import 'package:work/view/salon_screens/salon_menu_screens/salon_order_screen.dart';
+import 'package:work/view/salon_screens/salon_menu_screens/salon_satatistics_screen.dart';
+import 'package:work/view/salon_screens/salon_menu_screens/salon_services_screen.dart';
+import 'package:work/view/salon_screens/salon_menu_screens/salon_settings_screen.dart';
+import 'package:work/view/salon_screens/salon_menu_screens/salon_subscriptions_screen.dart';
 import 'package:work/view/user_screens/bottom_navigation_screens/user_menu_screen.dart';
 
 class SalonMenuScreen extends StatelessWidget {
@@ -104,22 +109,22 @@ class SalonMenuScreen extends StatelessWidget {
                       children: [
                         MenuItem(label: "تحليل الزيارات",
                           onTab: (){
-                            //navigateTo(context, BarberServicesScreen());
+                            navigateTo(context, SalonStatisticsScreen());
                           },),
                         SizedBox(height: 14,),
                         MenuItem(label: "الخدمات",
                           onTab: (){
-                            //navigateTo(context, SettingsScreen());
+                            navigateTo(context, SalonServicesScreen());
                           },),
                         SizedBox(height: 14,),
                         MenuItem(label: "ادارة الفروع",
                           onTab: (){
-                            // Navigator.pushNamed(context, TermsAndConditionsScreen.id);
+                             navigateTo(context, SalonBranchesScreen());
                           },),
                         SizedBox(height: 14,),
                         MenuItem(label: "الاشتراكات",
                           onTab: (){
-                            //navigateTo(context, AccountStatementScreen());
+                            navigateTo(context, SalonSubscriptionsScreen());
                           },),
                         SizedBox(height: 14,),
                         MenuItem(label: "المصروفات",
@@ -129,22 +134,22 @@ class SalonMenuScreen extends StatelessWidget {
                         SizedBox(height: 14,),
                         MenuItem(label: "المخازن",
                           onTab: (){
-                            //navigateTo(context, AccountStatementScreen());
+                            navigateTo(context, SalonOrderScreen());
                           },),
                         SizedBox(height: 14,),
                         MenuItem(label: "QR الحضور",
                           onTab: (){
-                            //navigateTo(context, AccountStatementScreen());
+                            navigateTo(context, AttendanceQRCodeScreen());
                           },),
                         SizedBox(height: 14,),
                         MenuItem(label: "اعدادات الخصوصية",
                           onTab: (){
-                            //navigateTo(context, AccountStatementScreen());
+                            navigateTo(context, SalonSettingsScreen());
                           },),
                         SizedBox(height: 14,),
                         MenuItem(label: "الشكاوي و الاقتراحات",
                           onTab: (){
-                            //navigateTo(context, AccountStatementScreen());
+                            navigateTo(context, SalonComplaintsScreen());
                           },),
 
                         SizedBox(height: 30,),

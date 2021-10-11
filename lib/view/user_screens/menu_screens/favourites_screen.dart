@@ -4,7 +4,6 @@ import 'package:work/view/user_screens/bottom_navigation_screens/user_home_scree
 
 class FavouritesScreen extends StatelessWidget {
   const FavouritesScreen({Key key}) : super(key: key);
-  static const String id = 'favouritesScreen';
   @override
   Widget build(BuildContext context) {
     return Scaffold(

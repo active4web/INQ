@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:work/shared/constants.dart';
+import 'package:work/shared/defaults.dart';
 import 'package:work/view/auth_screens/login_screens/login_screen.dart';
 
 class OnBoardScreen extends StatefulWidget {
   const OnBoardScreen({Key key}) : super(key: key);
-  static const String id = "onboardScreen";
 
   @override
   _OnBoardScreenState createState() => _OnBoardScreenState();
@@ -53,8 +53,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
             SizedBox(height: 60,),
             GestureDetector(
               onTap: (){
-                Navigator.pushNamedAndRemoveUntil(context, LoginScreen.id,
-                        (route) => false);
+                navigateAndFinish(context, LoginScreen());
               },
               child: Row(
                 textDirection: TextDirection.rtl,

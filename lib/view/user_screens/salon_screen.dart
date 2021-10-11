@@ -12,8 +12,6 @@ import 'bottom_navigation_screens/user_home_screen.dart';
 
 class SalonScreen extends StatefulWidget {
   const SalonScreen({Key key}) : super(key: key);
-  static const String id = 'SalonScreen';
-
   @override
   _SalonScreenState createState() => _SalonScreenState();
 }

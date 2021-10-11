@@ -3,7 +3,6 @@ import 'package:work/shared/constants.dart';
 
 class PrivacyScreen extends StatelessWidget {
   const PrivacyScreen({Key key}) : super(key: key);
-  static const String id = 'privacyScreen';
   @override
   Widget build(BuildContext context) {
     return Scaffold(

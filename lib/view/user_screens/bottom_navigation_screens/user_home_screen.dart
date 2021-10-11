@@ -6,6 +6,7 @@ import 'package:work/shared/components/custom_close_button.dart';
 import 'package:work/shared/components/custom_search_bar.dart';
 import 'package:work/shared/constants.dart';
 import 'package:work/shared/custom_icons.dart';
+import 'package:work/shared/defaults.dart';
 import 'package:work/view/notifications_screen.dart';
 import 'package:work/view/user_screens/salon_screen.dart';
 
@@ -48,8 +49,7 @@ class UserHomeScreen extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: (){
-                                Navigator.pushNamed(context,
-                                    NotificationsScreen.id);
+                                navigateTo(context, NotificationsScreen());
                               },
                               child: Icon(
                                 Icons.notifications_none_rounded,
@@ -397,7 +397,7 @@ class SalonCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        Navigator.pushNamed(context, SalonScreen.id);
+        navigateTo(context, SalonScreen());
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 16),

@@ -37,13 +37,13 @@ class BarberHomeScreen extends StatelessWidget {
                   crossAxisSpacing: 5,
                   mainAxisSpacing: 20,
                 children: [
-                  BarberHomeTile(label: 'بيانات الحساب',
+                  SquareTile(label: 'بيانات الحساب',
                     icon: CustomIcons.hair_salon,),
-                  BarberHomeTile(label: 'الحجوزات',
+                  SquareTile(label: 'الحجوزات',
                     icon: CustomIcons.appointment,),
-                  BarberHomeTile(label: 'تسجيل الدخول / الخروج',
+                  SquareTile(label: 'تسجيل الدخول / الخروج',
                     icon: CustomIcons.resign,),
-                  BarberHomeTile(label: 'اجازة',
+                  SquareTile(label: 'اجازة',
                     icon: CustomIcons.suitcases,),
                 ],
               ),
@@ -93,40 +93,44 @@ class BarberHomeScreen extends StatelessWidget {
   }
 }
 
-class BarberHomeTile extends StatelessWidget {
-  const BarberHomeTile({
-    Key key, this.label, this.icon,
+class SquareTile extends StatelessWidget {
+  const SquareTile({
+    Key key, this.label, this.icon, this.onTab,
   }) : super(key: key);
 
   final String label;
   final IconData icon;
-
+  final Function onTab;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width*0.4,
-      height: MediaQuery.of(context).size.width*0.4,
-      margin: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [BoxShadow(
-          color: Colors.grey.shade300,
-          blurRadius: 10,
-          spreadRadius: 0.5
-        )]
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon,
-          color: kPrimaryColor,
-          size: 50,),
-          SizedBox(height: 10,),
-          Text(label,style: TextStyle(
-            color: kPrimaryColor
-          ),textDirection: TextDirection.rtl,)
-        ],
+    return InkWell(
+      borderRadius: BorderRadius.circular(20),
+      onTap: onTab,
+      child: Container(
+        width: MediaQuery.of(context).size.width*0.4,
+        height: MediaQuery.of(context).size.width*0.4,
+        margin: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [BoxShadow(
+            color: Colors.grey.shade300,
+            blurRadius: 10,
+            spreadRadius: 0.5
+          )]
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon,
+            color: kPrimaryColor,
+            size: 50,),
+            SizedBox(height: 10,),
+            Text(label,style: TextStyle(
+              color: kPrimaryColor
+            ),textDirection: TextDirection.rtl,)
+          ],
+        ),
       ),
     );
   }
