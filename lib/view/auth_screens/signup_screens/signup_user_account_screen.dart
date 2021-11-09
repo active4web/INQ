@@ -1,26 +1,26 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:work/shared/components/custom_button.dart';
 import 'package:work/shared/components/custom_close_button.dart';
+import 'package:work/shared/components/custom_dropdown_menu.dart';
 import 'package:work/shared/components/custom_form_field.dart';
 import 'package:work/shared/components/custom_image_picker.dart';
 import 'package:work/shared/components/map_widget.dart';
 import 'package:work/shared/constants.dart';
-import 'package:work/shared/defaults.dart';
-import 'package:work/view/auth_screens/signup_screens/signup_account_type_screen.dart';
 import 'package:work/view/user_screens/bottom_navigation_screens/user_profile_screen.dart';
 
-class SignUpSalonAccountScreen extends StatefulWidget {
-  const SignUpSalonAccountScreen({Key key}) : super(key: key);
+class SignupUserAccountScreen extends StatefulWidget {
+  const SignupUserAccountScreen({Key key}) : super(key: key);
 
   @override
-  State<SignUpSalonAccountScreen> createState() =>
-      _SignUpSalonAccountScreenState();
+  State<SignupUserAccountScreen> createState() => _SignupUserAccountScreenState();
 }
 
-class _SignUpSalonAccountScreenState extends State<SignUpSalonAccountScreen>
+class _SignupUserAccountScreenState extends State<SignupUserAccountScreen>
     with AutomaticKeepAliveClientMixin {
+
   Completer<GoogleMapController> _controller = Completer();
 
   @override
@@ -52,37 +52,31 @@ class _SignUpSalonAccountScreenState extends State<SignUpSalonAccountScreen>
                 children: [
                   SizedBox(height: 30),
                   Label(
-                    text: 'بيانات الصالون',
+                    text: 'بيانات العميل',
                   ),
                   SizedBox(
                     height: 30,
                   ),
-                  CustomFormField(
-                    label: 'اسم الصالون',
+                  CustomDropdownField(
+                    hint: 'الدولة',
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  CustomFormField(
-                    label: 'اسم المالك',
+                  CustomDropdownField(
+                    hint: 'المدينة',
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  CustomFormField(
-                    label: 'رقم الجوال',
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  CustomImagePicker(
-                    text: 'رفع الرخصة المهنية',
+                  CustomDropdownField(
+                    hint: 'الجنس',
                   ),
                   SizedBox(
                     height: 20,
                   ),
                   CustomImagePicker(
-                    text: 'رفع صورة الصالون',
+                    text: ' رفع صورة المستخدم',
                   ),
                   SizedBox(
                     height: 20,
@@ -125,7 +119,7 @@ class _SignUpSalonAccountScreenState extends State<SignUpSalonAccountScreen>
                 SizedBox(
                     width: 270,
                     child: CustomButton(
-                      label: 'التالي',
+                      label: 'انشاء حساب',
                       onTab: () {},
                     )),
                 SizedBox(
@@ -146,4 +140,3 @@ class _SignUpSalonAccountScreenState extends State<SignUpSalonAccountScreen>
   @override
   bool get wantKeepAlive => true;
 }
-

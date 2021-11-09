@@ -16,6 +16,13 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+
+  TextEditingController userNameController = new TextEditingController();
+  TextEditingController fullNameController = new TextEditingController();
+  TextEditingController phoneController = new TextEditingController();
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
+  TextEditingController confirmPassController = new TextEditingController();
   bool isAccepted = false;
   Color getColor(Set<MaterialState> states) {
     const Set<MaterialState> interactiveStates = <MaterialState>{
@@ -51,46 +58,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            // Container(
-            //   color: Colors.white,
-            //   height: 80,
-            //   child: Column(
-            //     children: [
-            //       Directionality(
-            //         textDirection: TextDirection.rtl,
-            //         child:
-            //         NumberStepper(
-            //           numbers: [1,2,3],
-            //           numberStyle: TextStyle(color: Colors.transparent),
-            //           stepColor: Color(0xffC5CEE0),
-            //           lineColor: Color(0xffC5CEE0),
-            //           lineLength: 120,
-            //           direction: Axis.horizontal,
-            //           stepRadius: 10,
-            //           enableNextPreviousButtons: false,
-            //         ),
-            //       ),
-            //       Padding(
-            //         padding: const EdgeInsets.symmetric(horizontal: 16),
-            //         child: Row(
-            //           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //           textDirection: TextDirection.rtl,
-            //           children: [
-            //             Text('معلومات الحساب',textDirection: TextDirection.rtl,),
-            //             SizedBox(width: 50,),
-            //             Text('نوع الحساب',textDirection: TextDirection.rtl,),
-            //             SizedBox(width: 80,),
-            //             Text('انهاء',textDirection: TextDirection.rtl,)
-            //           ],
-            //         ),
-            //       )
-            //     ],
-            //   ),
-            // ),
             SizedBox(height: 30,),
             Label(text: 'معلومات الحساب',),
             SizedBox(height: 30,),
-            CustomFormField(label: 'اسم المستخدم',),
+            CustomFormField(label: 'اسم المستخدم',
+              controller: userNameController,
+            ),
             SizedBox(height: 20,),
             CustomFormField(label: 'رقم الجوال',),
             SizedBox(height: 20,),

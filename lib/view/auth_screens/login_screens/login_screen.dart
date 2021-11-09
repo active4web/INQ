@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:work/cubit/login_cubit/login_cubit.dart';
-import 'package:work/cubit/login_cubit/login_states.dart';
+import 'package:work/cubit/auth_cubit/auth_cubit.dart';
+import 'package:work/cubit/auth_cubit/auth_states.dart';
 import 'package:work/shared/components/custom_button.dart';
 import 'package:work/shared/constants.dart';
 import 'package:work/shared/defaults.dart';
+import 'package:work/shared/get_sys_codes.dart';
 import 'package:work/view/auth_screens/signup_screens/signup_account_type_screen.dart';
 import 'package:work/view/auth_screens/signup_screens/signup_screen.dart';
 import 'package:work/view/layouts/user_layout.dart';
@@ -59,39 +60,49 @@ class LoginScreen extends StatelessWidget {
                     height: 20,
                   ),
                   CustomPasswordFormField(),
-                  SizedBox(height: 10,),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     textDirection: TextDirection.rtl,
                     children: [
                       TextButton(
-                        onPressed: (){},
-                        child: Text('هل نسيت كلمة المرور؟',style: TextStyle(
-                          color: Colors.redAccent
-                        ),),
+                        onPressed: () {
+                        },
+                        child: Text(
+                          'هل نسيت كلمة المرور؟',
+                          style: TextStyle(color: Colors.redAccent),
+                        ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 20,),
-                  CustomButton(label: 'تسجيل الدخول',onTab: (){
-                    Navigator.pushNamedAndRemoveUntil(context, UserLayout.id,(route) => false);
-                  },),
-                  SizedBox(height:60),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  CustomButton(
+                    label: 'تسجيل الدخول',
+                    onTab: () {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, UserLayout.id, (route) => false);
+                    },
+                  ),
+                  SizedBox(height: 60),
                   Row(
                     textDirection: TextDirection.rtl,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('ليس لديك حساب ؟',style: TextStyle(
-                        fontSize: 16
-                      ),),
+                      Text(
+                        'ليس لديك حساب ؟',
+                        style: TextStyle(fontSize: 16),
+                      ),
                       TextButton(
-                          onPressed: (){
-                           navigateTo(context, SignUpScreen());
-                          },
-                          child: Text('انشأ حساب',style: TextStyle(
-                            color: kDarkBlueColor,
-                            fontSize: 16
-                          ),
-                          ),
+                        onPressed: () {
+                          navigateTo(context, SignUpScreen());
+                        },
+                        child: Text(
+                          'انشأ حساب',
+                          style: TextStyle(color: kDarkBlueColor, fontSize: 16),
+                        ),
                       ),
                     ],
                   )
@@ -104,7 +115,6 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
-
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
@@ -168,13 +178,11 @@ class CustomPasswordFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginCubit(),
-      child: BlocConsumer<LoginCubit, LoginStates>(
-        listener: (context, state) {
-
-        },
+      create: (context) => AuthCubit(),
+      child: BlocConsumer<AuthCubit, AuthStates>(
+        listener: (context, state) {},
         builder: (context, state) {
-          LoginCubit cubit = LoginCubit.get(context);
+          AuthCubit cubit = AuthCubit.get(context);
           return Container(
             height: 50,
             decoration: BoxDecoration(boxShadow: [

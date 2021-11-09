@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:work/shared/constants.dart';
 import 'package:work/shared/custom_icons.dart';
 import 'package:work/shared/defaults.dart';
+import 'package:work/view/auth_screens/signup_screens/signup_barber_account_screen.dart';
+import 'package:work/view/auth_screens/signup_screens/signup_provider_account_screen.dart';
 import 'package:work/view/auth_screens/signup_screens/signup_salon_account_screen.dart';
+import 'package:work/view/auth_screens/signup_screens/signup_user_account_screen.dart';
 import 'package:work/view/barber_screens/bottom_navigation_screens/barber_home_screen.dart';
 import 'package:work/view/user_screens/bottom_navigation_screens/user_profile_screen.dart';
 
@@ -91,10 +94,19 @@ class SignUpAccountTypeScreen extends StatelessWidget {
                           navigateTo(context, SignUpSalonAccountScreen());
                           },),
                         SquareTile(label: 'مستخدم',
+                          onTab: (){
+                          navigateTo(context, SignupUserAccountScreen());
+                          },
                           icon: CustomIcons.man,),
                         SquareTile(label: 'موردين',
+                          onTab: (){
+                          navigateTo(context, SignupProviderAccountScreen());
+                          },
                           icon: CustomIcons.shaving_cream,),
                         SquareTile(label: 'حلاق',
+                          onTab: (){
+                          navigateTo(context, SignupBarberAccountScreen());
+                          },
                           icon: CustomIcons.barber,),
                       ],
                     ),

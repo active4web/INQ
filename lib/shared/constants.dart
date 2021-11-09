@@ -5,7 +5,7 @@ const Color kDarkBlueColor = Color(0xff2E3A59);
 const Color kGreyColor = Color(0xffC5CEE0);
 const Color kLightGreenColor = Color(0xff7DDC8D);
 
-const String kBaseURL = 'http://polywinegypt.com/';
+const String kBaseURL = 'http://api.inqsalon.com/barbershop/services/';
 
 String kToken = '';
 

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 
 class CustomFormField extends StatelessWidget {
   const CustomFormField({
-    Key key, this.label,
+    Key key,
+    this.label, this.controller,
   }) : super(key: key);
 
   final String label;
+  final controller;
 
   @override
   Widget build(BuildContext context) {
@@ -16,19 +18,21 @@ class CustomFormField extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(30),
-          boxShadow: [BoxShadow(color: Colors.grey,blurRadius: 0.5,)]
-      ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              blurRadius: 0.5,
+            )
+          ]),
       child: TextFormField(
+        controller: controller,
         textDirection: TextDirection.rtl,
         decoration: InputDecoration(
             border: InputBorder.none,
             hintText: label,
-            hintTextDirection: TextDirection.rtl
-        ),
+            hintTextDirection: TextDirection.rtl),
         readOnly: false,
-        style: TextStyle(
-            color: Colors.black
-        ),
+        style: TextStyle(color: Colors.black),
       ),
     );
   }
