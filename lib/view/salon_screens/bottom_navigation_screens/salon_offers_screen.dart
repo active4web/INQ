@@ -25,12 +25,18 @@ class SalonOffersScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              SizedBox(height: 30,),
-              CustomButton(label: 'اضافة عرض جديد',
-              onTab: (){
-                navigateTo((context), SalonAddOfferScreen());
-              },),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 30,
+              ),
+              CustomButton(
+                label: 'اضافة عرض جديد',
+                onTab: () {
+                  navigateTo((context), SalonAddOfferScreen());
+                },
+              ),
+              SizedBox(
+                height: 20,
+              ),
               ListView.separated(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
@@ -39,7 +45,7 @@ class SalonOffersScreen extends StatelessWidget {
                       decoration: kWhiteBoxDecoration.copyWith(
                           borderRadius: BorderRadius.circular(10)),
                       padding:
-                      EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -101,7 +107,9 @@ class SalonOffersScreen extends StatelessWidget {
                               )
                             ],
                           ),
-                          SizedBox(height: 5,),
+                          SizedBox(
+                            height: 5,
+                          ),
                           Row(
                             textDirection: TextDirection.rtl,
                             children: [
@@ -127,86 +135,116 @@ class SalonOffersScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               InkWell(
-                                onTap: (){
+                                onTap: () {
                                   showCustomBottomSheet(
                                       context: context,
-                                      content: RepeatOfferSheet()
-                                  );
+                                      content: RepeatOfferSheet());
                                 },
                                 child: Row(
                                   textDirection: TextDirection.rtl,
                                   children: [
-                                    Icon(CupertinoIcons.repeat,
-                                    color: kPrimaryColor,
-                                    size: 18,),
-                                    SizedBox(width: 10,),
-                                    Text('تكرار',
+                                    Icon(
+                                      CupertinoIcons.repeat,
+                                      color: kPrimaryColor,
+                                      size: 18,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      'تكرار',
                                       textDirection: TextDirection.rtl,
-                                      style: TextStyle(
-                                          color: kDarkBlueColor
-                                      ),)
+                                      style: TextStyle(color: kDarkBlueColor),
+                                    )
                                   ],
                                 ),
                               ),
                               InkWell(
-                                onTap: (){
+                                onTap: () {
                                   showCustomBottomSheet(
                                       context: context,
                                       content: Column(
                                         children: [
-                                          Text('تعديل العرض',style: TextStyle(
-                                              color: kDarkBlueColor,
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.bold
+                                          Text(
+                                            'تعديل العرض',
+                                            style: TextStyle(
+                                                color: kDarkBlueColor,
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.bold),
+                                            textDirection: TextDirection.rtl,
                                           ),
-                                            textDirection: TextDirection.rtl,),
-                                          SizedBox(height: 30,),
-                                          CustomFormField(label: 'العرض',),
-                                          SizedBox(height: 20,),
-                                          CustomFormField(label: 'المدة',),
-                                          SizedBox(height: 20,),
-                                          CustomFormField(label: 'السعر',),
-                                          SizedBox(height: 70,),
+                                          SizedBox(
+                                            height: 30,
+                                          ),
+                                          CustomFormField(
+                                            label: 'العرض',
+                                          ),
+                                          SizedBox(
+                                            height: 20,
+                                          ),
+                                          CustomFormField(
+                                            label: 'المدة',
+                                          ),
+                                          SizedBox(
+                                            height: 20,
+                                          ),
+                                          CustomFormField(
+                                            label: 'السعر',
+                                          ),
+                                          SizedBox(
+                                            height: 70,
+                                          ),
                                           Row(
                                             textDirection: TextDirection.rtl,
                                             children: [
                                               SizedBox(
                                                   width: 270,
-                                                  child: CustomButton(label: 'حفظ',)),
-                                              SizedBox(width: 20,),
+                                                  child: CustomButton(
+                                                    label: 'حفظ',
+                                                  )),
+                                              SizedBox(
+                                                width: 20,
+                                              ),
                                               CustomCloseButton()
                                             ],
                                           ),
                                         ],
-                                      )
-                                  );
+                                      ));
                                 },
                                 child: Row(
                                   textDirection: TextDirection.rtl,
                                   children: [
-                                    Icon(FontAwesomeIcons.edit,
+                                    Icon(
+                                      FontAwesomeIcons.edit,
                                       size: 18,
-                                      color: Colors.orangeAccent,),
-                                    SizedBox(width: 10,),
-                                    Text('تعديل',
+                                      color: Colors.orangeAccent,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      'تعديل',
                                       textDirection: TextDirection.rtl,
-                                      style: TextStyle(
-                                          color: kDarkBlueColor
-                                      ),)
+                                      style: TextStyle(color: kDarkBlueColor),
+                                    )
                                   ],
                                 ),
                               ),
                               Row(
                                 textDirection: TextDirection.rtl,
                                 children: [
-                                  Icon(Icons.delete_outline_rounded,
-                                    color: Colors.redAccent,),
-                                  SizedBox(width: 5,),
-                                  Text('حذف',
+                                  Icon(
+                                    Icons.delete_outline_rounded,
+                                    color: Colors.redAccent,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    'حذف',
                                     textDirection: TextDirection.rtl,
-                                    style: TextStyle(
-                                        color: kDarkBlueColor
-                                    ),)
+                                    style: TextStyle(color: kDarkBlueColor),
+                                  )
                                 ],
                               )
                             ],
@@ -214,10 +252,12 @@ class SalonOffersScreen extends StatelessWidget {
                         ],
                       )),
                   separatorBuilder: (context, index) => SizedBox(
-                    height: 20,
-                  ),
+                        height: 20,
+                      ),
                   itemCount: 10),
-              SizedBox(height: 20,)
+              SizedBox(
+                height: 20,
+              )
             ],
           ),
         ),
@@ -225,9 +265,6 @@ class SalonOffersScreen extends StatelessWidget {
     );
   }
 }
-
-
-
 
 class RepeatOfferSheet extends StatelessWidget {
   const RepeatOfferSheet({
@@ -238,16 +275,20 @@ class RepeatOfferSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     OfferTime offerTime = OfferTime.Monthly;
     return StatefulBuilder(
-      builder: (context, setState) =>  Column(
+      builder: (context, setState) => Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('اعادة العرض',style: TextStyle(
-              color: kDarkBlueColor,
-              fontSize: 17,
-              fontWeight: FontWeight.bold
+          Text(
+            'اعادة العرض',
+            style: TextStyle(
+                color: kDarkBlueColor,
+                fontSize: 17,
+                fontWeight: FontWeight.bold),
+            textDirection: TextDirection.rtl,
           ),
-            textDirection: TextDirection.rtl,),
-          SizedBox(height: 30,),
+          SizedBox(
+            height: 30,
+          ),
           Row(
             textDirection: TextDirection.rtl,
             children: [
@@ -260,7 +301,9 @@ class RepeatOfferSheet extends StatelessWidget {
                   });
                 },
               ),
-              SizedBox(width: 16,),
+              SizedBox(
+                width: 16,
+              ),
               Text('شهري'),
             ],
           ),
@@ -276,7 +319,9 @@ class RepeatOfferSheet extends StatelessWidget {
                   });
                 },
               ),
-              SizedBox(width: 16,),
+              SizedBox(
+                width: 16,
+              ),
               Text('أسبوعي'),
             ],
           ),
@@ -292,18 +337,26 @@ class RepeatOfferSheet extends StatelessWidget {
                   });
                 },
               ),
-              SizedBox(width: 16,),
+              SizedBox(
+                width: 16,
+              ),
               Text('يومي'),
             ],
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Row(
             textDirection: TextDirection.rtl,
             children: [
               SizedBox(
                   width: 270,
-                  child: CustomButton(label: 'حفظ',)),
-              SizedBox(width: 20,),
+                  child: CustomButton(
+                    label: 'حفظ',
+                  )),
+              SizedBox(
+                width: 20,
+              ),
               CustomCloseButton()
             ],
           ),

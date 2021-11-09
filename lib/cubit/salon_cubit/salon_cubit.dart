@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,13 +7,14 @@ import 'package:work/view/salon_screens/bottom_navigation_screens/salon_barbers_
 import 'package:work/view/salon_screens/bottom_navigation_screens/salon_home_screen.dart';
 import 'package:work/view/salon_screens/bottom_navigation_screens/salon_menu_screen.dart';
 import 'package:work/view/salon_screens/bottom_navigation_screens/salon_offers_screen.dart';
-import 'package:work/view/salon_screens/bottom_navigation_screens/salon_reservations_screen.dart';import 'package:work/view/user_screens/bottom_navigation_screens/user_home_screen.dart';
+import 'package:work/view/salon_screens/bottom_navigation_screens/salon_reservations_screen.dart';
+import 'package:work/view/user_screens/bottom_navigation_screens/user_home_screen.dart';
 import 'package:work/view/user_screens/bottom_navigation_screens/user_menu_screen.dart';
 import 'package:work/view/user_screens/bottom_navigation_screens/user_profile_screen.dart';
 import 'package:work/view/user_screens/bottom_navigation_screens/user_reservations_screen.dart';
 
-class SalonCubit extends Cubit<SalonStates>{
-  SalonCubit(): super(SalonInitialState());
+class SalonCubit extends Cubit<SalonStates> {
+  SalonCubit() : super(SalonInitialState());
 
   static SalonCubit get(context) => BlocProvider.of(context);
 
@@ -31,13 +31,6 @@ class SalonCubit extends Cubit<SalonStates>{
     selectedIndex = value;
     emit(SalonBottomNavState());
   }
-
-
 }
 
-enum OfferTime{
-  Monthly,
-  Weekly,
-  Daily
-}
-
+enum OfferTime { Monthly, Weekly, Daily }

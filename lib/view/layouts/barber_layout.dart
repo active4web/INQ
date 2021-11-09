@@ -11,10 +11,10 @@ class BarberLayout extends StatelessWidget {
 
   static const String id = 'BarberLayout';
 
-  int selectedIndex = 0 ;
+  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<BarberCubit,BarberStates>(
+    return BlocConsumer<BarberCubit, BarberStates>(
       listener: (context, state) {},
       builder: (context, state) {
         BarberCubit cubit = BarberCubit.get(context);
@@ -54,8 +54,7 @@ class BarberLayout extends StatelessWidget {
                     BottomNavigationBarItem(
                         icon: Icon(Icons.more_vert_rounded), label: 'المزيد'),
                     BottomNavigationBarItem(
-                        icon: Icon(CustomIcons.appointment),
-                        label: 'الحجوزات'),
+                        icon: Icon(CustomIcons.appointment), label: 'الحجوزات'),
                     BottomNavigationBarItem(
                         icon: Icon(CustomIcons.offers), label: 'العروض'),
                     BottomNavigationBarItem(

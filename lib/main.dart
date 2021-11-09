@@ -4,24 +4,23 @@ import 'package:work/cubit/barber_cubit/barber_cubit.dart';
 import 'package:work/cubit/provider_cubit/provider_cubit.dart';
 import 'package:work/cubit/salon_cubit/salon_cubit.dart';
 import 'package:work/cubit/user_cubit/user_cubit.dart';
+import 'package:work/shared/bloc_observer.dart';
+import 'package:work/shared/constants.dart';
 import 'package:work/view/auth_screens/login_screens/login_screen.dart';
-import 'package:work/view/auth_screens/onboard_screens/onboard_screen.dart';
-import 'package:work/view/auth_screens/signup_screens/signup_account_type_screen.dart';
 import 'package:work/view/layouts/barber_layout.dart';
 import 'package:work/view/layouts/provider_layout.dart';
 import 'package:work/view/layouts/salon_layout.dart';
 import 'package:work/view/layouts/user_layout.dart';
-import 'package:work/view/notifications_screen.dart';
-import 'package:work/view/user_screens/menu_screens/about_app_screen.dart';
-import 'package:work/view/user_screens/menu_screens/customer_services.dart';
-import 'package:work/view/user_screens/menu_screens/favourites_screen.dart';
-import 'package:work/view/user_screens/menu_screens/privacy_screen.dart';
-import 'package:work/view/user_screens/menu_screens/terms_and_conditions_screen.dart';
-import 'package:work/view/user_screens/salon_screen.dart';
 
-import 'cubit/login_cubit/login_cubit.dart';
+import 'network/local/cache_helper.dart';
+import 'network/remote/dio_helper.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = MyBlocObserver();
+  DioHelper.init();
+  await CacheHelper.init();
+  kToken= CacheHelper.getData('token');
   runApp(MyApp());
 }
 
@@ -47,8 +46,8 @@ class MyApp extends StatelessWidget {
           SalonLayout.id: (context)=>SalonLayout(),
           UserLayout.id: (context)=>UserLayout()
         },
-        initialRoute: LoginScreen.id,
-        theme: ThemeData(
+        initialRoute:LoginScreen.id,
+          theme: ThemeData(
           appBarTheme: AppBarTheme(
             centerTitle: true
           ),
