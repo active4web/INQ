@@ -4,7 +4,9 @@ import '../constants.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
-    Key key, this.label, this.onTab,
+    Key key,
+    this.label,
+    this.onTab,
   }) : super(key: key);
   final String label;
   final Function onTab;
@@ -21,12 +23,12 @@ class CustomButton extends StatelessWidget {
           color: kPrimaryColor,
           borderRadius: BorderRadius.circular(30),
         ),
-        child: Center(child: Text(label,style: TextStyle(
-            color: Colors.white,
-            fontSize: 16
-        ),
-          textDirection: TextDirection.rtl,
-        ),
+        child: Center(
+          child: Text(
+            label,
+            style: TextStyle(color: Colors.white, fontSize: 16),
+            textDirection: TextDirection.rtl,
+          ),
         ),
       ),
     );
@@ -35,7 +37,9 @@ class CustomButton extends StatelessWidget {
 
 class CustomWhiteButton extends StatelessWidget {
   const CustomWhiteButton({
-    Key key, this.label, this.onTab,
+    Key key,
+    this.label,
+    this.onTab,
   }) : super(key: key);
   final String label;
   final Function onTab;
@@ -49,18 +53,17 @@ class CustomWhiteButton extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         height: 50,
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(30),
-          border: Border.all(color: kPrimaryColor,
-
-          )
-        ),
-        child: Center(child: Text(label,style: TextStyle(
-            color: kPrimaryColor,
-            fontSize: 16
-        ),
-          textDirection: TextDirection.rtl,
-        ),
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(30),
+            border: Border.all(
+              color: kPrimaryColor,
+            )),
+        child: Center(
+          child: Text(
+            label,
+            style: TextStyle(color: kPrimaryColor, fontSize: 16),
+            textDirection: TextDirection.rtl,
+          ),
         ),
       ),
     );

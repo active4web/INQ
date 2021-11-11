@@ -9,7 +9,7 @@ class CustomDropdownField extends StatelessWidget {
   final List itemsList;
   final Function onChanged;
   final String hint;
-  final dynamic value;
+  final  value;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +19,7 @@ class CustomDropdownField extends StatelessWidget {
       child: Directionality(
         textDirection: TextDirection.rtl,
         child: DropdownButton(
+          dropdownColor: Colors.white,
           underline: SizedBox(),
           isExpanded: true,
           onChanged: onChanged,

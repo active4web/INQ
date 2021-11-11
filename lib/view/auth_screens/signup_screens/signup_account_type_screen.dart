@@ -11,7 +11,13 @@ import 'package:work/view/barber_screens/bottom_navigation_screens/barber_home_s
 import 'package:work/view/user_screens/bottom_navigation_screens/user_profile_screen.dart';
 
 class SignUpAccountTypeScreen extends StatelessWidget {
-  const SignUpAccountTypeScreen({Key key}) : super(key: key);
+  const SignUpAccountTypeScreen({Key key, this.usrName, this.fullName, this.phone, this.email, this.password}) : super(key: key);
+
+  final usrName;
+  final fullName;
+  final phone;
+  final email;
+  final password;
   //static const String id = "signupScreen";
   @override
   Widget build(BuildContext context) {
@@ -95,7 +101,14 @@ class SignUpAccountTypeScreen extends StatelessWidget {
                           },),
                         SquareTile(label: 'مستخدم',
                           onTab: (){
-                          navigateTo(context, SignupUserAccountScreen());
+                          navigateTo(context, SignupUserAccountScreen(
+                            email: email,
+                            phone: phone,
+                            usrName: usrName,
+                            password: password,
+                            fullName: fullName,
+                            usrType: 'CUSTOMER',
+                          ));
                           },
                           icon: CustomIcons.man,),
                         SquareTile(label: 'موردين',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:work/cubit/auth_cubit/auth_cubit.dart';
 import 'package:work/cubit/barber_cubit/barber_cubit.dart';
 import 'package:work/cubit/provider_cubit/provider_cubit.dart';
 import 'package:work/cubit/salon_cubit/salon_cubit.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context)=> AuthCubit()),
         BlocProvider(create: (context)=> UserCubit()),
         BlocProvider(create: (context)=>BarberCubit()),
         BlocProvider(create: (context)=> ProviderCubit()),

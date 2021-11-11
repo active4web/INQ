@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:work/cubit/auth_cubit/auth_cubit.dart';
+import 'package:work/cubit/auth_cubit/auth_states.dart';
 import 'package:work/shared/components/custom_button.dart';
 import 'package:work/shared/components/custom_close_button.dart';
 import 'package:work/shared/components/custom_form_field.dart';
@@ -24,6 +27,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController passwordController = new TextEditingController();
   TextEditingController confirmPassController = new TextEditingController();
   bool isAccepted = false;
+
   Color getColor(Set<MaterialState> states) {
     const Set<MaterialState> interactiveStates = <MaterialState>{
       MaterialState.pressed,
@@ -35,6 +39,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
     return kPrimaryColor;
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +47,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         elevation: 0,
         backgroundColor: Colors.white,
         leading: IconButton(
-          onPressed: (){
+          onPressed: () {
             Navigator.pop(context);
           },
           icon: Icon(
@@ -50,61 +55,109 @@ class _SignUpScreenState extends State<SignUpScreen> {
             color: kDarkBlueColor,
           ),
         ),
-        title:Text('تسجيل مشترك جديد', style:TextStyle(
+        title: Text('تسجيل مشترك جديد', style: TextStyle(
             color: kDarkBlueColor
         ),),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            SizedBox(height: 30,),
-            Label(text: 'معلومات الحساب',),
-            SizedBox(height: 30,),
-            CustomFormField(label: 'اسم المستخدم',
-              controller: userNameController,
-            ),
-            SizedBox(height: 20,),
-            CustomFormField(label: 'رقم الجوال',),
-            SizedBox(height: 20,),
-            CustomFormField(label: 'البريد الالكتروني',),
-            SizedBox(height: 20,),
-            CustomFormField(label: 'كلمة المرور',),
-            SizedBox(height: 20,),
-            CustomFormField(label: 'تاكيد كلمة المرور',),
-            SizedBox(height: 30,),
-            Row(textDirection: TextDirection.rtl,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
             children: [
-               Checkbox(
-                value: isAccepted,
-                 checkColor: Colors.white,
-                 fillColor: MaterialStateProperty.resolveWith(getColor),
-                onChanged: (bool value){
-                  setState(() {
-                    isAccepted = value;
-                    print(value);
-                    print(isAccepted);
-                  });
-                },
+              SizedBox(height: 30,),
+              Label(text: 'معلومات الحساب',),
+              SizedBox(height: 30,),
+              CustomFormField(label: 'الاسم',
+                controller: fullNameController,),
+              SizedBox(height: 20,),
+              CustomFormField(label: 'رقم الجوال',
+                controller: phoneController,),
+              SizedBox(height: 20,),
+              CustomFormField(label: 'اسم المستخدم',
+                controller: userNameController,
               ),
-              Text('اقبل الشروط والاكام',textDirection: TextDirection.rtl,
-              style: TextStyle(color: kPrimaryColor),)
-            ],),
-            SizedBox(height: 40,),
-            Row(
-              textDirection: TextDirection.rtl,
-              children: [
-                SizedBox(
-                    width: 270,
-                    child: CustomButton(label: 'التالي',
-                    onTab: (){
-                      navigateTo(context, PhoneValidationScreen());
-                    },)),
-                SizedBox(width: 20,),
-                CustomCloseButton()
-              ],
-            ),
-          ],
+              SizedBox(height: 20,),
+              CustomFormField(label: 'البريد الالكتروني',
+                controller: emailController,),
+              SizedBox(height: 20,),
+              CustomFormField(label: 'كلمة المرور',
+                controller: passwordController,
+                isSecured: true,),
+              SizedBox(height: 20,),
+              CustomFormField(label: 'تاكيد كلمة المرور',
+                controller: confirmPassController,
+                isSecured: true,),
+              SizedBox(height: 30,),
+              Row(textDirection: TextDirection.rtl,
+                children: [
+                  Checkbox(
+                    value: isAccepted,
+                    checkColor: Colors.white,
+                    fillColor: MaterialStateProperty.resolveWith(getColor),
+                    onChanged: (bool value) {
+                      setState(() {
+                        isAccepted = value;
+                        print(value);
+                        print(isAccepted);
+                      });
+                    },
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      'اقبل الشروط والأحكام', textDirection: TextDirection.rtl,
+                      style: TextStyle(color: kPrimaryColor),),
+                  )
+                ],),
+              SizedBox(height: 40,),
+              Row(
+                textDirection: TextDirection.rtl,
+                children: [
+                  SizedBox(
+                      width: 270,
+                      child: BlocBuilder<AuthCubit, AuthStates>(
+                        builder: (context, state) {
+                          AuthCubit cubit = AuthCubit.get(context);
+                          return CustomButton(label: 'التالي',
+                            onTab: () {
+                              if (
+                              userNameController.text == '' ||
+                                  fullNameController.text == '' ||
+                                  phoneController.text == '' ||
+                                  emailController.text == '' ||
+                                  passwordController.text == ''
+                              ) {
+                                showToast(
+                                    text: 'تأكد من ملئ البيانات بشكل كامل',
+                                    color: Colors.red);
+                              } else if (passwordController.text !=
+                                  confirmPassController.text) {
+                                showToast(text: "كلمة المرور غير متوافقة",
+                                    color: Colors.red);
+                              } else if (!isAccepted) {
+                                showToast(
+                                    text: 'يجب الموافقة علي الشروط و الأحكام',
+                                    color: Colors.red);
+                              } else {
+                                navigateTo(context, PhoneValidationScreen(
+                                  email: emailController.text,
+                                  fullName: fullNameController.text,
+                                  password: passwordController.text,
+                                  phone: phoneController.text,
+                                  usrName: userNameController.text,
+                                ));
+                                cubit.createOtp(phone: phoneController.text);
+                              }
+                            },);
+                        },
+                      )),
+                  SizedBox(width: 20,),
+                  CustomCloseButton()
+                ],
+              ),
+              SizedBox(height: 30,)
+            ],
+          ),
         ),
       ),
     );

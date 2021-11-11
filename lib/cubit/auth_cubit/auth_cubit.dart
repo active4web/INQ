@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:work/models/response_body_model.dart';
 import 'package:work/network/remote/dio_helper.dart';
 
@@ -19,7 +20,55 @@ class AuthCubit extends Cubit<AuthStates> {
     emit(ChangePasswordVisibilityState());
   }
 
+  
+  var createOtpResponse;
+  void createOtp({
+  var phone
+}){
+    emit(CreateOtpLoadingState());
+    DioHelper.getData(
+      url: 'CoreService/createOTP',
+      query: {
+        'mobileNumberOrEmail':phone,
+        'service':'SINGUP',
+        'accessType':'MOBILE'
+      }
+    ).then((value){
+      createOtpResponse = value.data;
+      print(value.data);
+      emit(CreateOtpSuccessState());
+    }).catchError((error){
+      emit(CreateOtpErrorState());
+      print(error);
+    });
+  }
 
+  var checkOtpResponse;
+  void checkOtp({
+    var otpValue,
+    String usrName,
+    var phone
+  }){
+    emit(CheckOtpLoadingState());
+    DioHelper.getData(
+        url: 'CoreService/checkOTP',
+        query: {
+          'otpValue': otpValue,
+          'username':usrName,
+          'accessType':'MOBILE',
+          'mobileNumber': phone
+        }
+    ).then((value){
+      createOtpResponse = value.data;
+      print(value.data);
+      if(value.data['status']==true) {
+        emit(CheckOtpSuccessState());
+      }else emit(CheckOtpErrorState());
+    }).catchError((error){
+      emit(CheckOtpErrorState());
+      print(error);
+    });
+  }
   ResponseBodyModel signUpResponse;
   void signUp({
     var otpValue,
@@ -29,15 +78,10 @@ class AuthCubit extends Cubit<AuthStates> {
     String mobile,
     String userType,
     String clientFullName,
-    String employeeNo,
-    String nationalNo,
     int countryId,
     int cityId,
     int placeId,
-    int nationalityId,
-    int religiousId,
     int genderId,
-    int maritalStatusId,
   }){
     emit(SignupLoadingState());
     DioHelper.postData(
@@ -65,20 +109,6 @@ class AuthCubit extends Cubit<AuthStates> {
           "scType": 8,
           "scCode": placeId
         },
-        "usrNationality": {
-          "scType": 9,
-          "scCode": nationalityId
-        },
-        "usrEmployeeNo":employeeNo,
-        "usrNationalNo":"9931054201",
-        "usrMaritalStatus": {
-          "scType": 3,
-          "scCode": maritalStatusId
-        },
-        "usrReligiouse": {
-          "scType": 5,
-          "scCode": religiousId
-        },
         "usrGender": {
           "scType": 2,
           "scCode": genderId
@@ -97,7 +127,13 @@ class AuthCubit extends Cubit<AuthStates> {
 
 
 
-
+  Future<XFile> pickImage(file) async {
+    final ImagePicker _picker = ImagePicker();
+    file = await _picker.pickImage(source: ImageSource.gallery);
+    print(file.path);
+    emit(PickImageSuccessState());
+    return file;
+  }
 
 
 }

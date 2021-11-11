@@ -171,10 +171,11 @@ class CustomTextFormField extends StatelessWidget {
 class CustomPasswordFormField extends StatelessWidget {
   const CustomPasswordFormField({
     Key key,
-    this.controller,
+    this.controller, this.hintText = 'password',
   }) : super(key: key);
 
   final TextEditingController controller;
+  final String hintText;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -196,7 +197,7 @@ class CustomPasswordFormField extends StatelessWidget {
               child: TextFormField(
                 obscureText: cubit.showPassword,
                 decoration: InputDecoration(
-                  hintText: 'password',
+                  hintText: hintText,
                   suffixIcon: IconButton(
                     icon: Icon(
                       cubit.passwordIcon,

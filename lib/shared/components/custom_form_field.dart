@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 class CustomFormField extends StatelessWidget {
   const CustomFormField({
     Key key,
-    this.label, this.controller,
+    this.label, this.controller, this.isSecured=false,
   }) : super(key: key);
 
   final String label;
   final controller;
+  final bool isSecured;
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +27,12 @@ class CustomFormField extends StatelessWidget {
           ]),
       child: TextFormField(
         controller: controller,
+        obscureText: isSecured,
         textDirection: TextDirection.rtl,
         decoration: InputDecoration(
             border: InputBorder.none,
             hintText: label,
             hintTextDirection: TextDirection.rtl),
-        readOnly: false,
         style: TextStyle(color: Colors.black),
       ),
     );

@@ -4,12 +4,32 @@
 
 import 'dart:convert';
 
-List<ServiceModel> serviceModelFromJson(String str) => List<ServiceModel>.from(json.decode(str).map((x) => ServiceModel.fromJson(x)));
+ServiceModel serviceModelFromJson(String str) => ServiceModel.fromJson(json.decode(str));
 
-String serviceModelToJson(List<ServiceModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String serviceModelToJson(ServiceModel data) => json.encode(data.toJson());
 
 class ServiceModel {
   ServiceModel({
+    this.status,
+    this.data,
+  });
+
+  bool status;
+  List<Datum> data;
+
+  factory ServiceModel.fromJson(Map<String, dynamic> json) => ServiceModel(
+    status: json["status"],
+    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "status": status,
+    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+  };
+}
+
+class Datum {
+  Datum({
     this.scType,
     this.scCode,
     this.scParentType,
@@ -29,7 +49,7 @@ class ServiceModel {
   String scFrDesc;
   int scNumericCode;
 
-  factory ServiceModel.fromJson(Map<String, dynamic> json) => ServiceModel(
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     scType: json["scType"],
     scCode: json["scCode"],
     scParentType: json["scParentType"],
