@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:work/cubit/user_cubit/user_cubit.dart';
+import 'package:work/cubit/user_cubit/user_states.dart';
+import 'package:work/models/salon_info_model.dart';
 import 'package:work/shared/components/custom_button.dart';
 import 'package:work/shared/components/custom_close_button.dart';
 import 'package:work/shared/components/custom_form_field.dart';
@@ -11,7 +15,8 @@ import 'package:work/view/auth_screens/login_screens/login_screen.dart';
 import 'bottom_navigation_screens/user_home_screen.dart';
 
 class SalonScreen extends StatefulWidget {
-  const SalonScreen({Key key}) : super(key: key);
+  const SalonScreen({Key key, @required this.salonInfo}) : super(key: key);
+  final Datum salonInfo;
   @override
   _SalonScreenState createState() => _SalonScreenState();
 }
@@ -36,134 +41,146 @@ class _SalonScreenState extends State<SalonScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            expandedHeight: 220,
-            // backgroundColor: Colors.transparent,
-            elevation: 0,
-            pinned: false,
-            floating: false,
-            flexibleSpace: FlexibleSpaceBar(
-              background: FlutterLogo(),
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius:
-                          BorderRadius.vertical(top: Radius.circular(16))),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 35, vertical: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              textDirection: TextDirection.rtl,
+      body: BlocBuilder<UserCubit, UserStates>(
+        builder: (context, state) {
+          UserCubit cubit = UserCubit.get(context);
+          return CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                expandedHeight: 220,
+                // backgroundColor: Colors.transparent,
+                elevation: 0,
+                pinned: false,
+                floating: false,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: FlutterLogo(),
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(16))),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 35, vertical: 20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'صالون احلي طلة',
-                                  style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                      color: kDarkBlueColor),
+                                Row(
                                   textDirection: TextDirection.rtl,
-                                ),
-                              ],
-                            ),
-                            Row(
-                              textDirection: TextDirection.rtl,
-                              children: [
-                                RatingBar.builder(
-                                  initialRating: 3,
-                                  textDirection: TextDirection.rtl,
-                                  minRating: 1,
-                                  itemSize: 12,
-                                  direction: Axis.horizontal,
-                                  itemCount: 5,
-                                  itemPadding:
-                                      EdgeInsets.symmetric(horizontal: 1),
-                                  itemBuilder: (context, _) => Icon(
-                                    Icons.star,
-                                    color: Colors.amber,
-                                  ),
-                                  onRatingUpdate: (rating) {
-                                    print(rating);
-                                  },
-                                ),
-                              ],
-                            ),
-                            Row(
-                              textDirection: TextDirection.rtl,
-                              children: [
-                                Text('شارع الثورة,عمان '),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      TabBar(
-                        controller: _tabController,
-                        labelColor: kPrimaryColor,
-                        unselectedLabelColor: Colors.grey,
-                        tabs: [
-                          Text('طلب توظيف'),
-                          Text('عن الصالون'),
-                          Text('الخدمات'),
-                          Text('حجز موعد'),
-                        ],
-                      ),
-                      LimitedBox(
-                        maxHeight: 800,
-                        child: TabBarView(
-                          controller: _tabController,
-                          children: [
-                            JopRequestTabScreen(),
-                            Container(
-                              color: Color(0xfff8f8f8),
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                    height: 30,
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.symmetric(vertical: 20),
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 40, horizontal: 20),
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.9,
-                                    decoration: kWhiteBoxDecoration,
-                                    child: Text(
-                                      kLoremIpsum,
+                                  children: [
+                                    Text(
+                                      widget.salonInfo.stpSalNameAr,
+                                      style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          color: kDarkBlueColor),
                                       textDirection: TextDirection.rtl,
                                     ),
-                                  ),
-                                ],
-                              ),
+                                  ],
+                                ),
+                                Row(
+                                  textDirection: TextDirection.rtl,
+                                  children: [
+                                    RatingBar.builder(
+                                      initialRating: cubit.salonRating,
+                                      textDirection: TextDirection.rtl,
+                                      minRating: 0,
+                                      allowHalfRating: true,
+                                      itemSize: 12,
+                                      direction: Axis.horizontal,
+                                      itemCount: 5,
+                                      itemPadding:
+                                          EdgeInsets.symmetric(horizontal: 1),
+                                      itemBuilder: (context, _) => Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                      ),
+                                      onRatingUpdate: (rating) {
+                                        print(rating);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  textDirection: TextDirection.rtl,
+                                  children: [
+                                    Text(widget.salonInfo.stpSalGpsLocation ??
+                                        ''),
+                                  ],
+                                ),
+                              ],
                             ),
-                            ServicesTabScreen(pageController: _pageController),
-                            ReservationTabScreen(),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              },
-              childCount: 1,
-            ),
-          )
-        ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          TabBar(
+                            controller: _tabController,
+                            labelColor: kPrimaryColor,
+                            unselectedLabelColor: Colors.grey,
+                            tabs: [
+                              Text('طلب توظيف'),
+                              Text('عن الصالون'),
+                              Text('الخدمات'),
+                              Text('حجز موعد'),
+                            ],
+                          ),
+                          LimitedBox(
+                            maxHeight: 800,
+                            child: TabBarView(
+                              controller: _tabController,
+                              children: [
+                                JopRequestTabScreen(),
+                                Container(
+                                  color: Color(0xfff8f8f8),
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 30,
+                                      ),
+                                      Container(
+                                        margin:
+                                            EdgeInsets.symmetric(vertical: 20),
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 40, horizontal: 20),
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.9,
+                                        decoration: kWhiteBoxDecoration,
+                                        child: Text(
+                                          widget.salonInfo
+                                                  .stpSalSalonNoteAbout ??
+                                              '',
+                                          textDirection: TextDirection.rtl,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                ServicesTabScreen(
+                                    pageController: _pageController),
+                                ReservationTabScreen(),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                  },
+                  childCount: 1,
+                ),
+              )
+            ],
+          );
+        },
       ),
     );
   }

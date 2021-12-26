@@ -164,49 +164,53 @@ class _PhoneValidationScreenState extends State<PhoneValidationScreen> {
               SizedBox(
                 height: 80,
               ),
-            BlocConsumer<AuthCubit, AuthStates>(
-            listener: (context, state) {
-              if(state is CheckOtpSuccessState){
-                navigateTo(context, SignUpAccountTypeScreen(
-                  usrName: widget.usrName,
-                  phone: widget.phone,
-                  password: widget.password,
-                  fullName: widget.fullName,
-                  email: widget.email,
-
-                ));
-              }
-              else if(state is CheckOtpErrorState){
-                showToast(text: "رمز التأكيد خطأ", color: Colors.red);
-              }
-            },
-            builder: (context, state) {
-              AuthCubit cubit = AuthCubit.get(context);
-              return Row(
-                textDirection: TextDirection.rtl,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                      width: 270,
-                      child: state is CheckOtpLoadingState?
-
-                   Center(child:CircularProgressIndicator(color: kPrimaryColor,))
-                   :CustomButton(
-                        label: 'تحقق',
-                        onTab: () {
-                          cubit.checkOtp(otpValue: otpController.text,
+              BlocConsumer<AuthCubit, AuthStates>(
+                listener: (context, state) {
+                  if (state is CheckOtpSuccessState) {
+                    navigateTo(
+                        context,
+                        SignUpAccountTypeScreen(
+                          usrName: widget.usrName,
                           phone: widget.phone,
-                          usrName: widget.usrName);
-                        },
-                      )),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  CustomCloseButton()
-                ],
-              );
-  },
-),
+                          password: widget.password,
+                          fullName: widget.fullName,
+                          email: widget.email,
+                          otp: otpController.text,
+                        ));
+                  } else if (state is CheckOtpErrorState) {
+                    showToast(text: "رمز التأكيد خطأ", color: Colors.red);
+                  }
+                },
+                builder: (context, state) {
+                  AuthCubit cubit = AuthCubit.get(context);
+                  return Row(
+                    textDirection: TextDirection.rtl,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                          width: 270,
+                          child: state is CheckOtpLoadingState
+                              ? Center(
+                                  child: CircularProgressIndicator(
+                                  color: kPrimaryColor,
+                                ))
+                              : CustomButton(
+                                  label: 'تحقق',
+                                  onTab: () {
+                                    cubit.checkOtp(
+                                        otpValue: otpController.text,
+                                        phone: widget.phone,
+                                        usrName: widget.usrName);
+                                  },
+                                )),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      CustomCloseButton()
+                    ],
+                  );
+                },
+              ),
             ],
           ),
         ),

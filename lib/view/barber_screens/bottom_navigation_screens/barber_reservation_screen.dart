@@ -6,30 +6,35 @@ class BarberReservationScreen extends StatefulWidget {
   const BarberReservationScreen({Key key}) : super(key: key);
 
   @override
-  State<BarberReservationScreen> createState() => _BarberReservationScreenState();
+  State<BarberReservationScreen> createState() =>
+      _BarberReservationScreenState();
 }
 
 class _BarberReservationScreenState extends State<BarberReservationScreen> {
-
   CalendarController _calenderController;
   @override
   void initState() {
     _calenderController = CalendarController();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     final calenderController = CalendarController();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kLightGreenColor,
-        title: Text('الحجوزات',),
+        title: Text(
+          'الحجوزات',
+        ),
         elevation: 0,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 30,),
+            SizedBox(
+              height: 30,
+            ),
             Container(
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
@@ -43,22 +48,20 @@ class _BarberReservationScreenState extends State<BarberReservationScreen> {
                   color: Colors.white,
                 ),
                 child: TableCalendar(
-                  calendarStyle:
-                  CalendarStyle(
+                  calendarStyle: CalendarStyle(
                       highlightToday: true,
                       selectedColor: kPrimaryColor,
-                      todayColor: kLightGreenColor
-                  ),
+                      todayColor: kLightGreenColor),
                   initialCalendarFormat: CalendarFormat.week,
                   startDay: DateTime.utc(2010, 10, 16),
                   endDay: DateTime.utc(2030, 3, 14),
                   onDaySelected: (value, lis, list) {
                     setState(() {
-                      var dateTime =
-                          "${value.year}-${value.month}-${value.day}";
+                      DateTime dateTime = value;
+                      print(dateTime.day);
                     });
                   },
-                  calendarController:_calenderController ,
+                  calendarController: _calenderController,
                 ),
               ),
             ),

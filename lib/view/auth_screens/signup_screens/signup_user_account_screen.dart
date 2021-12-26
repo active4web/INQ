@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,9 +13,12 @@ import 'package:work/shared/components/custom_close_button.dart';
 import 'package:work/shared/components/custom_dropdown_menu.dart';
 import 'package:work/shared/components/custom_form_field.dart';
 import 'package:work/shared/components/custom_image_picker.dart';
+import 'package:work/shared/components/custom_location_picker.dart';
 import 'package:work/shared/components/map_widget.dart';
 import 'package:work/shared/constants.dart';
+import 'package:work/shared/defaults.dart';
 import 'package:work/shared/get_sys_codes.dart';
+import 'package:work/view/auth_screens/login_screens/login_screen.dart';
 import 'package:work/view/user_screens/bottom_navigation_screens/user_profile_screen.dart';
 
 class SignupUserAccountScreen extends StatefulWidget {
@@ -25,7 +29,8 @@ class SignupUserAccountScreen extends StatefulWidget {
       this.phone,
       this.email,
       this.password,
-      this.usrType, this.otp})
+      this.usrType,
+      this.otp})
       : super(key: key);
   final usrName;
   final fullName;
@@ -71,6 +76,7 @@ class _SignupUserAccountScreenState
   int gender;
   XFile file;
   XFile imageFile;
+  File usrImage;
 
   @override
   Widget build(BuildContext context) {
@@ -93,9 +99,28 @@ class _SignupUserAccountScreenState
         ),
       ),
       body: BlocConsumer<AuthCubit, AuthStates>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          AuthCubit cubit = AuthCubit.get(context);
+          if (state is SignupSuccessState) {
+            showAlertDialogWithAction(
+                imagePath: 'Assets/images/success.png',
+                context: context,
+                message: 'تم انشاء الحساب بنجاح',
+                buttonText: 'شكرًا',
+                action: () {
+                  navigateAndFinish(context, LoginScreen());
+                });
+          } else if (state is SignupErrorState) {
+            showToast(
+                color: Colors.red,
+                text: cubit.signUpFailModel.data.errorLookup.scEnDesc);
+          }
+        },
         builder: (context, state) {
           AuthCubit cubit = AuthCubit.get(context);
+          if (imageFile != null) {
+            usrImage = File(imageFile.path);
+          }
           return SingleChildScrollView(
             child: countries != null || cities != null || genders != null
                 ? Column(
@@ -210,7 +235,8 @@ class _SignupUserAccountScreenState
                           ],
                         ),
                       ),
-                      MapWidget(controller: _controller),
+                      // MapWidget(controller: _controller),
+                      LocationPickerScreen(),
                       SizedBox(
                         height: 20,
                       ),
@@ -229,6 +255,28 @@ class _SignupUserAccountScreenState
                                   : CustomButton(
                                       label: 'انشاء حساب',
                                       onTab: () {
+                                        cubit.signUp(
+                                          otpValue: widget.otp,
+                                          email: widget.email,
+                                          countryId: country,
+                                          cityId: city,
+                                          genderId: gender,
+                                          clientFullName: widget.fullName,
+                                          mobile: widget.phone,
+                                          password: widget.password,
+                                          userType: widget.usrType,
+                                          userName: widget.usrName,
+                                          usrImage: usrImage,
+                                        );
+                                        print(widget.phone);
+                                        print(widget.otp);
+                                        print(country);
+                                        print(city);
+                                        print(gender);
+                                        print(widget.password);
+                                        print(widget.usrName);
+                                        print(widget.usrType);
+                                        print(widget.fullName);
                                       },
                                     )),
                           SizedBox(

@@ -35,7 +35,9 @@ class BarberMenuScreen extends StatelessWidget {
                       color: kLightGreenColor,
                       child: Column(
                         children: [
-                          SizedBox(height: 90,),
+                          SizedBox(
+                            height: 90,
+                          ),
                           Row(
                             textDirection: TextDirection.rtl,
                             children: [
@@ -44,20 +46,24 @@ class BarberMenuScreen extends StatelessWidget {
                                 height: 80,
                                 decoration: BoxDecoration(
                                     color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10)
-                                ),
+                                    borderRadius: BorderRadius.circular(10)),
                               ),
-                              SizedBox(width: 30,),
+                              SizedBox(
+                                width: 30,
+                              ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 textDirection: TextDirection.rtl,
                                 children: [
-                                  Text('محمد أحمد',style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20
-                                  ),),
-                                  Text('mohamed@gmail.com',
-                                    style: TextStyle(color: Colors.white),),
+                                  Text(
+                                    'محمد أحمد',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20),
+                                  ),
+                                  Text(
+                                    'mohamed@gmail.com',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ],
                               )
                             ],
@@ -65,8 +71,7 @@ class BarberMenuScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Container(
-                    )
+                    Container()
                   ],
                 ),
               ),
@@ -76,13 +81,10 @@ class BarberMenuScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 30),
                   child: Container(
                     // margin: EdgeInsets.only(top: 220,),
-                    width: MediaQuery.of(context).size.width*0.85,
+                    width: MediaQuery.of(context).size.width * 0.85,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      boxShadow: [BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 1
-                      )],
+                      boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 1)],
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: ListView(
@@ -90,28 +92,51 @@ class BarberMenuScreen extends StatelessWidget {
                       physics: NeverScrollableScrollPhysics(),
                       padding: EdgeInsets.symmetric(vertical: 20),
                       children: [
-                        MenuItem(label: "الخدمات المقدمة",
-                          onTab: (){
+                        MenuItem(
+                          label: "الخدمات المقدمة",
+                          onTab: () {
                             navigateTo(context, BarberServicesScreen());
-                          },),
-                        SizedBox(height: 14,),
-                        MenuItem(label: "اعدادات الحلاق",
-                          onTab: (){
-                           navigateTo(context, SettingsScreen());
-                          },),
-                        SizedBox(height: 14,),
-                        MenuItem(label: "ورقة الحضور",
-                          onTab: (){
+                          },
+                        ),
+                        SizedBox(
+                          height: 14,
+                        ),
+                        MenuItem(
+                          label: "اعدادات الحلاق",
+                          onTab: () {
+                            navigateTo(context, SettingsScreen());
+                          },
+                        ),
+                        SizedBox(
+                          height: 14,
+                        ),
+                        MenuItem(
+                          label: "ورقة الحضور",
+                          onTab: () {
                             // Navigator.pushNamed(context, TermsAndConditionsScreen.id);
-                          },),
-                        SizedBox(height: 14,),
-                        MenuItem(label: "كشف حساب",
-                          onTab: (){
-                          navigateTo(context, AccountStatementScreen());
-                          },),
-                        SizedBox(height: 30,),
-                        TextButton(onPressed: (){}, child: Text('تسجيل الخروج',
-                          style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),))
+                          },
+                        ),
+                        SizedBox(
+                          height: 14,
+                        ),
+                        MenuItem(
+                          label: "كشف حساب",
+                          onTab: () {
+                            navigateTo(context, AccountStatementScreen());
+                          },
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              logOut(context);
+                            },
+                            child: Text(
+                              'تسجيل الخروج',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15),
+                            ))
                       ],
                     ),
                   ),

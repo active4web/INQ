@@ -21,43 +21,71 @@ Future<void> main() async {
   Bloc.observer = MyBlocObserver();
   DioHelper.init();
   await CacheHelper.init();
-  kToken= CacheHelper.getData('token');
+  kToken = CacheHelper.getData('token');
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  Widget getCurrentUser() {
+    switch (kUserType) {
+      case 'CUSTOMER':
+        {
+          return UserLayout();
+        }
+        break;
+      case 'BARBER':
+        {
+          return BarberLayout();
+        }
+        break;
+      case 'PROVIDER':
+        {
+          return ProviderLayout();
+        }
+        break;
+      case 'SALON':
+        {
+          return SalonLayout();
+        }
+        break;
+      default:
+        {
+          return LoginScreen();
+        }
+      //return null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context)=> AuthCubit()),
-        BlocProvider(create: (context)=> UserCubit()),
-        BlocProvider(create: (context)=>BarberCubit()),
-        BlocProvider(create: (context)=> ProviderCubit()),
-        BlocProvider(create: (context)=>SalonCubit()),
+        BlocProvider(create: (context) => AuthCubit()),
+        BlocProvider(create: (context) => UserCubit()),
+        BlocProvider(create: (context) => BarberCubit()),
+        BlocProvider(create: (context) => ProviderCubit()),
+        BlocProvider(create: (context) => SalonCubit()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
-        // builder: (context, child) {
-        //   return Directionality(textDirection: TextDirection.rtl, child: child);
+        // // builder: (context, child) {
+        // //   return Directionality(textDirection: TextDirection.rtl, child: child);
+        // // },
+        // routes: {
+        //   LoginScreen.id: (context) => LoginScreen(),
+        //   ProviderLayout.id: (context) => ProviderLayout(),
+        //   BarberLayout.id: (context) => BarberLayout(),
+        //   SalonLayout.id: (context) => SalonLayout(),
+        //   UserLayout.id: (context) => UserLayout()
         // },
-        routes: {
-          LoginScreen.id: (context) => LoginScreen(),
-          ProviderLayout.id: (context)=>ProviderLayout(),
-          BarberLayout.id: (context)=>BarberLayout(),
-          SalonLayout.id: (context)=>SalonLayout(),
-          UserLayout.id: (context)=>UserLayout()
-        },
-        initialRoute:LoginScreen.id,
-          theme: ThemeData(
-          appBarTheme: AppBarTheme(
-            centerTitle: true
-          ),
-          fontFamily: 'Cairo',
-          primarySwatch: Colors.green,
-          canvasColor: Colors.transparent,
-          scaffoldBackgroundColor: Color(0xfff8f8f8)
-        ),
+        //initialRoute: LoginScreen.id,
+        home: kToken == '' ? LoginScreen() : getCurrentUser(),
+        theme: ThemeData(
+            appBarTheme: AppBarTheme(centerTitle: true),
+            fontFamily: 'Cairo',
+            primarySwatch: Colors.green,
+            canvasColor: Colors.transparent,
+            scaffoldBackgroundColor: Color(0xfff8f8f8)),
       ),
     );
   }

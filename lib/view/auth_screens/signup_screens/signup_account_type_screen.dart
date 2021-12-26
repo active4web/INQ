@@ -11,13 +11,22 @@ import 'package:work/view/barber_screens/bottom_navigation_screens/barber_home_s
 import 'package:work/view/user_screens/bottom_navigation_screens/user_profile_screen.dart';
 
 class SignUpAccountTypeScreen extends StatelessWidget {
-  const SignUpAccountTypeScreen({Key key, this.usrName, this.fullName, this.phone, this.email, this.password}) : super(key: key);
+  const SignUpAccountTypeScreen(
+      {Key key,
+      this.usrName,
+      this.fullName,
+      this.phone,
+      this.email,
+      this.password,
+      this.otp})
+      : super(key: key);
 
   final usrName;
   final fullName;
   final phone;
   final email;
   final password;
+  final otp;
   //static const String id = "signupScreen";
   @override
   Widget build(BuildContext context) {
@@ -26,17 +35,18 @@ class SignUpAccountTypeScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.white,
         leading: IconButton(
-          onPressed: (){
+          onPressed: () {
             Navigator.pop(context);
           },
           icon: Icon(
-              Icons.arrow_back,
-              color: kDarkBlueColor,
+            Icons.arrow_back,
+            color: kDarkBlueColor,
           ),
         ),
-        title:Text('تسجيل مشترك جديد', style:TextStyle(
-          color: kDarkBlueColor
-        ),),
+        title: Text(
+          'تسجيل مشترك جديد',
+          style: TextStyle(color: kDarkBlueColor),
+        ),
       ),
       body: Column(
         children: [
@@ -82,9 +92,15 @@ class SignUpAccountTypeScreen extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   children: [
-                    SizedBox(height: 30,),
-                    Label(text: 'حدد نوع الحساب',),
-                    SizedBox(height: 50,),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Label(
+                      text: 'حدد نوع الحساب',
+                    ),
+                    SizedBox(
+                      height: 50,
+                    ),
                     GridView.count(
                       physics: NeverScrollableScrollPhysics(),
                       padding: EdgeInsets.zero,
@@ -94,33 +110,44 @@ class SignUpAccountTypeScreen extends StatelessWidget {
                       crossAxisSpacing: 5,
                       mainAxisSpacing: 20,
                       children: [
-                        SquareTile(label: 'صالون',
+                        SquareTile(
+                          label: 'صالون',
                           icon: CustomIcons.hair_salon,
-                          onTab: (){
-                          navigateTo(context, SignUpSalonAccountScreen());
-                          },),
-                        SquareTile(label: 'مستخدم',
-                          onTab: (){
-                          navigateTo(context, SignupUserAccountScreen(
-                            email: email,
-                            phone: phone,
-                            usrName: usrName,
-                            password: password,
-                            fullName: fullName,
-                            usrType: 'CUSTOMER',
-                          ));
+                          onTab: () {
+                            navigateTo(context, SignUpSalonAccountScreen());
                           },
-                          icon: CustomIcons.man,),
-                        SquareTile(label: 'موردين',
-                          onTab: (){
-                          navigateTo(context, SignupProviderAccountScreen());
+                        ),
+                        SquareTile(
+                          label: 'مستخدم',
+                          onTab: () {
+                            navigateTo(
+                                context,
+                                SignupUserAccountScreen(
+                                  email: email,
+                                  phone: phone,
+                                  usrName: usrName,
+                                  password: password,
+                                  fullName: fullName,
+                                  usrType: 'CUSTOMER',
+                                  otp: otp,
+                                ));
                           },
-                          icon: CustomIcons.shaving_cream,),
-                        SquareTile(label: 'حلاق',
-                          onTab: (){
-                          navigateTo(context, SignupBarberAccountScreen());
+                          icon: CustomIcons.man,
+                        ),
+                        SquareTile(
+                          label: 'موردين',
+                          onTab: () {
+                            navigateTo(context, SignupProviderAccountScreen());
                           },
-                          icon: CustomIcons.barber,),
+                          icon: CustomIcons.shaving_cream,
+                        ),
+                        SquareTile(
+                          label: 'حلاق',
+                          onTab: () {
+                            navigateTo(context, SignupBarberAccountScreen());
+                          },
+                          icon: CustomIcons.barber,
+                        ),
                       ],
                     ),
                   ],

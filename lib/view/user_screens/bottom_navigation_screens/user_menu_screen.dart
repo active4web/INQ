@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:work/cubit/user_cubit/user_cubit.dart';
 import 'package:work/shared/constants.dart';
 import 'package:work/shared/defaults.dart';
 import 'package:work/view/user_screens/menu_screens/about_app_screen.dart';
@@ -56,33 +57,23 @@ class UserMenuScreen extends StatelessWidget {
                                 textDirection: TextDirection.rtl,
                                 children: [
                                   Text(
-                                    'محمد أحمد',
+                                    UserCubit.get(context)
+                                        .userinfo
+                                        .data
+                                        .usrEnFullName,
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 20),
                                   ),
                                   Text(
-                                    'mohamed@gmail.com',
+                                    UserCubit.get(context)
+                                        .userinfo
+                                        .data
+                                        .usrEmail,
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   SizedBox(
                                     height: 10,
                                   ),
-                                  Container(
-                                    width: 120,
-                                    height: 35,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Center(
-                                        child: Text(
-                                      'الملف الشخصي',
-                                      textDirection: TextDirection.rtl,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 14),
-                                    )),
-                                  )
                                 ],
                               )
                             ],
@@ -159,7 +150,9 @@ class UserMenuScreen extends StatelessWidget {
                           height: 20,
                         ),
                         TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              logOut(context);
+                            },
                             child: Text(
                               'تسجيل الخروج',
                               style: TextStyle(

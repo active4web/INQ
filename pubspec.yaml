@@ -31,10 +31,14 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   font_awesome_flutter: ^9.1.0
   google_maps_flutter:
+  geocoding: ^2.0.1
+  location: ^4.2.0
+  map_pin_picker: any
   table_calendar:
   pin_code_fields: ^7.3.0
   dio: ^4.0.0
   nil: ^1.1.1
+  country_code_picker: ^2.0.2
   fluttertoast: ^8.0.8
   image_picker: ^0.8.4+4
   shared_preferences: ^2.0.8

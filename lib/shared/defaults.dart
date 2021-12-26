@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:work/network/local/cache_helper.dart';
 import 'package:work/shared/constants.dart';
+import 'package:work/view/auth_screens/login_screens/login_screen.dart';
 
 import 'components/custom_button.dart';
 import 'components/custom_close_button.dart';
@@ -36,6 +38,47 @@ Future<bool> showToast({
       fontSize: 16.0);
 }
 
+void showAlertDialogWithAction(
+    {BuildContext context,
+    String message,
+    Color messageColor = kPrimaryColor,
+    String imagePath,
+    String buttonText,
+    Function action}) {
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      backgroundColor: Color(0xffF8F8F8),
+      contentPadding: EdgeInsets.all(40),
+      content: Container(
+        height: MediaQuery.of(context).size.height * 0.5,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Image(image: AssetImage(imagePath)),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              message,
+              style: TextStyle(fontSize: 18, color: messageColor),
+              textDirection: TextDirection.rtl,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            CustomButton(
+              onTab: action,
+              label: buttonText,
+            )
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
 Future<dynamic> showCustomBottomSheet({BuildContext context, Widget content}) {
   return showModalBottomSheet(
       context: context,
@@ -55,4 +98,11 @@ Future<dynamic> showCustomBottomSheet({BuildContext context, Widget content}) {
               ),
             ),
           ));
+}
+
+void logOut(context) {
+  CacheHelper.removeData('token');
+  CacheHelper.removeData('userType')
+      .then((value) => navigateAndFinish(context, LoginScreen()));
+  CacheHelper.clearCache();
 }
