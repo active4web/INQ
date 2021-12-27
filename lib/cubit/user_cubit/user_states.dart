@@ -19,3 +19,9 @@ class GetBarbersBySalonLoadingState extends UserStates {}
 class GetBarbersBySalonSuccessState extends UserStates {}
 
 class GetBarbersBySalonErrorState extends UserStates {}
+
+class GetServicesBySalonLoadingState extends UserStates {}
+
+class GetServicesBySalonSuccessState extends UserStates {}
+
+class GetServicesBySalonErrorState extends UserStates {}

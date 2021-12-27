@@ -61,24 +61,13 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => AuthCubit()),
-        BlocProvider(create: (context) => UserCubit()),
+        BlocProvider(create: (context) => UserCubit()..fetchData()),
         BlocProvider(create: (context) => BarberCubit()),
         BlocProvider(create: (context) => ProviderCubit()),
         BlocProvider(create: (context) => SalonCubit()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
-        // // builder: (context, child) {
-        // //   return Directionality(textDirection: TextDirection.rtl, child: child);
-        // // },
-        // routes: {
-        //   LoginScreen.id: (context) => LoginScreen(),
-        //   ProviderLayout.id: (context) => ProviderLayout(),
-        //   BarberLayout.id: (context) => BarberLayout(),
-        //   SalonLayout.id: (context) => SalonLayout(),
-        //   UserLayout.id: (context) => UserLayout()
-        // },
-        //initialRoute: LoginScreen.id,
         home: kToken == '' ? LoginScreen() : getCurrentUser(),
         theme: ThemeData(
             appBarTheme: AppBarTheme(centerTitle: true),

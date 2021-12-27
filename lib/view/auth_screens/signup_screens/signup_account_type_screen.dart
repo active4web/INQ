@@ -114,7 +114,17 @@ class SignUpAccountTypeScreen extends StatelessWidget {
                           label: 'صالون',
                           icon: CustomIcons.hair_salon,
                           onTab: () {
-                            navigateTo(context, SignUpSalonAccountScreen());
+                            navigateTo(
+                                context,
+                                SignUpSalonAccountScreen(
+                                  email: email,
+                                  phone: phone,
+                                  usrName: usrName,
+                                  password: password,
+                                  fullName: fullName,
+                                  usrType: 'SALON',
+                                  otp: otp,
+                                ));
                           },
                         ),
                         SquareTile(

@@ -9,10 +9,12 @@ import 'package:work/models/auth_models/login_success_model.dart';
 import 'package:work/models/auth_models/response_model.dart';
 import 'package:work/models/salon_info_model.dart';
 import 'package:work/models/user_models/barbers_by_salon_model.dart';
+import 'package:work/models/user_models/services_by_salon_model.dart';
 import 'package:work/network/local/cache_helper.dart';
 import 'package:work/network/remote/dio_helper.dart';
 import 'package:work/shared/constants.dart';
 import 'package:work/view/user_screens/bottom_navigation_screens/user_home_screen.dart';
+import 'package:work/view/user_screens/bottom_navigation_screens/user_menu_screen.dart';
 import 'package:work/view/user_screens/bottom_navigation_screens/user_menu_screen.dart';
 import 'package:work/view/user_screens/bottom_navigation_screens/user_profile_screen.dart';
 import 'package:work/view/user_screens/bottom_navigation_screens/user_reservations_screen.dart';
@@ -77,18 +79,34 @@ class UserCubit extends Cubit<UserStates> {
   }
 
   BarbersBySalonModel barbersBySalonModel;
-  void getBarbersBySalon({int stpPsId, stpPrvId}) {
+  void getBarbersBySalon({int stpSalId}) {
     emit(GetBarbersBySalonLoadingState());
     DioHelper.getData(url: 'ShopServiceSetup/getBarbersOnSalon', query: {
       'accessType': 'MOBILE',
       'uuidToken': kToken,
-      'stpPspId': stpPsId,
-      'stpPrvId': stpPrvId,
+      'stpSalId': stpSalId,
     }).then((value) {
       barbersBySalonModel = BarbersBySalonModel.fromJson(value.data);
       emit(GetBarbersBySalonSuccessState());
     }).catchError((error) {
       emit(GetBarbersBySalonErrorState());
+      print(error.toString());
+    });
+  }
+
+  ServicesBySalonModel servicesBySalonModel;
+  void getServicesBySalon({int stpSalId}) {
+    emit(GetServicesBySalonLoadingState());
+    DioHelper.getData(url: 'ShopServiceSetup/getSalonServices', query: {
+      'accessType': 'MOBILE',
+      'uuidToken': kToken,
+      'stpSalId': stpSalId,
+    }).then((value) {
+      print(value.data);
+      servicesBySalonModel = ServicesBySalonModel.fromJson(value.data);
+      emit(GetServicesBySalonSuccessState());
+    }).catchError((error) {
+      emit(GetServicesBySalonErrorState());
       print(error.toString());
     });
   }

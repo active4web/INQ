@@ -261,6 +261,12 @@ class UserHomeScreen extends StatelessWidget {
                                               .data[index].stpSalId,
                                           branchId: cubit.salonInfoModel
                                               .data[index].stpSalBranchId);
+                                      cubit.getBarbersBySalon(
+                                          stpSalId: cubit.salonInfoModel
+                                              .data[index].stpSalId);
+                                      cubit.getServicesBySalon(
+                                          stpSalId: cubit.salonInfoModel
+                                              .data[index].stpSalId);
                                       navigateTo(
                                           context,
                                           SalonScreen(

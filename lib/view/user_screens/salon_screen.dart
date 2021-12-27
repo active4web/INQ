@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:work/cubit/auth_cubit/auth_cubit.dart';
 import 'package:work/cubit/user_cubit/user_cubit.dart';
 import 'package:work/cubit/user_cubit/user_states.dart';
 import 'package:work/models/salon_info_model.dart';
@@ -10,6 +11,7 @@ import 'package:work/shared/components/custom_button.dart';
 import 'package:work/shared/components/custom_close_button.dart';
 import 'package:work/shared/components/custom_form_field.dart';
 import 'package:work/shared/constants.dart';
+import 'package:work/shared/custom_icons.dart';
 import 'package:work/view/auth_screens/login_screens/login_screen.dart';
 
 import 'bottom_navigation_screens/user_home_screen.dart';
@@ -134,7 +136,7 @@ class _SalonScreenState extends State<SalonScreen>
                             ],
                           ),
                           LimitedBox(
-                            maxHeight: 800,
+                            maxHeight: 1200,
                             child: TabBarView(
                               controller: _tabController,
                               children: [
@@ -166,8 +168,11 @@ class _SalonScreenState extends State<SalonScreen>
                                   ),
                                 ),
                                 ServicesTabScreen(
+                                    cubit: cubit,
                                     pageController: _pageController),
-                                ReservationTabScreen(),
+                                ReservationTabScreen(
+                                  cubit: cubit,
+                                ),
                               ],
                             ),
                           )
@@ -305,10 +310,12 @@ class ServicesTabScreen extends StatelessWidget {
   const ServicesTabScreen({
     Key key,
     @required PageController pageController,
+    this.cubit,
   })  : _pageController = pageController,
         super(key: key);
 
   final PageController _pageController;
+  final UserCubit cubit;
 
   @override
   Widget build(BuildContext context) {
@@ -369,36 +376,19 @@ class ServicesTabScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20),
               child: Directionality(
                 textDirection: TextDirection.rtl,
-                child: GridView.count(
+                child: GridView.builder(
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 15,
-                  childAspectRatio: 3 / 1,
-                  children: [
-                    ServiceRow(
-                      name: 'قص شعر',
-                    ),
-                    ServiceRow(
-                      name: 'لحية',
-                    ),
-                    ServiceRow(
-                      name: 'صبغة',
-                    ),
-                    ServiceRow(
-                      name: 'ماسكات',
-                    ),
-                    ServiceRow(
-                      name: 'قص شعر',
-                    ),
-                    ServiceRow(
-                      name: 'حمام بخار',
-                    ),
-                    ServiceRow(
-                      name: 'سبا',
-                    ),
-                  ],
+                  itemCount: cubit.servicesBySalonModel.data.length,
+                  itemBuilder: (context, index) => ServiceRow(
+                    name: cubit.servicesBySalonModel.data[index].servicesNameAr,
+                  ),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 15,
+                    childAspectRatio: 3 / 1,
+                  ),
                 ),
               ),
             ),
@@ -412,7 +402,9 @@ class ServicesTabScreen extends StatelessWidget {
 class ReservationTabScreen extends StatelessWidget {
   const ReservationTabScreen({
     Key key,
+    this.cubit,
   }) : super(key: key);
+  final UserCubit cubit;
 
   @override
   Widget build(BuildContext context) {
@@ -427,7 +419,7 @@ class ReservationTabScreen extends StatelessWidget {
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             padding: EdgeInsets.zero,
-            itemCount: 3,
+            itemCount: cubit.barbersBySalonModel.data.length,
             itemBuilder: (context, index) => Container(
               height: MediaQuery.of(context).size.height * 0.12,
               margin: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -459,7 +451,8 @@ class ReservationTabScreen extends StatelessWidget {
                           textDirection: TextDirection.rtl,
                           children: [
                             Text(
-                              'ادهم خالد',
+                              cubit.barbersBySalonModel.data[index]
+                                  .bearberNameAr,
                               style: TextStyle(
                                   fontWeight: FontWeight.w600,
                                   fontSize: 20,
