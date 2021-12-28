@@ -30,7 +30,10 @@ class SignupUserAccountScreen extends StatefulWidget {
       this.email,
       this.password,
       this.usrType,
-      this.otp})
+      this.otp,
+      this.country,
+      this.city,
+      this.gender})
       : super(key: key);
   final usrName;
   final fullName;
@@ -39,6 +42,9 @@ class SignupUserAccountScreen extends StatefulWidget {
   final password;
   final usrType;
   final otp;
+  final country;
+  final city;
+  final gender;
 
   @override
   State<SignupUserAccountScreen> createState() =>
@@ -53,27 +59,6 @@ class _SignupUserAccountScreenState
 
   Completer<GoogleMapController> _controller = Completer();
 
-  ServiceModel genders;
-  ServiceModel countries;
-  ServiceModel cities;
-
-  void getData() async {
-    genders = await getSysCodes(scType: 2);
-    countries = await getSysCodes(scType: 6);
-    cities = await getSysCodes(scType: 7);
-    print(countries.data[0].scArDesc);
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    this.getData();
-    super.initState();
-  }
-
-  int country;
-  int city;
-  int gender;
   XFile file;
   XFile imageFile;
   File usrImage;
@@ -122,186 +107,110 @@ class _SignupUserAccountScreenState
             usrImage = File(imageFile.path);
           }
           return SingleChildScrollView(
-            child: countries != null || cities != null || genders != null
-                ? Column(
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
-                        child: Column(
-                          children: [
-                            SizedBox(height: 30),
-                            Label(
-                              text: 'بيانات العميل',
-                            ),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            CustomDropdownField(
-                              hint: 'الدولة',
-                              itemsList: countries.data.map((e) {
-                                return DropdownMenuItem(
-                                  child: Text(
-                                    e.scArDesc,
-                                  ),
-                                  value: e.scCode,
-                                  alignment: Alignment.centerRight,
-                                );
-                              }).toList(),
-                              value: country,
-                              onChanged: (value) {
-                                setState(() {
-                                  country = value;
-                                  print(country);
-                                });
-                              },
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            CustomDropdownField(
-                              hint: 'المدينة',
-                              itemsList: cities.data.map((e) {
-                                return DropdownMenuItem(
-                                  child: Text(
-                                    e.scArDesc,
-                                  ),
-                                  value: e.scCode,
-                                  alignment: Alignment.centerRight,
-                                );
-                              }).toList(),
-                              value: city,
-                              onChanged: (value) {
-                                setState(() {
-                                  city = value;
-                                  print(city);
-                                });
-                              },
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            CustomDropdownField(
-                              hint: 'الجنس',
-                              itemsList: genders.data.map((e) {
-                                return DropdownMenuItem(
-                                  child: Text(
-                                    e.scArDesc,
-                                  ),
-                                  value: e.scCode,
-                                  alignment: Alignment.centerRight,
-                                );
-                              }).toList(),
-                              value: gender,
-                              onChanged: (value) {
-                                setState(() {
-                                  gender = value;
-                                  print(gender);
-                                });
-                              },
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            CustomImagePicker(
-                              onTab: () {
-                                cubit.pickImage(file).then((value) {
-                                  setState(() {
-                                    imageFile = value;
-                                  });
-                                });
-                              },
-                              imageFile: imageFile,
-                              text: ' رفع صورة المستخدم',
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              textDirection: TextDirection.rtl,
-                              children: [
-                                Text(
-                                  'حدد الموقع على الخريطة',
-                                  textDirection: TextDirection.rtl,
-                                  style: TextStyle(
-                                      color: Color(0xff707070),
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                          ],
-                        ),
+                      SizedBox(height: 30),
+                      Label(
+                        text: 'بيانات العميل',
                       ),
-                      // MapWidget(controller: _controller),
-                      LocationPickerScreen(),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      CustomImagePicker(
+                        onTab: () {
+                          cubit.pickImage(file).then((value) {
+                            setState(() {
+                              imageFile = value;
+                            });
+                          });
+                        },
+                        imageFile: imageFile,
+                        text: ' رفع صورة المستخدم',
+                      ),
                       SizedBox(
                         height: 20,
                       ),
                       Row(
                         textDirection: TextDirection.rtl,
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(
-                              width: 270,
-                              child: state is SignupLoadingState
-                                  ? Center(
-                                      child: CircularProgressIndicator(
-                                        color: kPrimaryColor,
-                                      ),
-                                    )
-                                  : CustomButton(
-                                      label: 'انشاء حساب',
-                                      onTab: () {
-                                        cubit.signUp(
-                                          otpValue: widget.otp,
-                                          email: widget.email,
-                                          countryId: country,
-                                          cityId: city,
-                                          genderId: gender,
-                                          clientFullName: widget.fullName,
-                                          mobile: widget.phone,
-                                          password: widget.password,
-                                          userType: widget.usrType,
-                                          userName: widget.usrName,
-                                          usrImage: usrImage,
-                                        );
-                                        print(widget.phone);
-                                        print(widget.otp);
-                                        print(country);
-                                        print(city);
-                                        print(gender);
-                                        print(widget.password);
-                                        print(widget.usrName);
-                                        print(widget.usrType);
-                                        print(widget.fullName);
-                                      },
-                                    )),
-                          SizedBox(
-                            width: 20,
+                          Text(
+                            'حدد الموقع على الخريطة',
+                            textDirection: TextDirection.rtl,
+                            style: TextStyle(
+                                color: Color(0xff707070),
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
                           ),
-                          CustomCloseButton()
                         ],
                       ),
                       SizedBox(
-                        height: 30,
-                      )
-                    ],
-                  )
-                : Column(
-                    children: [
-                      SizedBox(
-                        height: 250,
-                      ),
-                      Center(
-                        child: CircularProgressIndicator(
-                          color: kPrimaryColor,
-                        ),
+                        height: 20,
                       ),
                     ],
                   ),
+                ),
+                // MapWidget(controller: _controller),
+                LocationPickerScreen(),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  textDirection: TextDirection.rtl,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                        width: 270,
+                        child: state is SignupLoadingState
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                  color: kPrimaryColor,
+                                ),
+                              )
+                            : CustomButton(
+                                label: 'انشاء حساب',
+                                onTab: () {
+                                  cubit.signUp(
+                                    otpValue: widget.otp,
+                                    email: widget.email,
+                                    countryId: widget.country,
+                                    cityId: widget.city,
+                                    genderId: widget.gender,
+                                    clientFullName: widget.fullName,
+                                    mobile: widget.phone,
+                                    password: widget.password,
+                                    userType: widget.usrType,
+                                    userName: widget.usrName,
+                                    usrImage: usrImage,
+                                  );
+                                  print(widget.phone);
+                                  print(widget.otp);
+                                  print(widget.country);
+                                  print(widget.city);
+                                  print(widget.gender);
+                                  print(widget.password);
+                                  print(widget.usrName);
+                                  print(widget.usrType);
+                                  print(widget.fullName);
+                                },
+                              )),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    CustomCloseButton()
+                  ],
+                ),
+                SizedBox(
+                  height: 30,
+                )
+              ],
+            ),
           );
         },
       ),

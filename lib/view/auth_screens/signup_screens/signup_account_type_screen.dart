@@ -18,7 +18,10 @@ class SignUpAccountTypeScreen extends StatelessWidget {
       this.phone,
       this.email,
       this.password,
-      this.otp})
+      this.otp,
+      this.country,
+      this.city,
+      this.gender})
       : super(key: key);
 
   final usrName;
@@ -27,6 +30,9 @@ class SignUpAccountTypeScreen extends StatelessWidget {
   final email;
   final password;
   final otp;
+  final country;
+  final city;
+  final gender;
   //static const String id = "signupScreen";
   @override
   Widget build(BuildContext context) {
@@ -138,6 +144,9 @@ class SignUpAccountTypeScreen extends StatelessWidget {
                                   usrName: usrName,
                                   password: password,
                                   fullName: fullName,
+                                  country: country,
+                                  city: city,
+                                  gender: gender,
                                   usrType: 'CUSTOMER',
                                   otp: otp,
                                 ));

@@ -19,7 +19,10 @@ class PhoneValidationScreen extends StatefulWidget {
       this.fullName,
       this.phone,
       this.email,
-      this.password})
+      this.password,
+      this.country,
+      this.city,
+      this.gender})
       : super(key: key);
 
   final usrName;
@@ -27,6 +30,9 @@ class PhoneValidationScreen extends StatefulWidget {
   final phone;
   final email;
   final password;
+  final country;
+  final city;
+  final gender;
 
   @override
   _PhoneValidationScreenState createState() => _PhoneValidationScreenState();
@@ -176,6 +182,9 @@ class _PhoneValidationScreenState extends State<PhoneValidationScreen> {
                           fullName: widget.fullName,
                           email: widget.email,
                           otp: otpController.text,
+                          country: widget.country,
+                          city: widget.city,
+                          gender: widget.gender,
                         ));
                   } else if (state is CheckOtpErrorState) {
                     showToast(text: "رمز التأكيد خطأ", color: Colors.red);

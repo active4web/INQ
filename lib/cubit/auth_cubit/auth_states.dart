@@ -1,3 +1,4 @@
+import 'package:work/cubit/auth_cubit/auth_cubit.dart';
 import 'package:work/models/auth_models/login_success_model.dart';
 import 'package:work/models/auth_models/response_fail_model.dart';
 
@@ -19,6 +20,8 @@ class LoginErrorState extends AuthStates {
 
 class ChangePasswordVisibilityState extends AuthStates {}
 
+class GetSysDataSuccessState extends AuthStates {}
+
 class SignupLoadingState extends AuthStates {}
 
 class SignupSuccessState extends AuthStates {}
@@ -38,3 +41,9 @@ class CheckOtpSuccessState extends AuthStates {}
 class CheckOtpErrorState extends AuthStates {}
 
 class PickImageSuccessState extends AuthStates {}
+
+class InsertSalonLoadingState extends AuthStates {}
+
+class InsertSalonSuccessState extends AuthStates {}
+
+class InsertSalonErrorState extends AuthStates {}

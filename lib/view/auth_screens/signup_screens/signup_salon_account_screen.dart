@@ -8,6 +8,7 @@ import 'package:work/shared/components/custom_button.dart';
 import 'package:work/shared/components/custom_close_button.dart';
 import 'package:work/shared/components/custom_form_field.dart';
 import 'package:work/shared/components/custom_image_picker.dart';
+import 'package:work/shared/components/description_text_field.dart';
 import 'package:work/shared/components/map_widget.dart';
 import 'package:work/shared/constants.dart';
 import 'package:work/shared/defaults.dart';
@@ -41,6 +42,10 @@ class SignUpSalonAccountScreen extends StatefulWidget {
 class _SignUpSalonAccountScreenState extends State<SignUpSalonAccountScreen>
     with AutomaticKeepAliveClientMixin {
   Completer<GoogleMapController> _controller = Completer();
+
+  TextEditingController salonNameController = new TextEditingController();
+  TextEditingController ownerNameController = new TextEditingController();
+  TextEditingController descriptionController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -83,19 +88,22 @@ class _SignUpSalonAccountScreenState extends State<SignUpSalonAccountScreen>
                         height: 30,
                       ),
                       CustomFormField(
+                        controller: salonNameController,
                         label: 'اسم الصالون',
                       ),
                       SizedBox(
                         height: 20,
                       ),
                       CustomFormField(
+                        controller: ownerNameController,
                         label: 'اسم المالك',
                       ),
                       SizedBox(
                         height: 20,
                       ),
-                      CustomFormField(
-                        label: 'رقم الجوال',
+                      DescriptionTextField(
+                        controller: descriptionController,
+                        hintText: 'عن الصالون',
                       ),
                       SizedBox(
                         height: 20,

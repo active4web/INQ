@@ -16,7 +16,7 @@ class ResponseModel {
   });
 
   bool status;
-  double data;
+  dynamic data;
 
   factory ResponseModel.fromJson(Map<String, dynamic> json) => ResponseModel(
         status: json["status"],

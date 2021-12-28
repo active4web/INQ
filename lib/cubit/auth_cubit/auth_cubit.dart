@@ -9,8 +9,10 @@ import 'package:work/models/auth_models/login_success_model.dart';
 import 'package:work/models/auth_models/response_fail_model.dart';
 import 'package:work/models/auth_models/response_model.dart';
 import 'package:work/models/auth_models/signup_success_model.dart';
+import 'package:work/models/service_model.dart';
 import 'package:work/models/system_code_response_model.dart';
 import 'package:work/network/remote/dio_helper.dart';
+import 'package:work/shared/get_sys_codes.dart';
 
 import 'auth_states.dart';
 
@@ -25,6 +27,68 @@ class AuthCubit extends Cubit<AuthStates> {
     showPassword = !showPassword;
     passwordIcon = showPassword ? Icons.visibility : Icons.visibility_off;
     emit(ChangePasswordVisibilityState());
+  }
+
+  ServiceModel genders;
+  ServiceModel countries;
+  ServiceModel cities;
+
+  void getSysData() async {
+    genders = await getSysCodes(scType: 2);
+    countries = await getSysCodes(scType: 6);
+    cities = await getSysCodes(scType: 7);
+    print(countries.data[0].scArDesc);
+    emit(GetSysDataSuccessState());
+  }
+
+  ResponseModel salonIdResponse;
+  void insertSalon({
+    String salonUserName,
+    String salonName,
+    String ownerName,
+    String phone,
+    String email,
+    String licenceImage,
+    String salonImage,
+    String country,
+    String city,
+    String gender,
+    String location,
+    String aboutSalon,
+  }) {
+    emit(InsertSalonLoadingState());
+    DioHelper.postData(url: 'ShopServiceSetup/insertStpSalSalons', query: {
+      'accessType': 'MOBILE',
+      'language': 'en'
+    }, data: {
+      "StpSalUsername": salonUserName,
+      "StpSalBranchId": "1",
+      "StpSalQrKeyCode": "ihfkhlwekhgwigh",
+      "StpSalNameAr": salonName,
+      "StpSalOwnerNameAr": ownerName,
+      "StpSalPhoneNumber": phone,
+      "StpSalEmail": email,
+      "StpSalVocationalLicense": licenceImage,
+      "StpSalSalonsStatus": "1",
+      "StpSalShopPicture": salonImage,
+      "StpSalCountryId": country,
+      "StpSalCityId": city,
+      "StpSalType": gender,
+      "StpSalGpsLocation": location,
+      "StpSalLongitude": lat,
+      "StpSalLatitude": long,
+      "StpSalSalonNoteAbout": aboutSalon
+    }).then((value) {
+      salonIdResponse = ResponseModel.fromJson(value.data);
+      print(value.data);
+      if (value.data['status'] == true) {
+        emit(InsertSalonSuccessState());
+      } else
+        emit(InsertSalonErrorState());
+    }).catchError((error) {
+      emit(InsertSalonErrorState());
+      print(error.toString());
+    });
   }
 
   var createOtpResponse;
