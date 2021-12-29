@@ -41,56 +41,6 @@ class AuthCubit extends Cubit<AuthStates> {
     emit(GetSysDataSuccessState());
   }
 
-  ResponseModel salonIdResponse;
-  void insertSalon({
-    String salonUserName,
-    String salonName,
-    String ownerName,
-    String phone,
-    String email,
-    String licenceImage,
-    String salonImage,
-    String country,
-    String city,
-    String gender,
-    String location,
-    String aboutSalon,
-  }) {
-    emit(InsertSalonLoadingState());
-    DioHelper.postData(url: 'ShopServiceSetup/insertStpSalSalons', query: {
-      'accessType': 'MOBILE',
-      'language': 'en'
-    }, data: {
-      "StpSalUsername": salonUserName,
-      "StpSalBranchId": "1",
-      "StpSalQrKeyCode": "ihfkhlwekhgwigh",
-      "StpSalNameAr": salonName,
-      "StpSalOwnerNameAr": ownerName,
-      "StpSalPhoneNumber": phone,
-      "StpSalEmail": email,
-      "StpSalVocationalLicense": licenceImage,
-      "StpSalSalonsStatus": "1",
-      "StpSalShopPicture": salonImage,
-      "StpSalCountryId": country,
-      "StpSalCityId": city,
-      "StpSalType": gender,
-      "StpSalGpsLocation": location,
-      "StpSalLongitude": lat,
-      "StpSalLatitude": long,
-      "StpSalSalonNoteAbout": aboutSalon
-    }).then((value) {
-      salonIdResponse = ResponseModel.fromJson(value.data);
-      print(value.data);
-      if (value.data['status'] == true) {
-        emit(InsertSalonSuccessState());
-      } else
-        emit(InsertSalonErrorState());
-    }).catchError((error) {
-      emit(InsertSalonErrorState());
-      print(error.toString());
-    });
-  }
-
   var createOtpResponse;
   void createOtp({var phone}) {
     emit(CreateOtpLoadingState());
@@ -130,6 +80,7 @@ class AuthCubit extends Cubit<AuthStates> {
   }
 
   var lat, long;
+  String location;
 
   ResponseFailModel signUpFailModel;
   SignUpSuccessModel signUpSuccessModel;
@@ -150,11 +101,11 @@ class AuthCubit extends Cubit<AuthStates> {
     String longitude,
     File usrImage,
   }) {
-    final bytes = usrImage.readAsBytesSync();
-    String _img64 = base64Encode(bytes);
-    print(_img64);
-    print(lat);
-    print(long);
+    // final bytes = usrImage.readAsBytesSync();
+    // String _img64 = base64Encode(bytes);
+    // print(_img64);
+    // print(lat);
+    // print(long);
     emit(SignupLoadingState());
     DioHelper.postData(url: 'CoreService/signup', query: {
       'otpValue': otpValue,
@@ -188,6 +139,60 @@ class AuthCubit extends Cubit<AuthStates> {
     }).catchError((error) {
       emit(SignupErrorState());
       print(error);
+    });
+  }
+
+  ResponseModel salonIdResponse;
+  void insertSalon({
+    String salonUserName,
+    String salonName,
+    String ownerName,
+    String phone,
+    String email,
+    File licenceImage,
+    File salonImage,
+    int country,
+    int city,
+    int gender,
+    String location,
+    String aboutSalon,
+  }) {
+    final licenceImageBytes = licenceImage.readAsBytesSync();
+    String licenceImageString = base64Encode(licenceImageBytes);
+    final salonImageBytes = salonImage.readAsBytesSync();
+    String salonImageString = base64Encode(salonImageBytes);
+    emit(InsertSalonLoadingState());
+    DioHelper.postData(url: 'ShopServiceSetup/insertStpSalSalons', query: {
+      'accessType': 'MOBILE',
+      'language': 'en'
+    }, data: {
+      "StpSalUsername": salonUserName,
+      "StpSalBranchId": "1",
+      "StpSalQrKeyCode": "ihfkhlwekhgwigh",
+      "StpSalNameAr": salonName,
+      "StpSalOwnerNameAr": ownerName,
+      "StpSalPhoneNumber": phone,
+      "StpSalEmail": email,
+      "StpSalVocationalLicense": licenceImageString,
+      "StpSalSalonsStatus": "1",
+      "StpSalShopPicture": salonImageString,
+      "StpSalCountryId": country,
+      "StpSalCityId": city,
+      "StpSalType": gender,
+      "StpSalGpsLocation": location,
+      "StpSalLongitude": lat.toString(),
+      "StpSalLatitude": long.toString(),
+      "StpSalSalonNoteAbout": aboutSalon
+    }).then((value) {
+      salonIdResponse = ResponseModel.fromJson(value.data);
+      print(value.data);
+      if (value.data['status'] == true) {
+        emit(InsertSalonSuccessState());
+      } else
+        emit(InsertSalonErrorState());
+    }).catchError((error) {
+      emit(InsertSalonErrorState());
+      print(error.toString());
     });
   }
 

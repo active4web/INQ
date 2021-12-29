@@ -128,6 +128,9 @@ class SignUpAccountTypeScreen extends StatelessWidget {
                                   usrName: usrName,
                                   password: password,
                                   fullName: fullName,
+                                  country: country,
+                                  city: city,
+                                  gender: gender,
                                   usrType: 'SALON',
                                   otp: otp,
                                 ));
