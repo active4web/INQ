@@ -21,7 +21,7 @@ class SalonMenuScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height+200,
+          height: MediaQuery.of(context).size.height + 200,
           child: Stack(
             overflow: Overflow.visible,
             fit: StackFit.loose,
@@ -39,7 +39,9 @@ class SalonMenuScreen extends StatelessWidget {
                       color: kLightGreenColor,
                       child: Column(
                         children: [
-                          SizedBox(height: 90,),
+                          SizedBox(
+                            height: 90,
+                          ),
                           Row(
                             textDirection: TextDirection.rtl,
                             children: [
@@ -48,20 +50,22 @@ class SalonMenuScreen extends StatelessWidget {
                                 height: 80,
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
-                                      image: AssetImage('Assets/images/Avatar.png')
-                                    ),
-                                    borderRadius: BorderRadius.circular(10)
-                                ),
+                                        image: AssetImage(
+                                            'Assets/images/Avatar.png')),
+                                    borderRadius: BorderRadius.circular(10)),
                               ),
-                              SizedBox(width: 10,),
+                              SizedBox(
+                                width: 10,
+                              ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 textDirection: TextDirection.rtl,
                                 children: [
-                                  Text('INQ Salon',style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20
-                                  ),),
+                                  Text(
+                                    'INQ Salon',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20),
+                                  ),
                                   Container(
                                     width: 100,
                                     height: 30,
@@ -69,11 +73,14 @@ class SalonMenuScreen extends StatelessWidget {
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(20),
                                     ),
-                                    child: Center(child: Text('ادارة الحساب'
-                                      ,textDirection: TextDirection.rtl,style: TextStyle(
+                                    child: Center(
+                                        child: Text(
+                                      'ادارة الحساب',
+                                      textDirection: TextDirection.rtl,
+                                      style: TextStyle(
                                           fontWeight: FontWeight.w600,
-                                        fontSize: 10
-                                      ),)),
+                                          fontSize: 10),
+                                    )),
                                   )
                                 ],
                               )
@@ -82,8 +89,7 @@ class SalonMenuScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Container(
-                    )
+                    Container()
                   ],
                 ),
               ),
@@ -93,13 +99,10 @@ class SalonMenuScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 30),
                   child: Container(
                     // margin: EdgeInsets.only(top: 220,),
-                    width: MediaQuery.of(context).size.width*0.85,
+                    width: MediaQuery.of(context).size.width * 0.85,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      boxShadow: [BoxShadow(
-                          color: Colors.grey,
-                          blurRadius: 1
-                      )],
+                      boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 1)],
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: ListView(
@@ -107,54 +110,96 @@ class SalonMenuScreen extends StatelessWidget {
                       physics: NeverScrollableScrollPhysics(),
                       padding: EdgeInsets.symmetric(vertical: 20),
                       children: [
-                        MenuItem(label: "تحليل الزيارات",
-                          onTab: (){
+                        MenuItem(
+                          label: "تحليل الزيارات",
+                          onTab: () {
                             navigateTo(context, SalonStatisticsScreen());
-                          },),
-                        SizedBox(height: 14,),
-                        MenuItem(label: "الخدمات",
-                          onTab: (){
+                          },
+                        ),
+                        SizedBox(
+                          height: 14,
+                        ),
+                        MenuItem(
+                          label: "الخدمات",
+                          onTab: () {
                             navigateTo(context, SalonServicesScreen());
-                          },),
-                        SizedBox(height: 14,),
-                        MenuItem(label: "ادارة الفروع",
-                          onTab: (){
-                             navigateTo(context, SalonBranchesScreen());
-                          },),
-                        SizedBox(height: 14,),
-                        MenuItem(label: "الاشتراكات",
-                          onTab: (){
+                          },
+                        ),
+                        SizedBox(
+                          height: 14,
+                        ),
+                        MenuItem(
+                          label: "ادارة الفروع",
+                          onTab: () {
+                            navigateTo(context, SalonBranchesScreen());
+                          },
+                        ),
+                        SizedBox(
+                          height: 14,
+                        ),
+                        MenuItem(
+                          label: "الاشتراكات",
+                          onTab: () {
                             navigateTo(context, SalonSubscriptionsScreen());
-                          },),
-                        SizedBox(height: 14,),
-                        MenuItem(label: "المصروفات",
-                          onTab: (){
+                          },
+                        ),
+                        SizedBox(
+                          height: 14,
+                        ),
+                        MenuItem(
+                          label: "المصروفات",
+                          onTab: () {
                             //navigateTo(context, AccountStatementScreen());
-                          },),
-                        SizedBox(height: 14,),
-                        MenuItem(label: "المخازن",
-                          onTab: (){
+                          },
+                        ),
+                        SizedBox(
+                          height: 14,
+                        ),
+                        MenuItem(
+                          label: "المخازن",
+                          onTab: () {
                             navigateTo(context, SalonOrderScreen());
-                          },),
-                        SizedBox(height: 14,),
-                        MenuItem(label: "QR الحضور",
-                          onTab: (){
+                          },
+                        ),
+                        SizedBox(
+                          height: 14,
+                        ),
+                        MenuItem(
+                          label: "QR الحضور",
+                          onTab: () {
                             navigateTo(context, AttendanceQRCodeScreen());
-                          },),
-                        SizedBox(height: 14,),
-                        MenuItem(label: "اعدادات الخصوصية",
-                          onTab: (){
+                          },
+                        ),
+                        SizedBox(
+                          height: 14,
+                        ),
+                        MenuItem(
+                          label: "اعدادات الخصوصية",
+                          onTab: () {
                             navigateTo(context, SalonSettingsScreen());
-                          },),
-                        SizedBox(height: 14,),
-                        MenuItem(label: "الشكاوي و الاقتراحات",
-                          onTab: (){
+                          },
+                        ),
+                        SizedBox(
+                          height: 14,
+                        ),
+                        MenuItem(
+                          label: "الشكاوي و الاقتراحات",
+                          onTab: () {
                             navigateTo(context, SalonComplaintsScreen());
-                          },),
-
-                        SizedBox(height: 30,),
-                        TextButton(onPressed: (){}, child: Text('تسجيل الخروج',
-                          style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),))
+                          },
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              logOut(context);
+                            },
+                            child: Text(
+                              'تسجيل الخروج',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 15),
+                            ))
                       ],
                     ),
                   ),

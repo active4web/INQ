@@ -131,7 +131,7 @@ class SignUpAccountTypeScreen extends StatelessWidget {
                                   country: country,
                                   city: city,
                                   gender: gender,
-                                  usrType: 'SALON',
+                                  usrType: 'BARBERSHOP',
                                   otp: otp,
                                 ));
                           },

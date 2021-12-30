@@ -49,8 +49,7 @@ class SignUpSalonAccountScreen extends StatefulWidget {
       _SignUpSalonAccountScreenState();
 }
 
-class _SignUpSalonAccountScreenState extends State<SignUpSalonAccountScreen>
-    with AutomaticKeepAliveClientMixin {
+class _SignUpSalonAccountScreenState extends State<SignUpSalonAccountScreen> {
   Completer<GoogleMapController> _controller = Completer();
 
   TextEditingController salonNameController = new TextEditingController();
@@ -63,26 +62,27 @@ class _SignUpSalonAccountScreenState extends State<SignUpSalonAccountScreen>
   XFile imageFile2;
   File licenseImage;
   File salonImage;
-
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthStates>(
       listener: (context, state) {
         AuthCubit cubit = AuthCubit.get(context);
-        if (state is SignupSuccessState) {
-          if (state is InsertSalonSuccessState) {
-            showAlertDialogWithAction(
-                imagePath: 'Assets/images/success.png',
-                context: context,
-                message: 'تم انشاء الحساب بنجاح',
-                buttonText: 'شكرًا',
-                action: () {
-                  navigateAndFinish(context, LoginScreen());
-                });
-          } else if (state is InsertSalonErrorState) {
-            showToast(text: 'فشل انشاء حساب', color: Colors.red);
-          }
+        if (state is InsertSalonSuccessState) {
+          isLoading = false;
+          showAlertDialogWithAction(
+              imagePath: 'Assets/images/success.png',
+              context: context,
+              message: 'تم انشاء الحساب بنجاح',
+              buttonText: 'شكرًا',
+              action: () {
+                navigateAndFinish(context, LoginScreen());
+              });
+        } else if (state is InsertSalonErrorState) {
+          isLoading = false;
+          showToast(text: 'فشل انشاء حساب', color: Colors.red);
         } else if (state is SignupErrorState) {
+          isLoading = false;
           showToast(
               color: Colors.red,
               text: cubit.signUpFailModel.data.errorLookup.scEnDesc);
@@ -214,8 +214,7 @@ class _SignUpSalonAccountScreenState extends State<SignUpSalonAccountScreen>
                   children: [
                     SizedBox(
                         width: 270,
-                        child: state is SignupLoadingState ||
-                                state is InsertSalonLoadingState
+                        child: isLoading
                             ? Center(
                                 child: CircularProgressIndicator(
                                   color: kPrimaryColor,
@@ -224,6 +223,7 @@ class _SignUpSalonAccountScreenState extends State<SignUpSalonAccountScreen>
                             : CustomButton(
                                 label: 'تسجيل',
                                 onTab: () {
+                                  isLoading = true;
                                   cubit.signUp(
                                       otpValue: widget.otp,
                                       email: widget.email,
@@ -236,15 +236,6 @@ class _SignUpSalonAccountScreenState extends State<SignUpSalonAccountScreen>
                                       userType: widget.usrType,
                                       userName: widget.usrName,
                                       usrImage: salonImage);
-                                  print(widget.phone);
-                                  print(widget.otp);
-                                  print(widget.country);
-                                  print(widget.city);
-                                  print(widget.gender);
-                                  print(widget.password);
-                                  print(widget.usrName);
-                                  print(widget.usrType);
-                                  print(widget.fullName);
                                   cubit.insertSalon(
                                     email: widget.email,
                                     phone: widget.phone,
@@ -276,7 +267,4 @@ class _SignUpSalonAccountScreenState extends State<SignUpSalonAccountScreen>
       },
     );
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

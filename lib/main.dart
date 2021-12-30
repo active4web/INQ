@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
           return ProviderLayout();
         }
         break;
-      case 'SALON':
+      case 'BARBERSHOP':
         {
           return SalonLayout();
         }

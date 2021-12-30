@@ -57,10 +57,10 @@ class LoginScreen extends StatelessWidget {
                     CacheHelper.setData(key: 'userType', value: 'PROVIDER');
                   }
                   break;
-                case 'SALON':
+                case 'BARBERSHOP':
                   {
                     navigateAndFinish(context, SalonLayout());
-                    CacheHelper.setData(key: 'userType', value: 'SALON');
+                    CacheHelper.setData(key: 'userType', value: 'BARBERSHOP');
                   }
                   break;
               }

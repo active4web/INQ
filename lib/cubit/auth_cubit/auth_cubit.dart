@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:work/models/auth_models/signup_success_model.dart';
 import 'package:work/models/service_model.dart';
 import 'package:work/models/system_code_response_model.dart';
 import 'package:work/network/remote/dio_helper.dart';
+import 'package:work/shared/defaults.dart';
 import 'package:work/shared/get_sys_codes.dart';
 
 import 'auth_states.dart';
@@ -154,45 +156,53 @@ class AuthCubit extends Cubit<AuthStates> {
     int country,
     int city,
     int gender,
-    String location,
     String aboutSalon,
   }) {
-    final licenceImageBytes = licenceImage.readAsBytesSync();
+    Uint8List licenceImageBytes = licenceImage.readAsBytesSync();
     String licenceImageString = base64Encode(licenceImageBytes);
-    final salonImageBytes = salonImage.readAsBytesSync();
+
+    Uint8List salonImageBytes = salonImage.readAsBytesSync();
     String salonImageString = base64Encode(salonImageBytes);
+
     emit(InsertSalonLoadingState());
-    DioHelper.postData(url: 'ShopServiceSetup/insertStpSalSalons', query: {
+    DioHelper.getData(url: 'ShopServiceSetup/generateSalCode', query: {
       'accessType': 'MOBILE',
-      'language': 'en'
-    }, data: {
-      "StpSalUsername": salonUserName,
-      "StpSalBranchId": "1",
-      "StpSalQrKeyCode": "ihfkhlwekhgwigh",
-      "StpSalNameAr": salonName,
-      "StpSalOwnerNameAr": ownerName,
-      "StpSalPhoneNumber": phone,
-      "StpSalEmail": email,
-      "StpSalVocationalLicense": licenceImageString,
-      "StpSalSalonsStatus": "1",
-      "StpSalShopPicture": salonImageString,
-      "StpSalCountryId": country,
-      "StpSalCityId": city,
-      "StpSalType": gender,
-      "StpSalGpsLocation": location,
-      "StpSalLongitude": lat.toString(),
-      "StpSalLatitude": long.toString(),
-      "StpSalSalonNoteAbout": aboutSalon
-    }).then((value) {
-      salonIdResponse = ResponseModel.fromJson(value.data);
-      print(value.data);
-      if (value.data['status'] == true) {
-        emit(InsertSalonSuccessState());
-      } else
+    }).then((qrCode) {
+      print(qrCode.data['data']);
+      DioHelper.postData(url: 'ShopServiceSetup/insertStpSalSalons', query: {
+        'accessType': 'MOBILE',
+        'language': 'en'
+      }, data: {
+        "StpSalUsername": salonUserName,
+        "StpSalBranchId": "1",
+        "StpSalQrKeyCode": qrCode.data['data'],
+        "StpSalNameAr": salonName,
+        "StpSalOwnerNameAr": ownerName,
+        "StpSalPhoneNumber": phone,
+        "StpSalEmail": email,
+        "StpSalVocationalLicense": licenceImageString,
+        "StpSalSalonsStatus": "1",
+        "StpSalShopPicture": salonImageString,
+        "StpSalCountryId": country.toString(),
+        "StpSalCityId": city.toString(),
+        "StpSalType": gender.toString(),
+        "StpSalGpsLocation": location,
+        "StpSalLongitude": lat.toString(),
+        "StpSalLatitude": long.toString(),
+        "StpSalSalonNoteAbout": aboutSalon
+      }).then((value) {
+        salonIdResponse = ResponseModel.fromJson(value.data);
+        print(value.data);
+        if (value.data['status'] == true) {
+          emit(InsertSalonSuccessState());
+        } else
+          emit(InsertSalonErrorState());
+      }).catchError((error) {
         emit(InsertSalonErrorState());
+        print(error.toString());
+      });
     }).catchError((error) {
       emit(InsertSalonErrorState());
-      print(error.toString());
     });
   }
 
