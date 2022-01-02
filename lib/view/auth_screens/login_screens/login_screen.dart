@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:work/cubit/auth_cubit/auth_cubit.dart';
 import 'package:work/cubit/auth_cubit/auth_states.dart';
+import 'package:work/cubit/salon_cubit/salon_cubit.dart';
 import 'package:work/network/local/cache_helper.dart';
 import 'package:work/shared/components/custom_button.dart';
 import 'package:work/shared/constants.dart';
@@ -38,6 +39,7 @@ class LoginScreen extends StatelessWidget {
             CacheHelper.setData(
                     key: 'token', value: state.loginModel.data.userLoginToken)
                 .then((value) {
+              kToken = CacheHelper.getData('token');
               switch (state.loginModel.data.usrType) {
                 case 'CUSTOMER':
                   {
@@ -61,6 +63,8 @@ class LoginScreen extends StatelessWidget {
                   {
                     navigateAndFinish(context, SalonLayout());
                     CacheHelper.setData(key: 'userType', value: 'BARBERSHOP');
+                    SalonCubit.get(context)
+                        .getMySalonInfo(userName: usrNameController.text);
                   }
                   break;
               }

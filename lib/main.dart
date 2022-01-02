@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => UserCubit()..fetchData()),
         BlocProvider(create: (context) => BarberCubit()),
         BlocProvider(create: (context) => ProviderCubit()),
-        BlocProvider(create: (context) => SalonCubit()),
+        BlocProvider(create: (context) => SalonCubit()..fetchData()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

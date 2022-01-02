@@ -250,6 +250,9 @@ class UserHomeScreen extends StatelessWidget {
                                 physics: NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   return SalonCard(
+                                    salonRate: double.parse(cubit
+                                        .salonInfoModel.data[index].salonRate
+                                        .toString()),
                                     salonName: cubit.salonInfoModel.data[index]
                                         .stpSalNameAr,
                                     salonAddress: cubit.salonInfoModel
@@ -508,12 +511,14 @@ class SalonCard extends StatelessWidget {
     this.salonAddress,
     this.bookingsCount = 0,
     this.onTap,
+    this.salonRate,
   }) : super(key: key);
 
   final salonName;
   final salonAddress;
   final bookingsCount;
   final onTap;
+  final salonRate;
 
   @override
   Widget build(BuildContext context) {
@@ -556,34 +561,35 @@ class SalonCard extends StatelessWidget {
                   ),
 
                   /// Rating Bars
-                  // Row(
-                  //   textDirection: TextDirection.rtl,
-                  //   children: [
-                  //     RatingBar.builder(
-                  //       initialRating: salonRate,
-                  //       textDirection: TextDirection.rtl,
-                  //       minRating: 1,
-                  //       itemSize: 12,
-                  //       direction: Axis.horizontal,
-                  //       allowHalfRating: true,
-                  //       itemCount: 5,
-                  //       itemPadding: EdgeInsets.symmetric(horizontal: 1),
-                  //       itemBuilder: (context, _) => Icon(
-                  //         Icons.star,
-                  //         color: Colors.amber,
-                  //       ),
-                  //       onRatingUpdate: (rating) {
-                  //         print(rating);
-                  //       },
-                  //     ),
-                  //   ],
-                  // ),
                   Row(
                     textDirection: TextDirection.rtl,
                     children: [
-                      Text(salonAddress),
+                      RatingBar.builder(
+                        initialRating: salonRate,
+                        textDirection: TextDirection.rtl,
+                        minRating: 1,
+                        itemSize: 12,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemPadding: EdgeInsets.symmetric(horizontal: 1),
+                        itemBuilder: (context, _) => Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                        onRatingUpdate: (rating) {
+                          print(rating);
+                        },
+                      ),
                     ],
                   ),
+                  SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.5,
+                      child: Text(
+                        salonAddress,
+                        textDirection: TextDirection.rtl,
+                        overflow: TextOverflow.ellipsis,
+                      )),
                   Row(
                     textDirection: TextDirection.rtl,
                     children: [

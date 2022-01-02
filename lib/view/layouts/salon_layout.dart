@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:work/cubit/salon_cubit/salon_cubit.dart';
 import 'package:work/cubit/salon_cubit/salon_states.dart';
+import 'package:work/models/salon_info_model.dart';
+import 'package:work/network/local/cache_helper.dart';
 import 'package:work/shared/custom_icons.dart';
 
 class SalonLayout extends StatelessWidget {
@@ -10,7 +14,7 @@ class SalonLayout extends StatelessWidget {
   static const String id = 'SalonLayout';
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<SalonCubit,SalonStates>(
+    return BlocConsumer<SalonCubit, SalonStates>(
       listener: (context, state) {},
       builder: (context, state) {
         SalonCubit cubit = SalonCubit.get(context);
@@ -52,11 +56,9 @@ class SalonLayout extends StatelessWidget {
                     BottomNavigationBarItem(
                         icon: Icon(CustomIcons.barber), label: 'الحلاقين'),
                     BottomNavigationBarItem(
-                        icon: Icon(CustomIcons.appointment),
-                        label: 'الحجوزات'),
+                        icon: Icon(CustomIcons.appointment), label: 'الحجوزات'),
                     BottomNavigationBarItem(
-                        icon: Icon(CustomIcons.offers),
-                        label: 'العروض'),
+                        icon: Icon(CustomIcons.offers), label: 'العروض'),
                     BottomNavigationBarItem(
                         icon: Icon(CustomIcons.hair_salon), label: 'الرئيسية'),
                   ],

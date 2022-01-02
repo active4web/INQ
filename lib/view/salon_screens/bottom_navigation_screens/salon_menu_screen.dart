@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:work/cubit/salon_cubit/salon_cubit.dart';
+import 'package:work/cubit/salon_cubit/salon_states.dart';
 import 'package:work/shared/constants.dart';
 import 'package:work/shared/defaults.dart';
 import 'package:work/view/salon_screens/salon_menu_screens/attendance_qr_code_screen.dart';
@@ -49,40 +52,48 @@ class SalonMenuScreen extends StatelessWidget {
                                 width: 80,
                                 height: 80,
                                 decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                            'Assets/images/Avatar.png')),
+                                    // image: DecorationImage(
+                                    //     image: AssetImage(
+                                    //         'Assets/images/Avatar.png')),
+                                    color: Colors.white,
                                     borderRadius: BorderRadius.circular(10)),
                               ),
                               SizedBox(
                                 width: 10,
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                textDirection: TextDirection.rtl,
-                                children: [
-                                  Text(
-                                    'INQ Salon',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 20),
-                                  ),
-                                  Container(
-                                    width: 100,
-                                    height: 30,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: Center(
-                                        child: Text(
-                                      'ادارة الحساب',
-                                      textDirection: TextDirection.rtl,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 10),
-                                    )),
-                                  )
-                                ],
+                              BlocBuilder<SalonCubit, SalonStates>(
+                                builder: (context, state) {
+                                  SalonCubit cubit = SalonCubit.get(context);
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    textDirection: TextDirection.rtl,
+                                    children: [
+                                      Text(
+                                        cubit.mySalonInfo.data[0].stpSalNameAr,
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 20),
+                                      ),
+                                      Container(
+                                        width: 100,
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                        ),
+                                        child: Center(
+                                            child: Text(
+                                          'ادارة الحساب',
+                                          textDirection: TextDirection.rtl,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 10),
+                                        )),
+                                      )
+                                    ],
+                                  );
+                                },
                               )
                             ],
                           )

@@ -32,6 +32,7 @@ class SalonInfoModel {
 class Datum {
   Datum({
     this.stpSalId,
+    this.salonRate,
     this.stpSalUsername,
     this.stpSalBranchId,
     this.stpSalQrKeyCode,
@@ -58,6 +59,7 @@ class Datum {
     this.stpSalUpdatedOn,
   });
 
+  dynamic salonRate;
   int stpSalId;
   String stpSalUsername;
   int stpSalBranchId;
@@ -86,6 +88,7 @@ class Datum {
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         stpSalId: json["stpSalId"],
+        salonRate: json["salonRate"],
         stpSalUsername: json["stpSalUsername"],
         stpSalBranchId: json["stpSalBranchId"],
         stpSalQrKeyCode: json["stpSalQrKeyCode"],
@@ -120,6 +123,7 @@ class Datum {
 
   Map<String, dynamic> toJson() => {
         "stpSalId": stpSalId,
+        "salonRate": salonRate,
         "stpSalUsername": stpSalUsername,
         "stpSalBranchId": stpSalBranchId,
         "stpSalQrKeyCode": stpSalQrKeyCode,

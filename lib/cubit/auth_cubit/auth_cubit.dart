@@ -189,7 +189,9 @@ class AuthCubit extends Cubit<AuthStates> {
         "StpSalGpsLocation": location,
         "StpSalLongitude": lat.toString(),
         "StpSalLatitude": long.toString(),
-        "StpSalSalonNoteAbout": aboutSalon
+        "StpSalSalonNoteAbout": aboutSalon,
+        "SalonRate": "0",
+        "StpFavId": "0"
       }).then((value) {
         salonIdResponse = ResponseModel.fromJson(value.data);
         print(value.data);
