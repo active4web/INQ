@@ -22,6 +22,7 @@ Future<void> main() async {
   DioHelper.init();
   await CacheHelper.init();
   kToken = CacheHelper.getData('token');
+
   runApp(MyApp());
 }
 

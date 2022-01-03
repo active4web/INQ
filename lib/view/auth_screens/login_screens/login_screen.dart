@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:work/cubit/auth_cubit/auth_cubit.dart';
 import 'package:work/cubit/auth_cubit/auth_states.dart';
 import 'package:work/cubit/salon_cubit/salon_cubit.dart';
+import 'package:work/models/salon_info_model.dart';
 import 'package:work/network/local/cache_helper.dart';
 import 'package:work/shared/components/custom_button.dart';
 import 'package:work/shared/constants.dart';
@@ -36,6 +37,7 @@ class LoginScreen extends StatelessWidget {
           if (state is LoginSuccessState) {
             CacheHelper.setData(
                 key: 'userInfo', value: jsonEncode(state.loginModel));
+            CacheHelper.setData(key: 'userName', value: usrNameController.text);
             CacheHelper.setData(
                     key: 'token', value: state.loginModel.data.userLoginToken)
                 .then((value) {
