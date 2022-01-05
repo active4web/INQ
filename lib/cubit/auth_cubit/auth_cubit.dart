@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -233,6 +234,19 @@ class AuthCubit extends Cubit<AuthStates> {
       print(error.toString());
       emit(LoginErrorState());
     });
+  }
+
+  String filToString;
+  String fileName;
+  void pickFile() async {
+    FilePickerResult result = await FilePicker.platform.pickFiles();
+    if (result != null) {
+      Uint8List fileBytes = result.files.first.bytes;
+      filToString = base64Encode(fileBytes);
+      fileName = result.files.first.name;
+      print(fileName);
+      emit(PickFileSuccessState());
+    }
   }
 
   Future<XFile> pickImage(file) async {

@@ -1,10 +1,11 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:work/cubit/auth_cubit/auth_states.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:work/cubit/salon_cubit/salon_states.dart';
 import 'package:work/models/salon_info_model.dart';
 import 'package:work/models/salon_services_model.dart';
@@ -18,10 +19,6 @@ import 'package:work/view/salon_screens/bottom_navigation_screens/salon_home_scr
 import 'package:work/view/salon_screens/bottom_navigation_screens/salon_menu_screen.dart';
 import 'package:work/view/salon_screens/bottom_navigation_screens/salon_offers_screen.dart';
 import 'package:work/view/salon_screens/bottom_navigation_screens/salon_reservations_screen.dart';
-import 'package:work/view/user_screens/bottom_navigation_screens/user_home_screen.dart';
-import 'package:work/view/user_screens/bottom_navigation_screens/user_menu_screen.dart';
-import 'package:work/view/user_screens/bottom_navigation_screens/user_profile_screen.dart';
-import 'package:work/view/user_screens/bottom_navigation_screens/user_reservations_screen.dart';
 
 class SalonCubit extends Cubit<SalonStates> {
   SalonCubit() : super(SalonInitialState());
@@ -70,7 +67,7 @@ class SalonCubit extends Cubit<SalonStates> {
     DioHelper.getData(url: 'ShopServiceSetup/getSalonServices', query: {
       'accessType': "MOBILE",
       'uuidToken': kToken,
-      'stpSalId': /*mySalonInfo.data[0].stpSalId*/ 3
+      'stpSalId': mySalonInfo.data[0].stpSalId
     }).then((value) {
       print(value.data);
       salonServicesModel = SalonServicesModel.fromJson(value.data);
@@ -111,6 +108,56 @@ class SalonCubit extends Cubit<SalonStates> {
       emit(InsertSalonServiceErrorState());
       print(error);
     });
+  }
+
+  void updateSalonService(
+      {int salId, stpSsrId, neededHours, stpSsrServicesId, neededMinutes}) {
+    emit(UpdateSalonServiceLoadingState());
+    DioHelper.postData(url: 'ShopServiceSetup/updateStpSalServices', query: {
+      'accessType': "MOBILE",
+      'uuidToken': kToken,
+      'language': 'ar'
+    }, data: {
+      "stpSsrId": stpSsrId,
+      "stpSalId": salId,
+      "stpSsrNeedTimeHoure": neededHours,
+      "stpSpnBranchId": "1",
+      "stpSsrNeedTimeMinut": neededMinutes,
+      "stpSsrServicesId": stpSsrServicesId
+    }).then((value) {
+      if (value.data['status'] == true)
+        emit(UpdateSalonServiceSuccessState());
+      else
+        emit(UpdateSalonServiceErrorState());
+    }).catchError((error) {
+      emit(UpdateSalonServiceErrorState());
+      print(error);
+    });
+  }
+
+  void deleteSalonService({int serviceId}) {
+    emit(DeleteSalonServiceLoadingState());
+    DioHelper.postData(url: 'ShopServiceSetup/deleteStpSalServices', query: {
+      'accessType': "MOBILE",
+      'uuidToken': kToken,
+      'language': 'ar',
+      'stpSsrId': serviceId
+    }).then((value) {
+      print(value.data);
+      value.data['data'] == true
+          ? emit(DeleteSalonServiceSuccessState())
+          : emit(DeleteSalonServiceErrorState());
+    }).catchError((error) {
+      emit(DeleteSalonServiceErrorState());
+      print(error);
+    });
+  }
+
+  Uint8List salonQrImage;
+  Future<void> generateSalonQrCode() async {
+    salonQrImage =
+        await scanner.generateBarCode(mySalonInfo.data[0].stpSalQrKeyCode);
+    emit(GenerateCodeSuccessState());
   }
 
   void getCache() {

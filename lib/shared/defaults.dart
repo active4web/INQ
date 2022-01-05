@@ -5,10 +5,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:work/network/local/cache_helper.dart';
 import 'package:work/shared/constants.dart';
 import 'package:work/view/auth_screens/login_screens/login_screen.dart';
-
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'components/custom_button.dart';
-import 'components/custom_close_button.dart';
-import 'components/custom_form_field.dart';
 
 void navigateTo(BuildContext context, Widget screen) {
   Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
@@ -105,6 +103,67 @@ void logOut(context) {
   CacheHelper.removeData('userType')
       .then((value) => navigateAndFinish(context, LoginScreen()));
   CacheHelper.clearCache();
+}
+
+void ensureDeleteMessage({context, onTap, String text}) {
+  showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+            backgroundColor: Color(0xffF8F8F8),
+            title: Center(
+                child: Text(
+              text,
+              textDirection: TextDirection.rtl,
+              style: TextStyle(
+                color: kPrimaryColor,
+                fontWeight: FontWeight.bold,
+              ),
+            )),
+            actionsAlignment: MainAxisAlignment.spaceEvenly,
+            actions: [
+              TextButton(
+                child: Text(
+                  'تراجع',
+                  style: TextStyle(color: Colors.white),
+                ),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(kPrimaryColor),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              TextButton(
+                child: Text(
+                  'حذف',
+                  style: TextStyle(color: Colors.white),
+                ),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.red),
+                ),
+                onPressed: onTap,
+              ),
+            ],
+          ));
+}
+
+void showLoadingDialogue(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      content: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SpinKitFadingCircle(
+              color: kPrimaryColor,
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }
 
 /// Print Long String

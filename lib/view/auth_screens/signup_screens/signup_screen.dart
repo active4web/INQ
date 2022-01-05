@@ -266,6 +266,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     showToast(
                                         text: 'تأكد من ملئ البيانات بشكل كامل',
                                         color: Colors.red);
+                                  } else if (passwordController.text.length <
+                                      8) {
+                                    showToast(
+                                        text:
+                                            'كلمة المرور يجب ألا تقل عن 8 عناصر',
+                                        color: Colors.red);
                                   } else if (passwordController.text !=
                                       confirmPassController.text) {
                                     showToast(

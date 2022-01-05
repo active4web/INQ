@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:work/cubit/auth_cubit/auth_cubit.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:work/cubit/user_cubit/user_cubit.dart';
 import 'package:work/cubit/user_cubit/user_states.dart';
 import 'package:work/shared/components/custom_button.dart';
@@ -236,6 +236,10 @@ class UserHomeScreen extends StatelessWidget {
                                   const EdgeInsets.symmetric(horizontal: 30),
                               child: CustomButton(
                                 label: 'مزامنة باستخدام QR code ',
+                                onTab: () async {
+                                  String cameraScanResult =
+                                      await scanner.scan();
+                                },
                               ),
                             ),
                             SizedBox(

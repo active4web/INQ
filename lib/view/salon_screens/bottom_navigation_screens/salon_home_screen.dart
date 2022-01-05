@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +9,9 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:work/cubit/salon_cubit/salon_cubit.dart';
 import 'package:work/cubit/salon_cubit/salon_states.dart';
 import 'package:work/shared/components/custom_button.dart';
+import 'package:work/shared/components/custom_close_button.dart';
 import 'package:work/shared/constants.dart';
+import 'package:work/shared/defaults.dart';
 
 class SalonHomeScreen extends StatefulWidget {
   const SalonHomeScreen({Key key}) : super(key: key);
@@ -24,6 +29,7 @@ class _SalonHomeScreenState extends State<SalonHomeScreen>
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
     _calenderController = CalendarController();
+    SalonCubit.get(context).generateSalonQrCode();
     super.initState();
   }
 
@@ -38,6 +44,8 @@ class _SalonHomeScreenState extends State<SalonHomeScreen>
     return BlocBuilder<SalonCubit, SalonStates>(
       builder: (context, state) {
         SalonCubit cubit = SalonCubit.get(context);
+        Uint8List bytes =
+            Base64Codec().decode(cubit.mySalonInfo.data[0].stpSalShopPicture);
         return cubit.mySalonInfo == null
             ? Center(
                 child: CircularProgressIndicator(
@@ -48,6 +56,7 @@ class _SalonHomeScreenState extends State<SalonHomeScreen>
                 appBar: PreferredSize(
                   preferredSize: Size.fromHeight(80),
                   child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
                     color: kLightGreenColor,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -60,12 +69,12 @@ class _SalonHomeScreenState extends State<SalonHomeScreen>
                             textDirection: TextDirection.rtl,
                             children: [
                               Container(
-                                width: 50,
-                                height: 50,
+                                width: 60,
+                                height: 60,
                                 decoration: BoxDecoration(
-                                    // image: DecorationImage(
-                                    //     image: AssetImage('Assets/images/Avatar.png')
-                                    // ),
+                                    image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: MemoryImage(bytes)),
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(10)),
                               ),
@@ -108,6 +117,69 @@ class _SalonHomeScreenState extends State<SalonHomeScreen>
                           height: 30,
                         ),
                         CustomButton(
+                          onTab: () {
+                            showCustomBottomSheet(
+                                context: context,
+                                content: Column(
+                                  children: [
+                                    Text(
+                                      'PLS scan QR code from customer mobile account',
+                                      style: TextStyle(
+                                          fontSize: 15, color: Colors.black87),
+                                    ),
+                                    cubit.salonQrImage == null
+                                        ? Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.6,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.6,
+                                            child: Center(
+                                              child: CircularProgressIndicator(
+                                                color: kPrimaryColor,
+                                              ),
+                                            ),
+                                          )
+                                        : Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.6,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.6,
+                                            margin: EdgeInsets.all(20),
+                                            decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                    image: MemoryImage(
+                                                        cubit.salonQrImage))),
+                                          ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      textDirection: TextDirection.rtl,
+                                      children: [
+                                        SizedBox(
+                                            width: 250,
+                                            child: CustomButton(
+                                              label: 'تم',
+                                            )),
+                                        SizedBox(
+                                          width: 20,
+                                        ),
+                                        CustomCloseButton()
+                                      ],
+                                    ),
+                                  ],
+                                ));
+                          },
                           label: 'احجز باستخدام QR code',
                         ),
                         SizedBox(

@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:work/cubit/salon_cubit/salon_cubit.dart';
@@ -12,6 +15,7 @@ import 'package:work/view/salon_screens/salon_menu_screens/salon_satatistics_scr
 import 'package:work/view/salon_screens/salon_menu_screens/salon_services_screen.dart';
 import 'package:work/view/salon_screens/salon_menu_screens/salon_settings_screen.dart';
 import 'package:work/view/salon_screens/salon_menu_screens/salon_subscriptions_screen.dart';
+import 'package:work/view/salon_screens/salon_profile_screen.dart';
 import 'package:work/view/user_screens/bottom_navigation_screens/user_menu_screen.dart';
 
 class SalonMenuScreen extends StatelessWidget {
@@ -24,6 +28,8 @@ class SalonMenuScreen extends StatelessWidget {
       body: BlocBuilder<SalonCubit, SalonStates>(
         builder: (context, state) {
           SalonCubit cubit = SalonCubit.get(context);
+          Uint8List bytes =
+              Base64Codec().decode(cubit.mySalonInfo.data[0].stpSalShopPicture);
           return SingleChildScrollView(
             child: Container(
               width: MediaQuery.of(context).size.width,
@@ -55,9 +61,9 @@ class SalonMenuScreen extends StatelessWidget {
                                     width: 80,
                                     height: 80,
                                     decoration: BoxDecoration(
-                                        // image: DecorationImage(
-                                        //     image: AssetImage(
-                                        //         'Assets/images/Avatar.png')),
+                                        image: DecorationImage(
+                                            image: MemoryImage(bytes),
+                                            fit: BoxFit.cover),
                                         color: Colors.white,
                                         borderRadius:
                                             BorderRadius.circular(10)),
@@ -77,22 +83,28 @@ class SalonMenuScreen extends StatelessWidget {
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 20),
                                       ),
-                                      Container(
-                                        width: 100,
-                                        height: 30,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(20),
+                                      GestureDetector(
+                                        onTap: () {
+                                          navigateTo(
+                                              context, SalonProfileScreen());
+                                        },
+                                        child: Container(
+                                          width: 100,
+                                          height: 30,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                          child: Center(
+                                              child: Text(
+                                            'ادارة الحساب',
+                                            textDirection: TextDirection.rtl,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 10),
+                                          )),
                                         ),
-                                        child: Center(
-                                            child: Text(
-                                          'ادارة الحساب',
-                                          textDirection: TextDirection.rtl,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 10),
-                                        )),
                                       )
                                     ],
                                   ),

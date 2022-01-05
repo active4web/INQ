@@ -36,7 +36,10 @@ dependencies:
   map_pin_picker: any
   table_calendar:
   pin_code_fields: ^7.3.0
+  file_picker: ^4.3.0
   dio: ^4.0.0
+  flutter_spinkit: ^5.1.0
+  qrscan: ^0.3.2
   nil: ^1.1.1
   country_code_picker: ^2.0.2
   fluttertoast: ^8.0.8

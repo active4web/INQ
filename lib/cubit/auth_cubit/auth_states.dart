@@ -42,6 +42,8 @@ class CheckOtpErrorState extends AuthStates {}
 
 class PickImageSuccessState extends AuthStates {}
 
+class PickFileSuccessState extends AuthStates {}
+
 class InsertSalonLoadingState extends AuthStates {}
 
 class InsertSalonSuccessState extends AuthStates {}

@@ -7,6 +7,7 @@ import 'package:work/shared/components/custom_close_button.dart';
 import 'package:work/shared/components/custom_dropdown_menu.dart';
 import 'package:work/shared/components/custom_form_field.dart';
 import 'package:work/shared/constants.dart';
+import 'package:work/shared/defaults.dart';
 
 class AddServiceScreen extends StatelessWidget {
   const AddServiceScreen({Key key}) : super(key: key);
@@ -17,7 +18,23 @@ class AddServiceScreen extends StatelessWidget {
     TextEditingController hoursController = new TextEditingController();
     TextEditingController minutesController = new TextEditingController();
     return BlocConsumer<SalonCubit, SalonStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is InsertSalonServiceSuccessState) {
+          showAlertDialogWithAction(
+              imagePath: 'Assets/images/success.png',
+              messageColor: kPrimaryColor,
+              context: context,
+              message: 'تم اضافة الخدمة بنجاح',
+              buttonText: 'تم',
+              action: () {
+                SalonCubit.get(context).getSalonServices();
+                Navigator.pop(context);
+                Navigator.pop(context);
+              });
+        } else if (state is InsertSalonServiceErrorState) {
+          showToast(text: 'فشل اضافة خدمة جديدة', color: Colors.red);
+        }
+      },
       builder: (context, state) {
         SalonCubit cubit = SalonCubit.get(context);
         return Scaffold(
@@ -105,7 +122,7 @@ class AddServiceScreen extends StatelessWidget {
                                   onTab: () {
                                     cubit.insertSalonService(
                                         salId:
-                                            3 /*cubit.mySalonInfo.data[0].stpSalId*/,
+                                            cubit.mySalonInfo.data[0].stpSalId,
                                         serviceId: serviceCode,
                                         neededHours: hoursController.text,
                                         neededMinutes: minutesController.text);

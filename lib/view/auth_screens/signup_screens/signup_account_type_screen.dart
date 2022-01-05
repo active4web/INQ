@@ -157,18 +157,31 @@ class SignUpAccountTypeScreen extends StatelessWidget {
                           icon: CustomIcons.man,
                         ),
                         SquareTile(
+                          label: 'حلاق',
+                          onTab: () {
+                            navigateTo(
+                                context,
+                                SignupBarberAccountScreen(
+                                  email: email,
+                                  phone: phone,
+                                  usrName: usrName,
+                                  password: password,
+                                  fullName: fullName,
+                                  country: country,
+                                  city: city,
+                                  gender: gender,
+                                  usrType: 'BARBER',
+                                  otp: otp,
+                                ));
+                          },
+                          icon: CustomIcons.barber,
+                        ),
+                        SquareTile(
                           label: 'موردين',
                           onTab: () {
                             navigateTo(context, SignupProviderAccountScreen());
                           },
                           icon: CustomIcons.shaving_cream,
-                        ),
-                        SquareTile(
-                          label: 'حلاق',
-                          onTab: () {
-                            navigateTo(context, SignupBarberAccountScreen());
-                          },
-                          icon: CustomIcons.barber,
                         ),
                       ],
                     ),
