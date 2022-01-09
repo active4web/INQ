@@ -49,3 +49,9 @@ class InsertSalonLoadingState extends AuthStates {}
 class InsertSalonSuccessState extends AuthStates {}
 
 class InsertSalonErrorState extends AuthStates {}
+
+class InsertBarberLoadingState extends AuthStates {}
+
+class InsertBarberSuccessState extends AuthStates {}
+
+class InsertBarberErrorState extends AuthStates {}

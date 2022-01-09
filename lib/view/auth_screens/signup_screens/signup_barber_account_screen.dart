@@ -11,6 +11,8 @@ import 'package:work/shared/components/custom_dropdown_menu.dart';
 import 'package:work/shared/components/custom_form_field.dart';
 import 'package:work/shared/components/custom_image_picker.dart';
 import 'package:work/shared/constants.dart';
+import 'package:work/shared/defaults.dart';
+import 'package:work/view/auth_screens/login_screens/login_screen.dart';
 import 'package:work/view/user_screens/bottom_navigation_screens/user_profile_screen.dart';
 
 class SignupBarberAccountScreen extends StatelessWidget {
@@ -43,7 +45,8 @@ class SignupBarberAccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     XFile file;
     XFile imageFile;
-    File usrImage;
+    File barberImage;
+    bool isLoading = false;
     TextEditingController barberNameController = new TextEditingController();
     TextEditingController experienceYearsController =
         new TextEditingController();
@@ -67,12 +70,31 @@ class SignupBarberAccountScreen extends StatelessWidget {
       ),
       body: BlocConsumer<AuthCubit, AuthStates>(
         listener: (context, state) {
-          // TODO: implement listener
+          AuthCubit cubit = AuthCubit.get(context);
+          if (state is InsertBarberSuccessState) {
+            isLoading = false;
+            showAlertDialogWithAction(
+                imagePath: 'Assets/images/success.png',
+                context: context,
+                message: 'تم انشاء الحساب بنجاح',
+                buttonText: 'شكرًا',
+                action: () {
+                  navigateAndFinish(context, LoginScreen());
+                });
+          } else if (state is InsertBarberErrorState) {
+            isLoading = false;
+            showToast(text: 'فشل انشاء حساب', color: Colors.red);
+          } else if (state is SignupErrorState) {
+            isLoading = false;
+            showToast(
+                color: Colors.red,
+                text: cubit.signUpFailModel.data.errorLookup.scEnDesc);
+          }
         },
         builder: (context, state) {
           AuthCubit cubit = AuthCubit.get(context);
           if (imageFile != null) {
-            usrImage = File(imageFile.path);
+            barberImage = File(imageFile.path);
           }
           return SingleChildScrollView(
             child: Column(
@@ -153,8 +175,32 @@ class SignupBarberAccountScreen extends StatelessWidget {
                         ],
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
+                      cubit.fileName == null
+                          ? SizedBox()
+                          : Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    cubit.fileName ?? '',
+                                    style: TextStyle(
+                                      color: Colors.black54,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Icon(
+                                    Icons.check,
+                                    color: kPrimaryColor,
+                                    size: 20,
+                                  )
+                                ],
+                              ),
+                            )
                     ],
                   ),
                 ),
@@ -167,10 +213,40 @@ class SignupBarberAccountScreen extends StatelessWidget {
                   children: [
                     SizedBox(
                         width: 270,
-                        child: CustomButton(
-                          label: 'انشاء حساب',
-                          onTab: () {},
-                        )),
+                        child: isLoading
+                            ? Center(
+                                child: CircularProgressIndicator(
+                                  color: kPrimaryColor,
+                                ),
+                              )
+                            : CustomButton(
+                                label: 'انشاء حساب',
+                                onTab: () {
+                                  isLoading = true;
+                                  cubit.signUp(
+                                    otpValue: otp,
+                                    email: email,
+                                    countryId: country,
+                                    cityId: city,
+                                    genderId: gender,
+                                    clientFullName: fullName,
+                                    mobile: phone,
+                                    password: password,
+                                    userType: usrType,
+                                    userName: usrName,
+                                    usrImage: barberImage,
+                                  );
+                                  cubit.insertBarber(
+                                    gender: gender,
+                                    email: email,
+                                    barberName: barberNameController.text,
+                                    barberImage: barberImage,
+                                    barberUserName: usrName,
+                                    yearsOfExperience:
+                                        experienceYearsController.text,
+                                  );
+                                },
+                              )),
                     SizedBox(
                       width: 20,
                     ),

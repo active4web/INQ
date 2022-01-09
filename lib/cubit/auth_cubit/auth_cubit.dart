@@ -206,6 +206,52 @@ class AuthCubit extends Cubit<AuthStates> {
       });
     }).catchError((error) {
       emit(InsertSalonErrorState());
+      print(error.toString());
+    });
+  }
+
+  void insertBarber(
+      {String barberUserName,
+      String barberName,
+      String email,
+      int gender,
+      String yearsOfExperience,
+      File barberImage}) {
+    Uint8List barberImageBytes = barberImage.readAsBytesSync();
+    String barberImageString = base64Encode(barberImageBytes);
+    emit(InsertBarberLoadingState());
+    DioHelper.getData(url: 'ShopServiceSetup/generateBarCode', query: {
+      'accessType': 'MOBILE',
+    }).then((qrCode) {
+      print(qrCode.data['data']);
+      DioHelper.postData(url: 'ShopServiceSetup/insertStpSalBarbers', query: {
+        'accessType': 'MOBILE',
+        'language': 'en'
+      }, data: {
+        "StpSbrUsername": barberUserName,
+        "StpSalQrKeyCode": qrCode.data['data'],
+        "StpSbrNameAr": barberName,
+        "StpSbrNameLt": barberName,
+        "StpSbrEmail": email,
+        "StpSbrGender": gender.toString(),
+        "StpSbrYearsOfExperience": yearsOfExperience,
+        "StpSbrPersonalPhoto": barberImageString,
+        "StpSbrCv": fileToString,
+        "StpSbrStatus": "1",
+        "StpSbrStatusDate": ""
+      }).then((value) {
+        print(value.data);
+        if (value.data['status'] == true) {
+          emit(InsertBarberSuccessState());
+        } else
+          emit(InsertBarberErrorState());
+      }).catchError((error) {
+        emit(InsertBarberErrorState());
+        print(error);
+      });
+    }).catchError((error) {
+      emit(InsertBarberErrorState());
+      print(error);
     });
   }
 
@@ -236,17 +282,15 @@ class AuthCubit extends Cubit<AuthStates> {
     });
   }
 
-  String filToString;
+  String fileToString;
   String fileName;
   void pickFile() async {
     FilePickerResult result = await FilePicker.platform.pickFiles();
-    if (result != null) {
-      Uint8List fileBytes = result.files.first.bytes;
-      filToString = base64Encode(fileBytes);
-      fileName = result.files.first.name;
-      print(fileName);
-      emit(PickFileSuccessState());
-    }
+    Uint8List fileBytes = result.files.first.bytes;
+    fileName = result.files.first.name;
+    if (fileBytes != null) fileToString = base64Encode(fileBytes);
+    print(fileName);
+    emit(PickFileSuccessState());
   }
 
   Future<XFile> pickImage(file) async {

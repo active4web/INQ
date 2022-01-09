@@ -39,10 +39,8 @@ class SalonCubit extends Cubit<SalonStates> {
     emit(SalonBottomNavState());
   }
 
-  // String userName;
   SalonInfoModel mySalonInfo;
-
-  SalonInfoModel mySalonInfoModel;
+  SalonInfoModel _salonInfoModel;
   void getMySalonInfo({String userName}) {
     emit(GetMySalonInfoLoadingState());
     DioHelper.getData(url: 'ShopServiceSetup/getSalonInfo', query: {
@@ -51,10 +49,9 @@ class SalonCubit extends Cubit<SalonStates> {
       'username': userName
     }).then((value) {
       print(value.data);
-      mySalonInfoModel = SalonInfoModel.fromJson(value.data);
+      _salonInfoModel = SalonInfoModel.fromJson(value.data);
       emit(GetMySalonInfoSuccessState());
-      CacheHelper.setData(
-          key: 'salonInfo', value: jsonEncode(mySalonInfoModel));
+      CacheHelper.setData(key: 'salonInfo', value: jsonEncode(_salonInfoModel));
     }).catchError((error) {
       emit(GetMySalonInfoErrorState());
       print(error.toString());

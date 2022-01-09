@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:work/cubit/auth_cubit/auth_cubit.dart';
 import 'package:work/cubit/auth_cubit/auth_states.dart';
+import 'package:work/cubit/barber_cubit/barber_cubit.dart';
 import 'package:work/cubit/salon_cubit/salon_cubit.dart';
 import 'package:work/models/salon_info_model.dart';
 import 'package:work/network/local/cache_helper.dart';
@@ -53,6 +54,8 @@ class LoginScreen extends StatelessWidget {
                   {
                     navigateAndFinish(context, BarberLayout());
                     CacheHelper.setData(key: 'userType', value: 'BARBER');
+                    BarberCubit.get(context)
+                        .getBarberInfo(userName: usrNameController.text);
                   }
                   break;
                 case 'PROVIDER':

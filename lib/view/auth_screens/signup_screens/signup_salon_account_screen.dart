@@ -221,7 +221,7 @@ class _SignUpSalonAccountScreenState extends State<SignUpSalonAccountScreen> {
                                 ),
                               )
                             : CustomButton(
-                                label: 'تسجيل',
+                                label: 'انشاء حساب',
                                 onTab: () {
                                   isLoading = true;
                                   cubit.signUp(
