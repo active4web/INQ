@@ -50,26 +50,26 @@ class LoginScreen extends StatelessWidget {
                     CacheHelper.setData(key: 'userType', value: 'CUSTOMER');
                   }
                   break;
-                case 'BARBER':
-                  {
-                    navigateAndFinish(context, BarberLayout());
-                    CacheHelper.setData(key: 'userType', value: 'BARBER');
-                    BarberCubit.get(context)
-                        .getBarberInfo(userName: usrNameController.text);
-                  }
-                  break;
                 case 'PROVIDER':
                   {
                     navigateAndFinish(context, ProviderLayout());
                     CacheHelper.setData(key: 'userType', value: 'PROVIDER');
                   }
                   break;
+                case 'BARBER':
+                  {
+                    BarberCubit.get(context)
+                        .getBarberInfo(userName: usrNameController.text);
+                    navigateAndFinish(context, BarberLayout());
+                    CacheHelper.setData(key: 'userType', value: 'BARBER');
+                  }
+                  break;
                 case 'BARBERSHOP':
                   {
-                    navigateAndFinish(context, SalonLayout());
-                    CacheHelper.setData(key: 'userType', value: 'BARBERSHOP');
                     SalonCubit.get(context)
                         .getMySalonInfo(userName: usrNameController.text);
+                    navigateAndFinish(context, SalonLayout());
+                    CacheHelper.setData(key: 'userType', value: 'BARBERSHOP');
                   }
                   break;
               }

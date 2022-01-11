@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:work/shared/components/custom_button.dart';
-import 'package:work/shared/components/custom_close_button.dart';
+import 'package:qrscan/qrscan.dart' as scanner;
 import 'package:work/shared/constants.dart';
 import 'package:work/shared/custom_icons.dart';
 import 'package:work/shared/defaults.dart';
@@ -52,6 +52,9 @@ class BarberHomeScreen extends StatelessWidget {
                   SquareTile(
                     label: 'تسجيل الدخول / الخروج',
                     icon: CustomIcons.resign,
+                    onTab: () {
+                      logOut(context);
+                    },
                   ),
                   SquareTile(
                     label: 'اجازة',
@@ -64,46 +67,47 @@ class BarberHomeScreen extends StatelessWidget {
               ),
               CustomButton(
                 label: 'اتصل بالصالون عن طريق QR code',
-                onTab: () {
-                  showCustomBottomSheet(
-                      context: context,
-                      content: Column(
-                        children: [
-                          Text(
-                            'scan Salon QR code for attendance',
-                            style:
-                                TextStyle(fontSize: 20, color: Colors.black87),
-                          ),
-                          Container(
-                            width: 250,
-                            height: 250,
-                            margin: EdgeInsets.all(20),
-                            color: Colors.black,
-                            // child: QRView(
-                            //   key: qrKey,
-                            //   onQRViewCreated: _onQRViewCreated,
-                            // ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            textDirection: TextDirection.rtl,
-                            children: [
-                              SizedBox(
-                                  width: 250,
-                                  child: CustomButton(
-                                    label: 'تم',
-                                  )),
-                              SizedBox(
-                                width: 20,
-                              ),
-                              CustomCloseButton()
-                            ],
-                          ),
-                        ],
-                      ));
+                onTab: () async {
+                  String cameraScanResult = await scanner.scan();
+                  // showCustomBottomSheet(
+                  //     context: context,
+                  //     content: Column(
+                  //       children: [
+                  //         Text(
+                  //           'scan Salon QR code for attendance',
+                  //           style:
+                  //               TextStyle(fontSize: 20, color: Colors.black87),
+                  //         ),
+                  //         Container(
+                  //           width: 250,
+                  //           height: 250,
+                  //           margin: EdgeInsets.all(20),
+                  //           color: Colors.black,
+                  //           // child: QRView(
+                  //           //   key: qrKey,
+                  //           //   onQRViewCreated: _onQRViewCreated,
+                  //           // ),
+                  //         ),
+                  //         SizedBox(
+                  //           height: 10,
+                  //         ),
+                  //         Row(
+                  //           mainAxisAlignment: MainAxisAlignment.center,
+                  //           textDirection: TextDirection.rtl,
+                  //           children: [
+                  //             SizedBox(
+                  //                 width: 250,
+                  //                 child: CustomButton(
+                  //                   label: 'تم',
+                  //                 )),
+                  //             SizedBox(
+                  //               width: 20,
+                  //             ),
+                  //             CustomCloseButton()
+                  //           ],
+                  //         ),
+                  //       ],
+                  //     ));
                 },
               ),
               SizedBox(

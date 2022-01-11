@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:work/cubit/auth_cubit/auth_cubit.dart';
 import 'package:work/cubit/barber_cubit/barber_cubit.dart';
 import 'package:work/cubit/provider_cubit/provider_cubit.dart';
-import 'package:work/cubit/salon_cubit/salon_cubit.dart';
 import 'package:work/cubit/user_cubit/user_cubit.dart';
 import 'package:work/shared/bloc_observer.dart';
 import 'package:work/shared/constants.dart';
@@ -13,6 +12,7 @@ import 'package:work/view/layouts/provider_layout.dart';
 import 'package:work/view/layouts/salon_layout.dart';
 import 'package:work/view/layouts/user_layout.dart';
 
+import 'cubit/salon_cubit/salon_cubit.dart';
 import 'network/local/cache_helper.dart';
 import 'network/remote/dio_helper.dart';
 
@@ -63,12 +63,12 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => AuthCubit()),
         BlocProvider(create: (context) => UserCubit()..fetchData()),
-        BlocProvider(create: (context) => BarberCubit()),
+        BlocProvider(create: (context) => BarberCubit()..fetchData()),
         BlocProvider(create: (context) => ProviderCubit()),
         BlocProvider(create: (context) => SalonCubit()..fetchData()),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Inq Salon',
         home: kToken == '' ? LoginScreen() : getCurrentUser(),
         theme: ThemeData(
             appBarTheme: AppBarTheme(centerTitle: true),

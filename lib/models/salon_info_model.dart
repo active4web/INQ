@@ -31,124 +31,108 @@ class SalonInfoModel {
 
 class Datum {
   Datum({
-    this.stpSalId,
     this.salonRate,
+    this.stpSalEmail,
+    this.stpSalCityId,
+    this.stpSalId,
+    this.stpSalNameAr,
+    this.stpSalType,
+    this.stpSalPhoneNumber,
+    this.stpSalVocationalLicense,
+    this.stpSalSalonsStatus,
     this.stpSalUsername,
     this.stpSalBranchId,
     this.stpSalQrKeyCode,
-    this.stpSalNameAr,
-    this.stpSalNameLt,
     this.stpSalOwnerNameAr,
-    this.stpSalOwnerNameLt,
-    this.stpSalPhoneNumber,
-    this.stpSalEmail,
-    this.stpSalVocationalLicense,
-    this.stpSalSalonsStatus,
-    this.stpSalSalonsStatusDate,
-    this.stpSalShopPicture,
-    this.stpSalCountryId,
-    this.stpSalCityId,
-    this.stpSalType,
-    this.stpSalGpsLocation,
     this.stpSalLongitude,
     this.stpSalLatitude,
+    this.stpSalCountryId,
+    this.stpSalGpsLocation,
+    this.stpSalSalonsStatusDate,
+    this.stpSalShopPicture,
     this.stpSalSalonNoteAbout,
     this.stpSalCreatedBy,
-    this.stpSalCreatedOn,
     this.stpSalUpdatedBy,
     this.stpSalUpdatedOn,
+    this.stpSalCreatedOn,
   });
 
   dynamic salonRate;
+  String stpSalEmail;
+  int stpSalCityId;
   int stpSalId;
+  String stpSalNameAr;
+  int stpSalType;
+  String stpSalPhoneNumber;
+  String stpSalVocationalLicense;
+  int stpSalSalonsStatus;
   String stpSalUsername;
   int stpSalBranchId;
   String stpSalQrKeyCode;
-  String stpSalNameAr;
-  String stpSalNameLt;
   String stpSalOwnerNameAr;
-  String stpSalOwnerNameLt;
-  String stpSalPhoneNumber;
-  String stpSalEmail;
-  String stpSalVocationalLicense;
-  int stpSalSalonsStatus;
-  int stpSalSalonsStatusDate;
-  String stpSalShopPicture;
-  int stpSalCountryId;
-  int stpSalCityId;
-  int stpSalType;
-  String stpSalGpsLocation;
   String stpSalLongitude;
   String stpSalLatitude;
+  int stpSalCountryId;
+  String stpSalGpsLocation;
+  int stpSalSalonsStatusDate;
+  String stpSalShopPicture;
   String stpSalSalonNoteAbout;
   String stpSalCreatedBy;
-  int stpSalCreatedOn;
   String stpSalUpdatedBy;
   int stpSalUpdatedOn;
+  int stpSalCreatedOn;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
-        stpSalId: json["stpSalId"],
         salonRate: json["salonRate"],
+        stpSalEmail: json["stpSalEmail"],
+        stpSalCityId: json["stpSalCityId"],
+        stpSalId: json["stpSalId"],
+        stpSalNameAr: json["stpSalNameAr"],
+        stpSalType: json["stpSalType"],
+        stpSalPhoneNumber: json["stpSalPhoneNumber"],
+        stpSalVocationalLicense: json["stpSalVocationalLicense"],
+        stpSalSalonsStatus: json["stpSalSalonsStatus"],
         stpSalUsername: json["stpSalUsername"],
         stpSalBranchId: json["stpSalBranchId"],
         stpSalQrKeyCode: json["stpSalQrKeyCode"],
-        stpSalNameAr: json["stpSalNameAr"],
-        stpSalNameLt: json["stpSalNameLt"],
         stpSalOwnerNameAr: json["stpSalOwnerNameAr"],
-        stpSalOwnerNameLt: json["stpSalOwnerNameLt"],
-        stpSalPhoneNumber: json["stpSalPhoneNumber"],
-        stpSalEmail: json["stpSalEmail"],
-        stpSalVocationalLicense: json["stpSalVocationalLicense"],
-        stpSalSalonsStatus: json["stpSalSalonsStatus"],
+        stpSalLongitude: json["stpSalLongitude"],
+        stpSalLatitude: json["stpSalLatitude"],
+        stpSalCountryId: json["stpSalCountryId"],
+        stpSalGpsLocation: json["stpSalGpsLocation"],
         stpSalSalonsStatusDate: json["stpSalSalonsStatusDate"],
         stpSalShopPicture: json["stpSalShopPicture"],
-        stpSalCountryId: json["stpSalCountryId"],
-        stpSalCityId: json["stpSalCityId"],
-        stpSalType: json["stpSalType"],
-        stpSalGpsLocation: json["stpSalGpsLocation"] == null
-            ? null
-            : json["stpSalGpsLocation"],
-        stpSalLongitude:
-            json["stpSalLongitude"] == null ? null : json["stpSalLongitude"],
-        stpSalLatitude:
-            json["stpSalLatitude"] == null ? null : json["stpSalLatitude"],
-        stpSalSalonNoteAbout: json["stpSalSalonNoteAbout"] == null
-            ? null
-            : json["stpSalSalonNoteAbout"],
+        stpSalSalonNoteAbout: json["stpSalSalonNoteAbout"],
         stpSalCreatedBy: json["stpSalCreatedBy"],
-        stpSalCreatedOn: json["stpSalCreatedOn"],
         stpSalUpdatedBy: json["stpSalUpdatedBy"],
         stpSalUpdatedOn: json["stpSalUpdatedOn"],
+        stpSalCreatedOn: json["stpSalCreatedOn"],
       );
 
   Map<String, dynamic> toJson() => {
-        "stpSalId": stpSalId,
         "salonRate": salonRate,
+        "stpSalEmail": stpSalEmail,
+        "stpSalCityId": stpSalCityId,
+        "stpSalId": stpSalId,
+        "stpSalNameAr": stpSalNameAr,
+        "stpSalType": stpSalType,
+        "stpSalPhoneNumber": stpSalPhoneNumber,
+        "stpSalVocationalLicense": stpSalVocationalLicense,
+        "stpSalSalonsStatus": stpSalSalonsStatus,
         "stpSalUsername": stpSalUsername,
         "stpSalBranchId": stpSalBranchId,
         "stpSalQrKeyCode": stpSalQrKeyCode,
-        "stpSalNameAr": stpSalNameAr,
-        "stpSalNameLt": stpSalNameLt,
         "stpSalOwnerNameAr": stpSalOwnerNameAr,
-        "stpSalOwnerNameLt": stpSalOwnerNameLt,
-        "stpSalPhoneNumber": stpSalPhoneNumber,
-        "stpSalEmail": stpSalEmail,
-        "stpSalVocationalLicense": stpSalVocationalLicense,
-        "stpSalSalonsStatus": stpSalSalonsStatus,
+        "stpSalLongitude": stpSalLongitude,
+        "stpSalLatitude": stpSalLatitude,
+        "stpSalCountryId": stpSalCountryId,
+        "stpSalGpsLocation": stpSalGpsLocation,
         "stpSalSalonsStatusDate": stpSalSalonsStatusDate,
         "stpSalShopPicture": stpSalShopPicture,
-        "stpSalCountryId": stpSalCountryId,
-        "stpSalCityId": stpSalCityId,
-        "stpSalType": stpSalType,
-        "stpSalGpsLocation":
-            stpSalGpsLocation == null ? null : stpSalGpsLocation,
-        "stpSalLongitude": stpSalLongitude == null ? null : stpSalLongitude,
-        "stpSalLatitude": stpSalLatitude == null ? null : stpSalLatitude,
-        "stpSalSalonNoteAbout":
-            stpSalSalonNoteAbout == null ? null : stpSalSalonNoteAbout,
+        "stpSalSalonNoteAbout": stpSalSalonNoteAbout,
         "stpSalCreatedBy": stpSalCreatedBy,
-        "stpSalCreatedOn": stpSalCreatedOn,
         "stpSalUpdatedBy": stpSalUpdatedBy,
         "stpSalUpdatedOn": stpSalUpdatedOn,
+        "stpSalCreatedOn": stpSalCreatedOn,
       };
 }

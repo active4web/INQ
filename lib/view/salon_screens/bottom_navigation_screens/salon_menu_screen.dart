@@ -28,7 +28,7 @@ class SalonMenuScreen extends StatelessWidget {
       body: BlocBuilder<SalonCubit, SalonStates>(
         builder: (context, state) {
           SalonCubit cubit = SalonCubit.get(context);
-          Uint8List bytes =
+          Uint8List image =
               Base64Codec().decode(cubit.mySalonInfo.data[0].stpSalShopPicture);
           return SingleChildScrollView(
             child: Container(
@@ -62,7 +62,7 @@ class SalonMenuScreen extends StatelessWidget {
                                     height: 80,
                                     decoration: BoxDecoration(
                                         image: DecorationImage(
-                                            image: MemoryImage(bytes),
+                                            image: MemoryImage(image),
                                             fit: BoxFit.cover),
                                         color: Colors.white,
                                         borderRadius:

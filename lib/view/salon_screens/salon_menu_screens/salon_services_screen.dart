@@ -9,7 +9,7 @@ import 'package:work/shared/components/custom_dropdown_menu.dart';
 import 'package:work/shared/components/custom_form_field.dart';
 import 'package:work/shared/constants.dart';
 import 'package:work/shared/defaults.dart';
-import 'package:work/view/add_service_screen.dart';
+import 'package:work/view/salon_screens/add_salon_service_screen.dart';
 
 class SalonServicesScreen extends StatefulWidget {
   const SalonServicesScreen({Key key}) : super(key: key);
@@ -96,7 +96,7 @@ class _SalonServicesScreenState extends State<SalonServicesScreen> {
                         CustomButton(
                           label: 'اضافة خدمة',
                           onTab: () {
-                            navigateTo(context, AddServiceScreen());
+                            navigateTo(context, AddSalonServiceScreen());
                           },
                         ),
                         SizedBox(

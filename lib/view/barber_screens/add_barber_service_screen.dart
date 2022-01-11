@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:work/cubit/barber_cubit/barber_cubit.dart';
+import 'package:work/cubit/barber_cubit/barber_states.dart';
 import 'package:work/cubit/salon_cubit/salon_cubit.dart';
 import 'package:work/cubit/salon_cubit/salon_states.dart';
 import 'package:work/shared/components/custom_button.dart';
@@ -9,17 +11,18 @@ import 'package:work/shared/components/custom_form_field.dart';
 import 'package:work/shared/constants.dart';
 import 'package:work/shared/defaults.dart';
 
-class AddServiceScreen extends StatelessWidget {
-  const AddServiceScreen({Key key}) : super(key: key);
+class AddBarberServiceScreen extends StatelessWidget {
+  const AddBarberServiceScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     int serviceCode;
     TextEditingController hoursController = new TextEditingController();
     TextEditingController minutesController = new TextEditingController();
-    return BlocConsumer<SalonCubit, SalonStates>(
+    TextEditingController priceController = new TextEditingController();
+    return BlocConsumer<BarberCubit, BarberStates>(
       listener: (context, state) {
-        if (state is InsertSalonServiceSuccessState) {
+        if (state is InsertBarberServiceSuccessState) {
           showAlertDialogWithAction(
               imagePath: 'Assets/images/success.png',
               messageColor: kPrimaryColor,
@@ -27,16 +30,16 @@ class AddServiceScreen extends StatelessWidget {
               message: 'تم اضافة الخدمة بنجاح',
               buttonText: 'تم',
               action: () {
-                SalonCubit.get(context).getSalonServices();
+                BarberCubit.get(context).getBarberServices();
                 Navigator.pop(context);
                 Navigator.pop(context);
               });
-        } else if (state is InsertSalonServiceErrorState) {
+        } else if (state is InsertBarberServiceErrorState) {
           showToast(text: 'فشل اضافة خدمة جديدة', color: Colors.red);
         }
       },
       builder: (context, state) {
-        SalonCubit cubit = SalonCubit.get(context);
+        BarberCubit cubit = BarberCubit.get(context);
         return Scaffold(
           appBar: AppBar(
             backgroundColor: kLightGreenColor,
@@ -106,12 +109,19 @@ class AddServiceScreen extends StatelessWidget {
                   SizedBox(
                     height: 20,
                   ),
+                  CustomFormField(
+                    label: 'سعر الخدمة',
+                    controller: priceController,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
                   Row(
                     textDirection: TextDirection.rtl,
                     children: [
                       SizedBox(
                           width: 270,
-                          child: state is InsertSalonServiceLoadingState
+                          child: state is InsertBarberServiceLoadingState
                               ? Center(
                                   child: CircularProgressIndicator(
                                     color: kPrimaryColor,
@@ -120,12 +130,14 @@ class AddServiceScreen extends StatelessWidget {
                               : CustomButton(
                                   label: 'حفظ',
                                   onTab: () {
-                                    cubit.insertSalonService(
-                                        salId:
-                                            cubit.mySalonInfo.data[0].stpSalId,
-                                        serviceId: serviceCode,
-                                        neededHours: hoursController.text,
-                                        neededMinutes: minutesController.text);
+                                    cubit.insertBarberService(
+                                      neededHours: hoursController.text,
+                                      neededMinutes: minutesController.text,
+                                      serviceId: serviceCode,
+                                      price: priceController.text,
+                                      barberId: cubit
+                                          .barberInfoModel.data[0].stpSbrId,
+                                    );
                                   },
                                 )),
                       SizedBox(

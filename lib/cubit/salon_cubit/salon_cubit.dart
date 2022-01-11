@@ -40,7 +40,7 @@ class SalonCubit extends Cubit<SalonStates> {
   }
 
   SalonInfoModel mySalonInfo;
-  SalonInfoModel _salonInfoModel;
+  SalonInfoModel mySalonInfoModel;
   void getMySalonInfo({String userName}) {
     emit(GetMySalonInfoLoadingState());
     DioHelper.getData(url: 'ShopServiceSetup/getSalonInfo', query: {
@@ -49,13 +49,20 @@ class SalonCubit extends Cubit<SalonStates> {
       'username': userName
     }).then((value) {
       print(value.data);
-      _salonInfoModel = SalonInfoModel.fromJson(value.data);
+      mySalonInfoModel = SalonInfoModel.fromJson(value.data);
       emit(GetMySalonInfoSuccessState());
-      CacheHelper.setData(key: 'salonInfo', value: jsonEncode(_salonInfoModel));
+      CacheHelper.setData(
+          key: 'salonInfo', value: jsonEncode(mySalonInfoModel));
     }).catchError((error) {
       emit(GetMySalonInfoErrorState());
       print(error.toString());
     });
+  }
+
+  void getCache() {
+    mySalonInfo =
+        SalonInfoModel.fromJson(jsonDecode(CacheHelper.getData('salonInfo')));
+    emit(GetSalonCacheSuccessState());
   }
 
   SalonServicesModel salonServicesModel;
@@ -157,13 +164,7 @@ class SalonCubit extends Cubit<SalonStates> {
     emit(GenerateCodeSuccessState());
   }
 
-  void getCache() {
-    mySalonInfo =
-        SalonInfoModel.fromJson(jsonDecode(CacheHelper.getData('salonInfo')));
-  }
-
   void fetchData() {
-    // getMySalonInfo();
     getCache();
     getSysData();
   }

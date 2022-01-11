@@ -228,6 +228,8 @@ class AuthCubit extends Cubit<AuthStates> {
         'accessType': 'MOBILE',
         'language': 'en'
       }, data: {
+        "StpSalId": "0",
+        "StpSbrBranchId": "0",
         "StpSbrUsername": barberUserName,
         "StpSalQrKeyCode": qrCode.data['data'],
         "StpSbrNameAr": barberName,

@@ -6,6 +6,8 @@ class SalonBottomNavState extends SalonStates {}
 
 class SalonChangeNavBarState extends SalonStates {}
 
+class GetSalonCacheSuccessState extends SalonStates {}
+
 class GetMySalonInfoLoadingState extends SalonStates {}
 
 class GetMySalonInfoSuccessState extends SalonStates {}
