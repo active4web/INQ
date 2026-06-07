@@ -13,8 +13,18 @@ jobs:
     permissions:
       contents: read
       deployments: write
+    defaults:
+      run:
+        working-directory: prof-review
     steps:
       - uses: actions/checkout@v4
+      - name: Extract project zip
+        working-directory: ${{ github.workspace }}
+        run: unzip -o talentos-cf-workers.zip
+      - name: Overlay repo root files into prof-review
+        working-directory: ${{ github.workspace }}
+        run: |
+          rsync -av --exclude='.git' --exclude='Assets' --exclude='android' --exclude='ios' --exclude='lib' --exclude='test' --exclude='*.zip' --exclude='pubspec*' --exclude='flutter*' --exclude='template.json' . prof-review/
       - uses: pnpm/action-setup@v3
         with: { version: 10, run_install: false }
       - uses: actions/setup-node@v4
@@ -26,6 +36,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: prof-review
           command: pages project create talentos --production-branch=master
         continue-on-error: true
       - name: Deploy to Pages
@@ -33,14 +44,25 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: prof-review
           command: pages deploy dist/public --project-name=talentos --branch=${{ github.head_ref || github.ref_name }}
 
   worker:
     name: Workers (backend)
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
+    defaults:
+      run:
+        working-directory: prof-review
     steps:
       - uses: actions/checkout@v4
+      - name: Extract project zip
+        working-directory: ${{ github.workspace }}
+        run: unzip -o talentos-cf-workers.zip
+      - name: Overlay repo root files into prof-review
+        working-directory: ${{ github.workspace }}
+        run: |
+          rsync -av --exclude='.git' --exclude='Assets' --exclude='android' --exclude='ios' --exclude='lib' --exclude='test' --exclude='*.zip' --exclude='pubspec*' --exclude='flutter*' --exclude='template.json' . prof-review/
       - uses: pnpm/action-setup@v3
         with: { version: 10, run_install: false }
       - uses: actions/setup-node@v4
@@ -51,4 +73,5 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: prof-review
           command: deploy --config wrangler.worker.toml
