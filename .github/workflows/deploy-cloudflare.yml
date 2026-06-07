@@ -6,10 +6,6 @@ name: Deploy to Cloudflare
   pull_request:
     branches: [main, master]
 
-defaults:
-  run:
-    working-directory: prof-review
-
 jobs:
   pages:
     name: Pages (frontend)
@@ -17,15 +13,18 @@ jobs:
     permissions:
       contents: read
       deployments: write
+    defaults:
+      run:
+        working-directory: prof-review
     steps:
       - uses: actions/checkout@v4
+      - name: Extract project zip
+        working-directory: ${{ github.workspace }}
+        run: unzip -o talentos-cf-workers.zip
       - uses: pnpm/action-setup@v3
         with: { version: 10, run_install: false }
       - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-          cache-dependency-path: prof-review/pnpm-lock.yaml
+        with: { node-version: 20 }
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
       - run: pnpm build:client
@@ -40,15 +39,18 @@ jobs:
     name: Workers (backend)
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
+    defaults:
+      run:
+        working-directory: prof-review
     steps:
       - uses: actions/checkout@v4
+      - name: Extract project zip
+        working-directory: ${{ github.workspace }}
+        run: unzip -o talentos-cf-workers.zip
       - uses: pnpm/action-setup@v3
         with: { version: 10, run_install: false }
       - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-          cache-dependency-path: prof-review/pnpm-lock.yaml
+        with: { node-version: 20 }
       - run: pnpm install --frozen-lockfile
       - run: pnpm build:worker
       - uses: cloudflare/wrangler-action@v3
