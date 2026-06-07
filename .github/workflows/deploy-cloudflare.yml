@@ -25,7 +25,7 @@ jobs:
         with: { version: 10, run_install: false }
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
-      - run: pnpm install
+      - run: pnpm install --no-frozen-lockfile
       - run: pnpm check
       - run: pnpm build:client
       - uses: cloudflare/wrangler-action@v3
@@ -51,7 +51,7 @@ jobs:
         with: { version: 10, run_install: false }
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
-      - run: pnpm install
+      - run: pnpm install --no-frozen-lockfile
       - run: pnpm build:worker
       - uses: cloudflare/wrangler-action@v3
         with:
