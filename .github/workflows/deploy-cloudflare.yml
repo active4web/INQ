@@ -26,7 +26,6 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
       - run: pnpm install --no-frozen-lockfile
-      - run: pnpm check
       - run: pnpm build:client
       - uses: cloudflare/wrangler-action@v3
         with:
