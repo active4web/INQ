@@ -1,0 +1,39 @@
+# Cloudflare Workers - backend
+# Deploy with:  wrangler deploy --config wrangler.worker.toml
+# Or:           pnpm deploy:worker
+name = "talentos-api"
+main = "dist-worker/worker.js"
+compatibility_date = "2025-06-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Public vars (non-secret)
+[vars]
+NODE_ENV = "production"
+LOG_LEVEL = "info"
+# CORS_ORIGIN should match your Pages domain -- defaults to "*" if unset
+# CORS_ORIGIN = "https://talentos.pages.dev"
+
+# Bindings
+# Pick ONE of these database options:
+
+# Option A - Hyperdrive (proxy to existing MySQL like PlanetScale, RDS, etc.)
+# Run once:
+#   wrangler hyperdrive create talentos-db \
+#     --connection-string="mysql://user:pass@host:3306/talentos"
+# [[hyperdrive]]
+# binding = "DB"
+# id = "<paste-hyperdrive-id>"
+
+# Option B - D1 (SQLite on the edge - requires Drizzle dialect change)
+# Run once:
+#   wrangler d1 create talentos
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "talentos"
+# database_id = "<paste-d1-id>"
+
+# Secrets (set via wrangler secret put or CF dashboard)
+# DATABASE_URL      - full connection string (for Hyperdrive/direct)
+# JWT_SECRET        - random 32+ char string
+# ENCRYPTION_KEY    - 32-byte hex key for at-rest encryption
+# STORAGE_SECRET    - optional, for storage proxy HMAC
