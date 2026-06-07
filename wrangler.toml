@@ -1,0 +1,13 @@
+# ============================================================================
+# Cloudflare configuration -- both Pages (frontend) and Workers (backend) ready.
+# ============================================================================
+
+# -- Pages (frontend) --------------------------------------------------------
+name = "talentos"
+compatibility_date = "2025-06-01"
+pages_build_output_dir = "dist/public"
+
+# -- Workers (backend) -------------------------------------------------------
+# Deploy with:  pnpm deploy:worker
+# Uses a separate wrangler entry so frontend and backend can ship independently.
+# To activate, pass --config wrangler.worker.toml (see file).
