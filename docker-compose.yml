@@ -1,0 +1,32 @@
+services:
+  db:
+    image: mysql:8
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: talentos
+      MYSQL_ROOT_PASSWORD: dev-root
+      MYSQL_USER: talentos
+      MYSQL_PASSWORD: dev-pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 5
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: mysql://talentos:dev-pass@db:3306/talentos
+      LOG_LEVEL: debug
+    ports:
+      - "3000:3000"
+
+volumes:
+  db-data:

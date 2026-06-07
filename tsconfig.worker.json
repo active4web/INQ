@@ -1,0 +1,27 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["@cloudflare/workers-types"],
+    "lib": ["ES2022", "WebWorker"],
+    "moduleResolution": "Bundler",
+    "module": "ESNext",
+    "noEmit": true
+  },
+  "include": [
+    "server/worker.ts",
+    "server/routers.ts",
+    "server/routers/**/*.ts",
+    "server/_core/trpc.ts",
+    "server/_core/authz.ts",
+    "server/_core/context.ts",
+    "server/_core/logger.ts",
+    "server/_core/intentEngine.ts",
+    "server/_core/blindMatching.ts",
+    "server/_core/systemRouter.ts",
+    "server/_core/cookies.ts",
+    "server/db.ts",
+    "drizzle/**/*.ts",
+    "shared/**/*.ts"
+  ],
+  "exclude": ["server/_core/index.ts", "server/_core/vite.ts", "**/*.test.ts", "node_modules"]
+}
