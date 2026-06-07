@@ -27,7 +27,16 @@ jobs:
         with: { node-version: 20 }
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm build:client
-      - uses: cloudflare/wrangler-action@v3
+      - name: Create Pages project if not exists
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: prof-review
+          command: pages project create talentos --production-branch=master
+        continue-on-error: true
+      - name: Deploy to Pages
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
