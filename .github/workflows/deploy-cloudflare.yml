@@ -1,0 +1,47 @@
+name: Deploy to Cloudflare
+
+on:
+  push:
+      branches: [main]
+        pull_request:
+            branches: [main]
+
+            jobs:
+              pages:
+                  name: Pages (frontend)
+                      runs-on: ubuntu-latest
+                          permissions:
+                                contents: read
+                                      deployments: write
+                                          steps:
+                                                - uses: actions/checkout@v4
+                                                      - uses: pnpm/action-setup@v3
+                                                              with: { version: 10, run_install: false }
+                                                                    - uses: actions/setup-node@v4
+                                                                            with: { node-version: 20, cache: pnpm }
+                                                                                  - run: pnpm install --frozen-lockfile
+                                                                                        - run: pnpm check
+                                                                                              - run: pnpm build:client
+                                                                                                    - uses: cloudflare/wrangler-action@v3
+                                                                                                            with:
+                                                                                                                      apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+                                                                                                                                accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+                                                                                                                                          command: pages deploy dist/public --project-name=talentos --branch=${{ github.head_ref || github.ref_name }}
+                                                                                                                                          
+                                                                                                                                            worker:
+                                                                                                                                                name: Workers (backend)
+                                                                                                                                                    runs-on: ubuntu-latest
+                                                                                                                                                        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+                                                                                                                                                            steps:
+                                                                                                                                                                  - uses: actions/checkout@v4
+                                                                                                                                                                        - uses: pnpm/action-setup@v3
+                                                                                                                                                                                with: { version: 10, run_install: false }
+                                                                                                                                                                                      - uses: actions/setup-node@v4
+                                                                                                                                                                                              with: { node-version: 20, cache: pnpm }
+                                                                                                                                                                                                    - run: pnpm install --frozen-lockfile
+                                                                                                                                                                                                          - run: pnpm build:worker
+                                                                                                                                                                                                                - uses: cloudflare/wrangler-action@v3
+                                                                                                                                                                                                                        with:
+                                                                                                                                                                                                                                  apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+                                                                                                                                                                                                                                            accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+                                                                                                                                                                                                                                                      command: deploy --config wrangler.worker.toml
